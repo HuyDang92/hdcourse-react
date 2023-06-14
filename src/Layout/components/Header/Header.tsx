@@ -3,7 +3,7 @@ import logoFPT from 'assets/logo/logo-fpt.png';
 
 const Header = () => {
   return (
-    <header className="supports-backdrop-blur:bg-white/95 sticky top-0 z-[70] max-h-20 w-full  border-b bg-white/80 py-3 backdrop-blur transition-all duration-300 lg:z-50">
+    <header className="supports-backdrop-blur:bg-white/95 sticky top-0 z-[70] max-h-20 w-full  border-b border-[#e5e7eb] bg-white/80 py-3 backdrop-blur transition-all duration-300 lg:z-50">
       <nav className="container mx-auto flex w-full basis-full flex-wrap items-center px-4 sm:px-6 lg:px-10">
         <Link className=" mr-auto flex-none text-slate-900" to="/">
           <img
@@ -16,7 +16,7 @@ const Header = () => {
           <div className="md:hidden">
             <button
               type="button"
-              className="hs-collapse-toggle inline-flex items-center justify-center gap-2 rounded-md border bg-white p-2.5 align-middle text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white "
+              className="hs-collapse-toggle text-gray-700 hover:bg-gray-50 inline-flex items-center justify-center gap-2 rounded-md border bg-white p-2.5 align-middle text-sm font-medium shadow-sm transition focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white "
               data-hs-collapse="#docs-navbar"
               aria-controls="docs-navbar"
               aria-label="Toggle navigation"
@@ -47,13 +47,13 @@ const Header = () => {
           <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-rounded scrollbar-w-1 fixed bottom-0 left-0 top-0 z-[50] h-full min-h-screen w-56 -translate-x-full bg-white p-4  transition-transform">
             <h5
               id="drawer-navigation-label"
-              className="text-base font-medium  uppercase text-gray-500"
+              className="text-gray-500 text-base  font-medium uppercase"
             >
               Menu
             </h5>
             <button
               type="button"
-              className="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 "
+              className="text-gray-400 hover:bg-gray-200 hover:text-gray-900 absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm "
             >
               <svg
                 aria-hidden="true"
@@ -71,38 +71,38 @@ const Header = () => {
               <span className="sr-only">Close menu</span>
             </button>
             <div className="overflow-y-auto py-4">
-              <div className="flex flex-col gap-2 rounded-lg bg-white text-gray-600 ">
+              <div className="text-gray-600 flex flex-col gap-2 rounded-lg bg-white ">
                 <Link
                   type="button"
-                  className="relative inline-flex w-full items-center rounded-md border-gray-200 px-2 py-2  text-[0.9rem]  text-gray-500 hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500 "
+                  className="border-gray-200 text-gray-500 relative inline-flex w-full items-center rounded-md px-2  py-2  text-[0.9rem] hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500 "
                   to="/login"
                 >
                   Đăng nhập
                 </Link>
                 <Link
                   type="button"
-                  className="relative inline-flex w-full items-center rounded-md border-gray-200 px-2 py-2  text-[0.9rem]  text-gray-500 hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500 "
+                  className="border-gray-200 text-gray-500 relative inline-flex w-full items-center rounded-md px-2  py-2  text-[0.9rem] hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500 "
                   to="/"
                 >
                   Trang chủ
                 </Link>
                 <Link
                   type="button"
-                  className="relative inline-flex w-full items-center rounded-md border-gray-200 px-2 py-2  text-[0.9rem]  text-gray-500 hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500"
+                  className="border-gray-200 text-gray-500 relative inline-flex w-full items-center rounded-md px-2  py-2  text-[0.9rem] hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500"
                   to="/"
                 >
                   Cơ sở
                 </Link>
                 <Link
                   type="button"
-                  className="relative inline-flex w-full items-center rounded-md border-gray-200 px-2 py-2  text-[0.9rem]  text-gray-500 hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500"
+                  className="border-gray-200 text-gray-500 relative inline-flex w-full items-center rounded-md px-2  py-2  text-[0.9rem] hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500"
                   to="/"
                 >
                   Năm học
                 </Link>
                 <Link
                   type="button"
-                  className="relative inline-flex w-full items-center rounded-md border-gray-200 px-2 py-2  text-[0.9rem]  text-gray-500 hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500"
+                  className="border-gray-200 text-gray-500 relative inline-flex w-full items-center rounded-md px-2  py-2  text-[0.9rem] hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500"
                   to="/"
                 >
                   Đăng ký dự án
@@ -110,12 +110,12 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <div className="fixed inset-0 z-40 hidden h-full  min-h-screen w-screen bg-gray-500 bg-opacity-50"></div>
+          <div className="bg-gray-500 fixed inset-0 z-40 hidden  h-full min-h-screen w-screen bg-opacity-50"></div>
         </div>
         <div className="ml-auto hidden items-center gap-x-2 sm:gap-x-3 md:order-3 md:flex md:pl-1">
-          <div className="relative z-50 flex items-center gap-1  before:hidden before:h-10 before:w-px before:bg-gray-300  md:before:block">
+          <div className="before:bg-gray-300 relative z-50 flex items-center  gap-1 before:hidden before:h-10 before:w-px  md:before:block">
             <Link
-              className="ml-7 inline-flex h-12 w-[9.25rem] items-center justify-center gap-x-3 rounded-md border border-transparent bg-gradient-to-tl from-sky-500 to-sky-500 px-2 text-center text-sm font-medium text-white duration-200 hover:ring-2 hover:ring-offset-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white "
+              className="ml-7 inline-flex h-12 w-[9.25rem] items-center justify-center gap-x-3 rounded-md border border-transparent bg-[#3B82F6] bg-gradient-to-tl px-2 text-center text-sm font-medium text-white duration-200 hover:bg-[#0FA5E8] hover:ring-2 hover:ring-[#0FA5E8] hover:ring-offset-2 focus:bg-[#0FA5E8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white "
               to="/login"
             >
               Đăng nhập

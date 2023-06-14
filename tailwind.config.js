@@ -4,8 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Custom colors go here
+        gray: '#989898',
       },
+      boxShadow: {
+        'border-full': '0 0 15px 0 rgba(0, 0, 0, 0.15)',
+      }
     },
     fontFamily: {
       sans: ['Inter', 'ui-sans-serif', 'system-ui'],
@@ -24,5 +27,7 @@ module.exports = {
       black: '900',
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin'),
+  ],
 };

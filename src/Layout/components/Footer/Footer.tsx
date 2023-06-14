@@ -132,7 +132,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <hr className="my-4 border-gray-100 opacity-50" />
+            <hr className="border-gray-100 my-4 opacity-50" />
             <div className="flex flex-wrap items-center justify-center md:justify-between">
               <div className="mx-auto w-full px-4 text-center md:w-4/12">
                 <p className="text-blueGray-500 text-[0.8rem]  font-bold text-[#b8c0c6]">
