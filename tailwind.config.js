@@ -1,14 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: 'jit',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
         gray: '#989898',
+        bg__statistical: 'rgba(251, 146, 60, 0.3)',
+
       },
       boxShadow: {
         'border-full': '0 0 15px 0 rgba(0, 0, 0, 0.15)',
-      }
+      },
     },
     fontFamily: {
       sans: ['Inter', 'ui-sans-serif', 'system-ui'],
@@ -27,7 +30,5 @@ module.exports = {
       black: '900',
     },
   },
-  plugins: [
-    require('flowbite/plugin'),
-  ],
+  plugins: [require('flowbite/plugin')],
 };

@@ -1,5 +1,6 @@
 import ChartBar from 'components/Chart/ChartBar';
 import ChartPie from 'components/Chart/ChartPie';
+import Statistical from 'components/Statistical';
 import { ProcessIcon, CompleteIcon, FutureIcon } from 'assets/icons';
 import classNames from 'classnames/bind';
 import styles from './Home.module.css';
@@ -48,7 +49,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-[2000px] ">
+    <div>
       <div className="container mx-auto w-full px-4 text-white lg:px-10">
         <div className="mt-5 flex flex-col gap-5 sm:flex-row lg:my-[3.125rem]">
           <div className="w-full rounded-lg bg-white p-4 shadow-border-full sm:w-1/2">
@@ -113,100 +114,8 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="my-[3.125rem] grid grid-cols-4 gap-5 text-black">
-          <div className="col-span-3">
-            <div className="rounded-lg bg-white p-4 p-6 shadow-border-full">
-              <div className="py-7 text-center">
-                <h1 className="text-3xl font-bold text-[#FB923C]">
-                  Thống kê dự án các cơ sở
-                </h1>
-                <h3 className="pt-3 text-xl">Tháng 1 - Tháng 6</h3>
-              </div>
-
-              <div className="relative overflow-x-auto">
-                <table className="text-gray-500 w-full text-left text-sm">
-                  <thead className="text-gray-700 bg-gray-50 ">
-                    <tr className="text-[0.625rem] text-[#8F8F8F]">
-                      <th scope="col" className="px-6 py-3 font-medium">
-                        Cơ sở
-                      </th>
-                      <th scope="col" className="px-6 py-3 font-medium">
-                        Dự án hoàn thành
-                      </th>
-                      <th scope="col" className="px-6 py-3 font-medium">
-                        Dự án đang triển khai
-                      </th>
-                      <th scope="col" className="px-6 py-3 font-medium">
-                        Dự án sắp triển khai
-                      </th>
-                      <th scope="col" className="px-6 py-3 font-medium">
-                        Số lượng sinh viên
-                      </th>
-                      <th scope="col" className="px-6 py-3 font-medium">
-                        Số lượng giảng viên
-                      </th>
-                      <th scope="col" className="px-6 py-3 font-medium">
-                        Thời gian
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className=" hover:bg-gray-50  border-b bg-white">
-                      <th
-                        scope="row"
-                        className="text-gray-900 whitespace-nowrap px-6 py-4 font-medium"
-                      >
-                        <div className="mr-4 flex items-center">
-                          <input
-                            id="schoolFacilitie"
-                            type="radio"
-                            value=""
-                            name="inline-radio-group"
-                            className="bg-gray-100 border-gray-300 h-4 w-4 text-blue-600 focus:ring-2 focus:ring-blue-500"
-                          />
-                          <label
-                            htmlFor="inline-radio"
-                            className="text-gray-900 ml-[1.125rem] text-sm font-medium"
-                          >
-                            Hồ Chí Minh
-                          </label>
-                        </div>
-                      </th>
-                      <td className="px-6 py-4 text-sm font-medium">Silver</td>
-                      <td className="px-6 py-4 text-sm font-medium">Laptop</td>
-                      <td className="px-6 py-4 text-sm font-medium">$2999</td>
-                    </tr>
-                    <tr className=" hover:bg-gray-50  border-b bg-white">
-                      <th
-                        scope="row"
-                        className="text-gray-900 whitespace-nowrap px-6 py-4 font-medium"
-                      >
-                        <div className="mr-4 flex items-center">
-                          <input
-                            id="orange-radio"
-                            type="radio"
-                            value=""
-                            name="colored-radio"
-                            className="bg-gray-100 border-gray-300 dark:ring-offset-gray-800 h-4 w-4 text-orange-500 focus:ring-2 focus:ring-orange-500"
-                          />
-                          <label
-                            htmlFor="orange-radio"
-                            className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
-                          >
-                            Hà Nội
-                          </label>
-                        </div>
-                      </th>
-                      <td className="px-6 py-4 text-sm font-medium">Silver</td>
-                      <td className="px-6 py-4 text-sm font-medium">Laptop</td>
-                      <td className="px-6 py-4 text-sm font-medium">$2999</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div className="col-span-1"></div>
+        <div className="my-[3.125rem] text-black">
+        <Statistical />
         </div>
       </div>
     </div>
