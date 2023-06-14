@@ -113,7 +113,7 @@ const Header = () => {
           <div className="bg-gray-500 fixed inset-0 z-40 hidden  h-full min-h-screen w-screen bg-opacity-50"></div>
         </div>
         <div className="ml-auto hidden items-center gap-x-2 sm:gap-x-3 md:order-3 md:flex md:pl-1">
-          <div className="before:bg-gray-300 relative z-50 flex items-center  gap-1 before:hidden before:h-10 before:w-px  md:before:block">
+          <div className="before:bg-gray-300 relative z-50 flex items-center gap-1 border-l-2  border-[#000000CC] before:hidden before:h-10 before:w-px  md:before:block">
             <Link
               className="ml-7 inline-flex h-12 w-[9.25rem] items-center justify-center gap-x-3 rounded-md border border-transparent bg-[#3B82F6] bg-gradient-to-tl px-2 text-center text-sm font-medium text-white duration-200 hover:bg-[#0FA5E8] hover:ring-2 hover:ring-[#0FA5E8] hover:ring-offset-2 focus:bg-[#0FA5E8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white "
               to="/login"
