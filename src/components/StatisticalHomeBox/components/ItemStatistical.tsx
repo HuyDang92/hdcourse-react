@@ -28,13 +28,13 @@ const ItemStatistical: React.FC<ItemStatisticalProps> = ({
         >
           <img src={icon} alt="" />
         </div>
-        <div className="text-base font-bold uppercase text-text-primary">
+        <div className="text-text-primary text-base font-bold uppercase">
           {title}
         </div>
       </div>
       <div className=" flex items-center justify-start gap-5">
         <p
-          className="max-h-[1.875rem] max-w-[3.75rem] rounded-xl p-2 text-[0.563rem] text-text-primary"
+          className="text-text-primary max-h-[1.875rem] max-w-[3.75rem] rounded-xl p-2 text-[0.563rem]"
           style={{ background: colorIcon }}
         >
           <span className="font-bold" style={{ color: colorText }}>
@@ -48,7 +48,7 @@ const ItemStatistical: React.FC<ItemStatisticalProps> = ({
           {count}
         </span>
       </div>
-      <p className="text-center text-base font-medium text-text-primary">
+      <p className="text-text-primary text-center text-base font-medium">
         {name}
       </p>
     </div>

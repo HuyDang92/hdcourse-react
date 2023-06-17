@@ -276,7 +276,9 @@ const Statistical = () => {
           <thead className="border-b-[1px] border-[#B5346A]  leading-10">
             <tr>
               <th className=" py-4 text-left text-sm font-semibold">Bộ môn</th>
-              <th className=" py-4 text-right text-sm font-semibold">Số lượng</th>
+              <th className=" py-4 text-right text-sm font-semibold">
+                Số lượng
+              </th>
             </tr>
           </thead>
           <tbody className="text-base font-normal leading-7">

@@ -7,7 +7,11 @@ interface ChartHalfPieProps {
   color: string[];
 }
 
-const ChartHalfPie: React.FC<ChartHalfPieProps> = ({ projectCount, color, totalProject }) => {
+const ChartHalfPie: React.FC<ChartHalfPieProps> = ({
+  projectCount,
+  color,
+  totalProject,
+}) => {
   const options: EChartsOption = {
     title: {
       text: projectCount,
