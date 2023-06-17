@@ -1,9 +1,12 @@
 import ChartBar from 'components/Chart/ChartBar';
 import ChartPie from 'components/Chart/ChartPie';
+import Search from 'components/Search';
+import ProjectsBox from 'components/ProjectsBox';
 import Statistical from 'components/Statistical';
 import { ProcessIcon, CompleteIcon, FutureIcon } from 'assets/icons';
 import classNames from 'classnames/bind';
 import styles from './Home.module.css';
+import StatisticalHomeBox from 'components/StatisticalHomeBox/StatisticalHomeBox';
 
 const cx = classNames.bind(styles);
 
@@ -48,9 +51,55 @@ const Home = () => {
     { value: 60, name: 'Tây Nguyên', percent: 63.2 },
   ];
 
+  const dataCharthalfPie1 = {
+    projectCount: 37,
+    totalProject: 100,
+    color: ['#FB923C', '#FFE5CE'],
+  };
+
+  const dataCharthalfPie2 = {
+    projectCount: 29,
+    totalProject: 100,
+    color: ['#297AFF', '#C0D8FF'],
+  };
+
+  const infoProjectData1 = {
+    title: 'Dự án đang triển khai',
+    titleColor: '#FB923C',
+    colorColumn: ['#FFE5CE', '#FFCDA3', '#FB923C'],
+    linearGradient:
+      'linear-gradient(180deg, #FB923C 0%, #FB923C 51.04%, rgba(251, 146, 60, 0.7) 100%)',
+    showProgress: true,
+  };
+
+  const infoProjectData2 = {
+    title: 'Dự án sắp triển khai',
+    titleColor: '#297AFF',
+    colorColumn: ['#C0D8FF', '#95BDFF', '#297AFF'],
+    linearGradient:
+      'linear-gradient(180deg, #3B82F6 0%, #3B82F6 51.04%, rgba(59, 130, 246, 0.7) 100%)',
+    showProgress: false,
+  };
+
   return (
     <div>
       <div className="container mx-auto w-full px-4 text-white lg:px-10">
+        <div className="mt-8 w-full text-black">
+          <StatisticalHomeBox />
+          <Search />
+          <div className="mt-10">
+            <ProjectsBox
+              infoProject={infoProjectData1}
+              chartHalfPieData={dataCharthalfPie1}
+            />
+          </div>
+          <div className="mt-[3.125rem]">
+            <ProjectsBox
+              infoProject={infoProjectData2}
+              chartHalfPieData={dataCharthalfPie2}
+            />
+          </div>
+        </div>
         <div className="mt-5 flex flex-col gap-5 sm:flex-row lg:my-[3.125rem]">
           <div className="w-full rounded-lg bg-white p-4 shadow-border-full sm:w-1/2">
             <ChartBar
@@ -74,7 +123,7 @@ const Home = () => {
 
         <div>
           <div>
-            <h2 className="mb-7 text-4xl font-bold text-black">
+            <h2 className="mb-7 text-3xl font-bold text-black">
               Thống kê dự án
             </h2>
           </div>
@@ -85,7 +134,7 @@ const Home = () => {
                   <CompleteIcon className="mr-10" />
                   <h3 className="text-left text-xl font-bold uppercase text-gray">
                     Dự án đã
-                    <br /> hoàng thành
+                    <br /> hoàn thành
                   </h3>
                 </button>
                 <button
@@ -115,7 +164,7 @@ const Home = () => {
         </div>
 
         <div className="my-[3.125rem] text-black">
-        <Statistical />
+          <Statistical />
         </div>
       </div>
     </div>
