@@ -1,6 +1,15 @@
 import ProjectIcon from 'assets/icons/project-icon.svg';
+import { StatisticalProjectTable } from 'types/Project';
 
-const Statistical = () => {
+// interface StatisticalProps {
+//   data: StatisticalProjectTable[] | undefined;
+// }
+
+interface StatisticalProps {
+  data: any;
+}
+
+const Statistical: React.FC<StatisticalProps> = ({ data }) => {
   return (
     <section className="flex flex-col items-center gap-3 sm:flex-row lg:h-[41.25rem]">
       <div className="bg-while rounded-lg bg-white px-4 py-6 shadow-border-full sm:w-4/5 lg:h-full">
@@ -43,214 +52,37 @@ const Statistical = () => {
               </tr>
             </thead>
             <tbody className="text-gray-900 text-center text-sm font-medium">
-              <tr className="h-14  border-b-[0.063rem] border-[#0000001A] py-2  leading-5">
-                <td>
-                  <div className="mr-[1.125rem] flex items-center">
-                    <input
-                      id="hcm"
-                      type="radio"
-                      value=""
-                      name="schoolFacilities"
-                      className="bg-gray-100 border-gray-300 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
-                    />
-                    <label
-                      htmlFor="hcm"
-                      className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
-                    >
-                      Hồ Chí Minh
-                    </label>
-                  </div>
-                </td>
-                <td>80</td>
-                <td>67</td>
-                <td>23</td>
-                <td>120</td>
-                <td>65</td>
-                <td>204h</td>
-                <td>167</td>
-              </tr>
-              <tr className="h-14  border-b-[0.063rem] border-[#0000001A] py-2  leading-5">
-                <td>
-                  <div className="mr-[1.125rem] flex items-center">
-                    <input
-                      id="hanoi"
-                      type="radio"
-                      value=""
-                      name="schoolFacilities"
-                      className="bg-gray-100 border-gray-300 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
-                    />
-                    <label
-                      htmlFor="hanoi"
-                      className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
-                    >
-                      Hà Nội
-                    </label>
-                  </div>
-                </td>
-                <td>80</td>
-                <td>67</td>
-                <td>23</td>
-                <td>120</td>
-                <td>65</td>
-                <td>204h</td>
-                <td>167</td>
-              </tr>
-              <tr className="h-14  border-b-[0.063rem] border-[#0000001A] py-2  leading-5">
-                <td>
-                  <div className="mr-[1.125rem] flex items-center">
-                    <input
-                      id="bacgiang"
-                      type="radio"
-                      value=""
-                      name="schoolFacilities"
-                      className="bg-gray-100 border-gray-300 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
-                    />
-                    <label
-                      htmlFor="bacgiang"
-                      className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
-                    >
-                      Bắc Giang
-                    </label>
-                  </div>
-                </td>
-                <td>80</td>
-                <td>67</td>
-                <td>23</td>
-                <td>120</td>
-                <td>65</td>
-                <td>204h</td>
-                <td>167</td>
-              </tr>
-              <tr className="h-16 border-b-[0.063rem] border-[#0000001A] py-2  leading-5">
-                <td>
-                  <div className="mr-[1.125rem] flex items-center">
-                    <input
-                      id="danang"
-                      type="radio"
-                      value=""
-                      name="schoolFacilities"
-                      className="bg-gray-100 border-gray-300 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
-                    />
-                    <label
-                      htmlFor="danang"
-                      className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
-                    >
-                      Đằ Nẵng
-                    </label>
-                  </div>
-                </td>
-                <td>80</td>
-                <td>67</td>
-                <td>23</td>
-                <td>120</td>
-                <td>65</td>
-                <td>204h</td>
-                <td>167</td>
-              </tr>
-              <tr className="h-14  border-b-[0.063rem] border-[#0000001A] py-2  leading-5">
-                <td>
-                  <div className="mr-[1.125rem] flex items-center">
-                    <input
-                      id="hue"
-                      type="radio"
-                      value=""
-                      name="schoolFacilities"
-                      className="bg-gray-100 border-gray-300 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
-                    />
-                    <label
-                      htmlFor="hue"
-                      className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
-                    >
-                      Huế
-                    </label>
-                  </div>
-                </td>
-                <td>80</td>
-                <td>67</td>
-                <td>23</td>
-                <td>120</td>
-                <td>65</td>
-                <td>204h</td>
-                <td>167</td>
-              </tr>
-              <tr className="h-14  border-b-[0.063rem] border-[#0000001A] py-2  leading-5">
-                <td>
-                  <div className="mr-[1.125rem] flex items-center">
-                    <input
-                      id="dongnai"
-                      type="radio"
-                      value=""
-                      name="schoolFacilities"
-                      className="bg-gray-100 border-gray-300 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
-                    />
-                    <label
-                      htmlFor="dongnai"
-                      className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
-                    >
-                      Đồng Nai
-                    </label>
-                  </div>
-                </td>
-                <td>80</td>
-                <td>67</td>
-                <td>23</td>
-                <td>120</td>
-                <td>65</td>
-                <td>204h</td>
-                <td>167</td>
-              </tr>
-              <tr className="h-14  border-b-[0.063rem] border-[#0000001A] py-2  leading-5">
-                <td>
-                  <div className="mr-[1.125rem] flex items-center">
-                    <input
-                      id="cantho"
-                      type="radio"
-                      value=""
-                      name="schoolFacilities"
-                      className="bg-gray-100 border-gray-300 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
-                    />
-                    <label
-                      htmlFor="cantho"
-                      className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
-                    >
-                      Cần Thơ
-                    </label>
-                  </div>
-                </td>
-                <td>80</td>
-                <td>67</td>
-                <td>23</td>
-                <td>120</td>
-                <td>65</td>
-                <td>204h</td>
-                <td>167</td>
-              </tr>
-              <tr className="h-14 border-b-[0.063rem] border-[#0000001A] py-2 leading-5">
-                <td>
-                  <div className="mr-[1.125rem] flex items-center">
-                    <input
-                      id="taynguyen"
-                      type="radio"
-                      value=""
-                      name="schoolFacilities"
-                      className="bg-gray-100 border-gray-300 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
-                    />
-                    <label
-                      htmlFor="taynguyen"
-                      className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
-                    >
-                      Tây Nguyên
-                    </label>
-                  </div>
-                </td>
-                <td>80</td>
-                <td>67</td>
-                <td>23</td>
-                <td>120</td>
-                <td>65</td>
-                <td>204h</td>
-                <td>167</td>
-              </tr>
+              {data?.map((item: StatisticalProjectTable, index: number) => (
+                <tr
+                  key={index}
+                  className="h-12  border-b-[0.063rem] border-[#0000001A] py-2  leading-5"
+                >
+                  <td>
+                    <div className="mr-[1.125rem] flex items-center">
+                      <input
+                        id={item.base}
+                        type="radio"
+                        value=""
+                        name="schoolFacilities"
+                        className="bg-gray-100 border-gray-300 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
+                      />
+                      <label
+                        htmlFor={item.base}
+                        className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
+                      >
+                        {item.base}
+                      </label>
+                    </div>
+                  </td>
+                  <td>{item.projectCompleted}</td>
+                  <td>{item.projectHappening}</td>
+                  <td>{item.projectUpcoming}</td>
+                  <td>{item.totalStudents}</td>
+                  <td>{item.totalTeachers}</td>
+                  <td>{item.time}h</td>
+                  <td>{item.totalProject}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

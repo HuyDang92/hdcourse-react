@@ -18,14 +18,15 @@ interface ChartPieProps {
 
 const ChartPie: React.FC<ChartPieProps> = ({ dataChart }) => {
   const colorList = [
-    '#F59E0B', //hp
-    '#3B82F6', //dn
-    '#14B8A6', //hcm
-    '#EC4899', //hue
-    '#FACC15', //tn
+    '#14B8A6', //hp
+    '#0A6E63', //dn
+    '#3B82F6', //hcm
+    '#6366F1', //hue
+    '#EC4899', //tn
     '#E274F4', //bg
-    '#6366F1', //ct
-    '#0A6E63', //hn
+    '#F59E0B', //dn
+    '#FACC15', //ct
+    '#8DB814', //hn
   ];
 
   const options: EChartsOption = {

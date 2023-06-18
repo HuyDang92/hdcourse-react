@@ -15,7 +15,7 @@ interface ItemStatisticalProps {
 
 const StatisticalHomeBox: React.FC<ItemStatisticalProps> = ({ data }) => {
   return (
-    <div className="mb-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 sm:flex-row gap-5">
+    <div className="mb-8 grid grid-cols-2 gap-5 sm:flex-row md:grid-cols-3 lg:grid-cols-5">
       <ItemStatistical
         title="Tổng số dự án"
         icon={ProjectIcon}

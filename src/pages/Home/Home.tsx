@@ -6,24 +6,40 @@ import ProjectsBox from 'components/ProjectsBox';
 import Statistical from 'components/Statistical';
 import StatisticalHomeBox from 'components/StatisticalHomeBox';
 import { ProcessIcon, CompleteIcon, FutureIcon } from 'assets/icons';
-import classNames from 'classnames/bind';
+import className from 'classnames/bind';
 import styles from './Home.module.css';
 import {
   useGetProjectOverviewQuery,
   useGetOverviewAnalyticByRoleQuery,
   useGetOverviewStatusProjectQuery,
+  useGetOverviewCourseQuery,
+  useGetProjectOverviewTableQuery,
 } from 'features/Home/home.service';
 
-const cx = classNames.bind(styles);
+const cx = className.bind(styles);
 
 const Home = () => {
   const [chartBarStudentData, setChartBarStudentData] = useState<any>({});
   const [chartBarTeacherData, setChartBarTeacherData] = useState<any>({});
   const [chartPieData, setChartPieData] = useState<any>({});
+  const [overviewCourseHap, setOverviewCourseHap] = useState<any>({});
+  const [overviewCourseUp, setOverviewCourseUp] = useState<any>({});
+  const [active, setActive] = useState<number>(2);
 
   const projectOverview = useGetProjectOverviewQuery();
   const overviewAnalyticStudent = useGetOverviewAnalyticByRoleQuery('student');
   const overviewAnalyticTeacher = useGetOverviewAnalyticByRoleQuery('teacher');
+  const overviewProject = useGetProjectOverviewTableQuery();
+
+  const overviewCourseHapenning = useGetOverviewCourseQuery({
+    type: 'HAPPENING',
+    page: 1,
+  });
+
+  const overviewCourseUpcoming = useGetOverviewCourseQuery({
+    type: 'UPCOMING',
+    page: 1,
+  });
 
   const overviewStatusProjectUpcoming =
     useGetOverviewStatusProjectQuery('UPCOMING');
@@ -31,36 +47,6 @@ const Home = () => {
     useGetOverviewStatusProjectQuery('HAPPENING');
   const overviewStatusProjectCompleted =
     useGetOverviewStatusProjectQuery('COMPLETED');
-
-  const dataCharthalfPie1 = {
-    projectCount: 37,
-    totalProject: 100,
-    color: ['#FB923C', '#FFE5CE'],
-  };
-
-  const dataCharthalfPie2 = {
-    projectCount: 29,
-    totalProject: 100,
-    color: ['#297AFF', '#C0D8FF'],
-  };
-
-  const infoProjectData1 = {
-    title: 'đang triển khai',
-    titleColor: '#FB923C',
-    colorColumn: ['#FFE5CE', '#FFCDA3', '#FB923C'],
-    linearGradient:
-      'linear-gradient(180deg, #FB923C 0%, #FB923C 51.04%, rgba(251, 146, 60, 0.7) 100%)',
-    showProgress: true,
-  };
-
-  const infoProjectData2 = {
-    title: 'sắp triển khai',
-    titleColor: '#297AFF',
-    colorColumn: ['#C0D8FF', '#95BDFF', '#297AFF'],
-    linearGradient:
-      'linear-gradient(180deg, #3B82F6 0%, #3B82F6 51.04%, rgba(59, 130, 246, 0.7) 100%)',
-    showProgress: false,
-  };
 
   useEffect(() => {
     const xAxisData = overviewAnalyticStudent.data?.map(
@@ -142,6 +128,7 @@ const Home = () => {
     };
 
     setChartPieData(chartPieData);
+    setActive(3);
   };
 
   const getProjectHappening = () => {
@@ -162,6 +149,7 @@ const Home = () => {
     };
 
     setChartPieData(chartPieData);
+    setActive(2);
   };
 
   const getProjectCompleted = () => {
@@ -182,7 +170,80 @@ const Home = () => {
     };
 
     setChartPieData(chartPieData);
+    setActive(1);
   };
+
+  useEffect(() => {
+    const dataOriginal = overviewCourseHapenning?.data?.projects;
+    const chunkSize = 6;
+    const formartArr = [];
+
+    if (overviewAnalyticStudent.status === 'fulfilled') {
+      for (let i = 0; i < dataOriginal.length; i += chunkSize) {
+        const chunk = dataOriginal.slice(i, i + chunkSize);
+        formartArr.push(chunk);
+      }
+
+      const stylesCss = {
+        titleColor: '#FB923C',
+        linearGradient:
+          'linear-gradient(180deg, #FB923C 0%, #FB923C 51.04%, rgba(251, 146, 60, 0.7) 100%)',
+        showProgress: true,
+      };
+
+      const dataCharthalfPie = {
+        totalProject: projectOverview?.data?.projectCount,
+        projectCount:
+          overviewCourseHapenning?.data?.projectsAnalysis.projectsCount,
+        studentsCount:
+          overviewCourseHapenning?.data?.projectsAnalysis.studentsCount,
+        color: ['#FB923C', '#FFE5CE'],
+        colorColumn: ['#FFE5CE', '#FFCDA3', '#FB923C'],
+      };
+
+      setOverviewCourseHap({
+        infoProjectData: formartArr,
+        stylesCss: stylesCss,
+        dataCharthalfPie: dataCharthalfPie,
+      });
+    }
+  }, [overviewCourseHapenning]);
+
+  useEffect(() => {
+    const dataOriginal = overviewCourseUpcoming?.data?.projects;
+    const chunkSize = 6;
+    const formartArr = [];
+
+    if (overviewAnalyticStudent.status === 'fulfilled') {
+      for (let i = 0; i < dataOriginal.length; i += chunkSize) {
+        const chunk = dataOriginal.slice(i, i + chunkSize);
+        formartArr.push(chunk);
+      }
+
+      const stylesCss = {
+        titleColor: '#297AFF',
+        linearGradient:
+          'linear-gradient(180deg, #3B82F6 0%, #3B82F6 51.04%, rgba(59, 130, 246, 0.7) 100%)',
+        showProgress: false,
+      };
+
+      const dataCharthalfPie = {
+        totalProject: projectOverview?.data?.projectCount,
+        projectCount:
+          overviewCourseUpcoming?.data?.projectsAnalysis.projectsCount,
+        studentsCount:
+          overviewCourseUpcoming?.data?.projectsAnalysis.studentsCount,
+        color: ['#297AFF', '#C0D8FF'],
+        colorColumn: ['#C0D8FF', '#95BDFF', '#297AFF'],
+      };
+
+      setOverviewCourseUp({
+        infoProjectData: formartArr,
+        stylesCss: stylesCss,
+        dataCharthalfPie: dataCharthalfPie,
+      });
+    }
+  }, [overviewCourseUpcoming]);
 
   return (
     <div>
@@ -191,16 +252,24 @@ const Home = () => {
           <StatisticalHomeBox data={projectOverview.data} />
           <Search />
           <div className="mt-10">
-            <ProjectsBox
-              infoProject={infoProjectData1}
-              chartHalfPieData={dataCharthalfPie1}
-            />
+            {overviewCourseHapenning.status === 'fulfilled' && (
+              <ProjectsBox
+                titleTable="đang triển khai"
+                infoProject={overviewCourseHap.infoProjectData}
+                chartHalfPieData={overviewCourseHap.dataCharthalfPie}
+                styleCss={overviewCourseHap.stylesCss}
+              />
+            )}
           </div>
           <div className="mt-[3.125rem]">
-            <ProjectsBox
-              infoProject={infoProjectData2}
-              chartHalfPieData={dataCharthalfPie2}
-            />
+            {overviewCourseUpcoming.status === 'fulfilled' && (
+              <ProjectsBox
+                titleTable="sắp triển khai"
+                infoProject={overviewCourseUp.infoProjectData}
+                chartHalfPieData={overviewCourseUp.dataCharthalfPie}
+                styleCss={overviewCourseUp.stylesCss}
+              />
+            )}
           </div>
         </div>
         <div className="mt-5 flex flex-col gap-5 sm:flex-row lg:my-[3.125rem]">
@@ -226,7 +295,9 @@ const Home = () => {
             <div className="col-span-1">
               <div className="flex h-full flex-col justify-between gap-5">
                 <button
-                  className="flex h-full items-center rounded-lg bg-white p-10 shadow-border-full"
+                  className={`${
+                    active === 1 && cx('project_active', 'border-[#34B53A]')
+                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-transparent`}
                   onClick={getProjectCompleted}
                 >
                   <CompleteIcon className="mr-10" />
@@ -236,9 +307,9 @@ const Home = () => {
                   </h3>
                 </button>
                 <button
-                  className={`${cx(
-                    'project_active'
-                  )} relative flex h-full items-center rounded-lg bg-white p-10 shadow-border-full`}
+                  className={`${
+                    active === 2 && cx('project_active', 'border-[#4E91FF]')
+                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-transparent`}
                   onClick={getProjectHappening}
                 >
                   <ProcessIcon className="mr-10" />
@@ -248,7 +319,9 @@ const Home = () => {
                   </h3>
                 </button>
                 <button
-                  className="flex h-full items-center rounded-lg bg-white p-10 shadow-border-full"
+                  className={`${
+                    active === 3 && cx('project_active', 'border-[#FB923C]')
+                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-transparent`}
                   onClick={getProjectUpcoming}
                 >
                   <FutureIcon className="mr-10" />
@@ -268,7 +341,7 @@ const Home = () => {
         </div>
 
         <div className="my-[3.125rem] text-black">
-          <Statistical />
+          <Statistical data={overviewProject.data} />;
         </div>
       </div>
     </div>

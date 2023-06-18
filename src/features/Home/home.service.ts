@@ -14,11 +14,28 @@ export const homeApi = createApi({
       }),
     }),
     getOverviewStatusProject: builder.query<any, any>({
-      query: (type) => ({ 
-        url: '/api/projects/overview-by-status-projects-and-base?type=' + type 
+      query: (type) => ({
+        url: '/api/projects/overview-by-status-projects-and-base?type=' + type,
       }),
+    }),
+    getOverviewCourse: builder.query<any, any>({
+      query: (args) => {
+        const { type, page, limit = '' } = args;
+        return {
+          url: `/api/projects/overview-project-by-status?type=${type}&page=${page}&limit=${limit}`,
+        };
+      },
+    }),
+    getProjectOverviewTable: builder.query<StatisticalHomeBoxProps, void>({
+      query: () => '/api/home/overview-table',
     }),
   }),
 });
 
-export const { useGetProjectOverviewQuery, useGetOverviewAnalyticByRoleQuery, useGetOverviewStatusProjectQuery } = homeApi;
+export const {
+  useGetProjectOverviewQuery,
+  useGetOverviewAnalyticByRoleQuery,
+  useGetOverviewStatusProjectQuery,
+  useGetOverviewCourseQuery,
+  useGetProjectOverviewTableQuery,
+} = homeApi;

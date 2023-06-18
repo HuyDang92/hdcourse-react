@@ -1,34 +1,56 @@
-.project_active::before {
-  position: absolute;
-  content: '';
-  background-color: #fff;
-  height: 100%;
-  width: 2rem;
-  top: 0;
-  right: -1.25rem;
-  box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.15),
-    0px -5px 5px -5px rgba(0, 0, 0, 0.15);
-}
+@media screen and (min-width: 1024px) {
+  @keyframes slideInFromLeftBefore {
+    0% {
+      right: 0;
+    }
+    100% {
+      right: -1.25rem;
+    }
+  }
 
-.project_active::after {
-  position: absolute;
-  content: '';
-  background-image: url('assets/icons/arrow.svg');
-  background-repeat: no-repeat;
-  background-size: 40%;
-  background-position: center;
-  font-size: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: orangered;
-  background-color: #e6e6e64d;
-  height: 100%;
-  width: 3.125rem;
-  top: 0;
-  right: -4.375rem;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.15),
-    5px 0 5px -5px rgba(0, 0, 0, 0.15), 0 5px 5px -5px rgba(0, 0, 0, 0.15);
+  @keyframes slideInFromLeftAfter {
+    0% {
+      right: 0;
+    }
+    100% {
+      right: -4.375rem;
+    }
+  }
+
+  .project_active::before {
+    position: absolute;
+    content: '';
+    background-color: #fff;
+    height: 100%;
+    width: 2rem;
+    top: 0;
+    right: -1.25rem;
+    box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.15),
+      0px -5px 5px -5px rgba(0, 0, 0, 0.15);
+    animation: slideInFromLeftBefore 0.5s ease;
+  }
+
+  .project_active::after {
+    position: absolute;
+    content: '';
+    background-image: url('assets/icons/arrow.svg');
+    background-repeat: no-repeat;
+    background-size: 40%;
+    background-position: center;
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: orangered;
+    background-color: #e6e6e64d;
+    height: 100%;
+    width: 3.125rem;
+    top: 0;
+    right: -4.375rem;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.15),
+      5px 0 5px -5px rgba(0, 0, 0, 0.15), 0 5px 5px -5px rgba(0, 0, 0, 0.15);
+    animation: slideInFromLeftAfter 0.5s ease;
+  }
 }

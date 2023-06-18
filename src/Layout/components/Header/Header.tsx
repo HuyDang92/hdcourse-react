@@ -100,13 +100,6 @@ const Header = () => {
                 >
                   Năm học
                 </Link>
-                <Link
-                  type="button"
-                  className="border-gray-200 text-gray-500 relative inline-flex w-full items-center rounded-md px-2  py-2  text-[0.9rem] hover:bg-sky-500 hover:text-white focus:text-blue-500 focus:ring-blue-500"
-                  to="/"
-                >
-                  Đăng ký dự án
-                </Link>
               </div>
             </div>
           </div>
@@ -144,12 +137,6 @@ const Header = () => {
               to="/"
             >
               Năm học
-            </Link>
-            <Link
-              className="group relative inline-flex items-center  justify-center gap-x-3 rounded-md p-4 py-2 pr-7 duration-100 before:absolute before:bottom-0 before:h-1  before:w-0 before:rounded-sm before:bg-sky-500 before:transition-all before:duration-100 hover:text-sky-500 hover:before:w-[70%]"
-              to="/"
-            >
-              Đăng ký dự án
             </Link>
           </div>
         </div>

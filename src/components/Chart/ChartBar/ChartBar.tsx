@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 
 interface ChartBar {
@@ -13,9 +13,22 @@ interface ChartBarProps {
   data: ChartBar;
 }
 
-const ChartBar: React.FC<ChartBarProps> = ({
-  data
-}) => {
+const ChartBar: React.FC<ChartBarProps> = ({ data }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  const checkIfMobile = () => {
+    const isMobile = window.innerWidth <= 768;
+    setIsMobile(isMobile);
+  };
+
+  useEffect(() => {
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, [isMobile]);
+
   const options = {
     title: {
       text: data.title,
@@ -34,7 +47,7 @@ const ChartBar: React.FC<ChartBarProps> = ({
     },
     legend: {
       icon: 'circle',
-      right: 0,
+      right: isMobile ? 'right' : 0,
       top: 'top',
       textStyle: {
         fontFamily: 'Inter, sans-serif',
@@ -57,7 +70,7 @@ const ChartBar: React.FC<ChartBarProps> = ({
         show: false, // Ẩn các dấu tick của trục x
       },
       axisLabel: {
-        interval: 0, // Hiển thị tất cả tên trục x
+        //interval: 0, // Hiển thị tất cả tên trục x
         fontSize: 12,
         fontFamily: 'Inter, sans-serif',
       },
