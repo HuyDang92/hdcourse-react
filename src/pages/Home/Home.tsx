@@ -341,7 +341,7 @@ const Home = () => {
         </div>
 
         <div className="my-[3.125rem] text-black">
-          <Statistical data={overviewProject.data} />;
+          <Statistical data={overviewProject.data} />
         </div>
       </div>
     </div>
