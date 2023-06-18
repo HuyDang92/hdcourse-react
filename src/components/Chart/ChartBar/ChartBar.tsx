@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
 
-interface ChartProps {
+interface ChartBar {
   title: string;
   xAxisData: string[];
   barData: number[][];
@@ -9,16 +9,16 @@ interface ChartProps {
   barColors: string[];
 }
 
-const ChartBar: React.FC<ChartProps> = ({
-  title,
-  xAxisData,
-  barData,
-  names,
-  barColors,
+interface ChartBarProps {
+  data: ChartBar;
+}
+
+const ChartBar: React.FC<ChartBarProps> = ({
+  data
 }) => {
   const options = {
     title: {
-      text: title,
+      text: data.title,
       textStyle: {
         fontFamily: 'Inter, sans-serif',
       },
@@ -49,7 +49,7 @@ const ChartBar: React.FC<ChartProps> = ({
     },
     xAxis: {
       type: 'category',
-      data: xAxisData,
+      data: data.xAxisData,
       axisLine: {
         show: false, // Ẩn đường line của trục x
       },
@@ -76,20 +76,20 @@ const ChartBar: React.FC<ChartProps> = ({
     },
     series: [
       {
-        name: names[0],
+        name: data.names[0],
         type: 'bar',
         itemStyle: {
-          color: barColors[0],
+          color: data.barColors[0],
         },
-        data: barData[0],
+        data: data.barData[0],
       },
       {
-        name: names[1],
+        name: data.names[1],
         type: 'bar',
         itemStyle: {
-          color: barColors[1],
+          color: data.barColors[1],
         },
-        data: barData[1],
+        data: data.barData[1],
       },
     ],
   };

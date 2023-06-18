@@ -49,7 +49,7 @@ const ItemProject = ({
         </div>
         {showProgress ? (
           <div
-            className="flex h-10 w-10 items-center justify-center rounded-full border-4 border-white text-xs font-bold text-white"
+            className="flex h-12 w-12 items-center justify-center rounded-full border-4 border-white text-xs font-bold text-white"
             style={{ background: titleColor }}
           >
             80%

@@ -1,55 +1,36 @@
+import { useEffect, useState } from 'react';
 import ChartBar from 'components/Chart/ChartBar';
 import ChartPie from 'components/Chart/ChartPie';
 import Search from 'components/Search';
 import ProjectsBox from 'components/ProjectsBox';
 import Statistical from 'components/Statistical';
+import StatisticalHomeBox from 'components/StatisticalHomeBox';
 import { ProcessIcon, CompleteIcon, FutureIcon } from 'assets/icons';
 import classNames from 'classnames/bind';
 import styles from './Home.module.css';
-import StatisticalHomeBox from 'components/StatisticalHomeBox/StatisticalHomeBox';
+import {
+  useGetProjectOverviewQuery,
+  useGetOverviewAnalyticByRoleQuery,
+  useGetOverviewStatusProjectQuery,
+} from 'features/Home/home.service';
 
 const cx = classNames.bind(styles);
 
 const Home = () => {
-  const xAxisData = [
-    'Hà Nội',
-    'HCM',
-    'Bắc Giang',
-    'Hải Phòng',
-    'Đà Nẵng',
-    'Huế',
-    'Đồng Nai',
-    'Cần Thơ',
-    'Tây Nguyên',
-  ];
+  const [chartBarStudentData, setChartBarStudentData] = useState<any>({});
+  const [chartBarTeacherData, setChartBarTeacherData] = useState<any>({});
+  const [chartPieData, setChartPieData] = useState<any>({});
 
-  const names1 = ['Số lượng sinh viên', 'Thời gian làm việc'];
-  const names2 = ['Số lượng giảng viên', 'Thời gian làm việc'];
+  const projectOverview = useGetProjectOverviewQuery();
+  const overviewAnalyticStudent = useGetOverviewAnalyticByRoleQuery('student');
+  const overviewAnalyticTeacher = useGetOverviewAnalyticByRoleQuery('teacher');
 
-  const barData1 = [
-    [200, 400, 200, 250, 400, 400, 200, 300, 400],
-    [100, 100, 300, 300, 400, 400, 200, 300, 400],
-  ];
-  const barData2 = [
-    [200, 100, 200, 300, 400, 400, 200, 300, 400],
-    [200, 100, 200, 300, 400, 400, 200, 300, 400],
-  ];
-
-  const barColors1 = ['#F97316', '#FED7AA'];
-  const barColors2 = ['#2563EB', '#BFDBFE'];
-
-  const subtext = '715';
-
-  const data = [
-    { value: 452, name: 'HCM', percent: 63.2 },
-    { value: 122, name: 'Hà Nội', percent: 63.2 },
-    { value: 65, name: 'Đà Nẵng', percent: 63.2 },
-    { value: 30, name: 'Cần Thơ', percent: 63.2 },
-    { value: 17, name: 'Huế', percent: 63.2 },
-    { value: 37, name: 'Bắc Giang', percent: 63.2 },
-    { value: 42, name: 'Hải Phòng', percent: 63.2 },
-    { value: 60, name: 'Tây Nguyên', percent: 63.2 },
-  ];
+  const overviewStatusProjectUpcoming =
+    useGetOverviewStatusProjectQuery('UPCOMING');
+  const overviewStatusProjectHappening =
+    useGetOverviewStatusProjectQuery('HAPPENING');
+  const overviewStatusProjectCompleted =
+    useGetOverviewStatusProjectQuery('COMPLETED');
 
   const dataCharthalfPie1 = {
     projectCount: 37,
@@ -64,7 +45,7 @@ const Home = () => {
   };
 
   const infoProjectData1 = {
-    title: 'Dự án đang triển khai',
+    title: 'đang triển khai',
     titleColor: '#FB923C',
     colorColumn: ['#FFE5CE', '#FFCDA3', '#FB923C'],
     linearGradient:
@@ -73,7 +54,7 @@ const Home = () => {
   };
 
   const infoProjectData2 = {
-    title: 'Dự án sắp triển khai',
+    title: 'sắp triển khai',
     titleColor: '#297AFF',
     colorColumn: ['#C0D8FF', '#95BDFF', '#297AFF'],
     linearGradient:
@@ -81,11 +62,133 @@ const Home = () => {
     showProgress: false,
   };
 
+  useEffect(() => {
+    const xAxisData = overviewAnalyticStudent.data?.map(
+      (item: { name: string }) => item.name
+    );
+    const countRole = overviewAnalyticStudent.data?.map(
+      (item: { countRole: number }) => item.countRole
+    );
+    const countTotalTimeWork = overviewAnalyticStudent.data?.map(
+      (item: { countTotalTimeWork: number }) => item.countTotalTimeWork
+    );
+    const chartBarStudentData = {
+      title: 'Thống kê sinh viên',
+      xAxisData: xAxisData,
+      barData: [countRole, countTotalTimeWork],
+      names: ['Số lượng sinh viên', 'Thời gian làm việc'],
+      barColors: ['#F97316', '#FED7AA'],
+    };
+
+    setChartBarStudentData(chartBarStudentData);
+  }, [overviewAnalyticStudent]);
+
+  useEffect(() => {
+    const xAxisData = overviewAnalyticTeacher.data?.map(
+      (item: { name: string }) => item.name
+    );
+    const countRole = overviewAnalyticTeacher.data?.map(
+      (item: { countRole: number }) => item.countRole
+    );
+    const countTotalTimeWork = overviewAnalyticTeacher.data?.map(
+      (item: { countTotalTimeWork: number }) => item.countTotalTimeWork
+    );
+    const chartBarTeacherData = {
+      title: 'Thống kê giảng viên',
+      xAxisData: xAxisData,
+      barData: [countRole, countTotalTimeWork],
+      names: ['Số lượng giảng viên', 'Thời gian làm việc'],
+      barColors: ['#2563EB', '#BFDBFE'],
+    };
+
+    setChartBarTeacherData(chartBarTeacherData);
+  }, [overviewAnalyticTeacher]);
+
+  useEffect(() => {
+    const totalProject = overviewStatusProjectHappening.data?.total;
+    const dataChart = overviewStatusProjectHappening.data?.baseAnalytic?.map(
+      (item: any) => {
+        return {
+          value: item.countProjects,
+          name: item.name,
+          percent: item.percentage,
+        };
+      }
+    );
+
+    const chartPieData = {
+      subtext: totalProject,
+      data: dataChart,
+    };
+
+    setChartPieData(chartPieData);
+  }, [overviewStatusProjectHappening]);
+
+  const getProjectUpcoming = () => {
+    const totalProject = overviewStatusProjectUpcoming.data?.total;
+    const dataChart = overviewStatusProjectUpcoming.data?.baseAnalytic?.map(
+      (item: any) => {
+        return {
+          value: item.countProjects,
+          name: item.name,
+          percent: item.percentage,
+        };
+      }
+    );
+
+    const chartPieData = {
+      subtext: totalProject,
+      data: dataChart,
+    };
+
+    setChartPieData(chartPieData);
+  };
+
+  const getProjectHappening = () => {
+    const totalProject = overviewStatusProjectHappening.data?.total;
+    const dataChart = overviewStatusProjectHappening.data?.baseAnalytic?.map(
+      (item: any) => {
+        return {
+          value: item.countProjects,
+          name: item.name,
+          percent: item.percentage,
+        };
+      }
+    );
+
+    const chartPieData = {
+      subtext: totalProject,
+      data: dataChart,
+    };
+
+    setChartPieData(chartPieData);
+  };
+
+  const getProjectCompleted = () => {
+    const totalProject = overviewStatusProjectCompleted.data?.total;
+    const dataChart = overviewStatusProjectCompleted.data?.baseAnalytic?.map(
+      (item: any) => {
+        return {
+          value: item.countProjects,
+          name: item.name,
+          percent: item.percentage,
+        };
+      }
+    );
+
+    const chartPieData = {
+      subtext: totalProject,
+      data: dataChart,
+    };
+
+    setChartPieData(chartPieData);
+  };
+
   return (
     <div>
       <div className="container mx-auto w-full px-4 text-white lg:px-10">
         <div className="mt-8 w-full text-black">
-          <StatisticalHomeBox />
+          <StatisticalHomeBox data={projectOverview.data} />
           <Search />
           <div className="mt-10">
             <ProjectsBox
@@ -102,22 +205,14 @@ const Home = () => {
         </div>
         <div className="mt-5 flex flex-col gap-5 sm:flex-row lg:my-[3.125rem]">
           <div className="w-full rounded-lg bg-white p-4 shadow-border-full sm:w-1/2">
-            <ChartBar
-              title="Thống kê sinh viên"
-              xAxisData={xAxisData}
-              barData={barData1}
-              names={names1}
-              barColors={barColors1}
-            />
+            {overviewAnalyticStudent.status === 'fulfilled' && (
+              <ChartBar data={chartBarStudentData} />
+            )}
           </div>
           <div className="w-full rounded-lg bg-white p-4 shadow-border-full sm:w-1/2">
-            <ChartBar
-              title="Thống kê giảng viên"
-              xAxisData={xAxisData}
-              barData={barData2}
-              names={names2}
-              barColors={barColors2}
-            />
+            {overviewAnalyticTeacher.status === 'fulfilled' && (
+              <ChartBar data={chartBarTeacherData} />
+            )}
           </div>
         </div>
 
@@ -130,7 +225,10 @@ const Home = () => {
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             <div className="col-span-1">
               <div className="flex h-full flex-col justify-between gap-5">
-                <button className="flex h-full items-center rounded-lg bg-white p-10 shadow-border-full">
+                <button
+                  className="flex h-full items-center rounded-lg bg-white p-10 shadow-border-full"
+                  onClick={getProjectCompleted}
+                >
                   <CompleteIcon className="mr-10" />
                   <h3 className="text-left text-xl font-bold uppercase text-gray">
                     Dự án đã
@@ -141,6 +239,7 @@ const Home = () => {
                   className={`${cx(
                     'project_active'
                   )} relative flex h-full items-center rounded-lg bg-white p-10 shadow-border-full`}
+                  onClick={getProjectHappening}
                 >
                   <ProcessIcon className="mr-10" />
                   <h3 className="text-left text-xl font-bold uppercase text-gray">
@@ -148,7 +247,10 @@ const Home = () => {
                     <br /> triển khai
                   </h3>
                 </button>
-                <button className="flex h-full items-center rounded-lg bg-white p-10 shadow-border-full">
+                <button
+                  className="flex h-full items-center rounded-lg bg-white p-10 shadow-border-full"
+                  onClick={getProjectUpcoming}
+                >
                   <FutureIcon className="mr-10" />
                   <h3 className="text-left text-xl font-bold uppercase text-gray">
                     Dự án sắp
@@ -158,7 +260,9 @@ const Home = () => {
               </div>
             </div>
             <div className="col-span-1 rounded-lg bg-white p-4 shadow-border-full sm:col-span-2 lg:col-span-3">
-              <ChartPie subtext={subtext} data={data} />
+              {overviewStatusProjectUpcoming.status === 'fulfilled' && (
+                <ChartPie dataChart={chartPieData} />
+              )}
             </div>
           </div>
         </div>

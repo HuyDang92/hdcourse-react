@@ -65,7 +65,7 @@ const Projects: React.FC<ProjectsProps> = ({
       <div className="w-3/4 rounded-lg bg-white">
         <div className="flex justify-between">
           <h1 className="text-medium text-[1.875rem] font-bold">
-            {infoProject.title}
+            Dự án {infoProject.title}
           </h1>
           <button className=" max-h-10 rounded-xl border border-solid border-[#00000033] px-6 py-2 text-base text-black">
             Xem tất cả
@@ -195,7 +195,9 @@ const Projects: React.FC<ProjectsProps> = ({
             >
               Tổng dự án
             </h3>
-            <p className="text-xs text-[#7E7E7E]">Đang triển khai</p>
+            <p className="text-xs text-[#7E7E7E] first-letter:uppercase">
+              {infoProject.title}
+            </p>
             <ChartHalfPie
               totalProject={chartHalfPieData.totalProject}
               projectCount={chartHalfPieData.projectCount}

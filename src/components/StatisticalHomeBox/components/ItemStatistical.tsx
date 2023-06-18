@@ -20,7 +20,7 @@ const ItemStatistical: React.FC<ItemStatisticalProps> = ({
   colorText,
 }) => {
   return (
-    <div className="w-1/5 rounded-xl bg-white p-9 shadow-border-full">
+    <div className="w-full rounded-xl bg-white p-4 shadow-border-full sm:p-6 2xl:p-9">
       <div className=" flex items-center gap-5">
         <div
           className="relative max-h-[3.125rem] max-w-[3.75rem] rounded-xl bg-yellow-200 bg-opacity-30 px-5 py-3"
@@ -32,7 +32,7 @@ const ItemStatistical: React.FC<ItemStatisticalProps> = ({
           {title}
         </div>
       </div>
-      <div className=" flex items-center justify-start gap-5">
+      <div className="flex items-center justify-start gap-5">
         <p
           className="text-text-primary max-h-[1.875rem] max-w-[3.75rem] rounded-xl p-2 text-[0.563rem]"
           style={{ background: colorIcon }}
