@@ -297,7 +297,7 @@ const Home = () => {
                 <button
                   className={`${
                     active === 1 && cx('project_active', 'border-[#34B53A]')
-                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-transparent`}
+                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
                   onClick={getProjectCompleted}
                 >
                   <CompleteIcon className="mr-10" />
@@ -309,7 +309,7 @@ const Home = () => {
                 <button
                   className={`${
                     active === 2 && cx('project_active', 'border-[#4E91FF]')
-                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-transparent`}
+                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
                   onClick={getProjectHappening}
                 >
                   <ProcessIcon className="mr-10" />
@@ -321,7 +321,7 @@ const Home = () => {
                 <button
                   className={`${
                     active === 3 && cx('project_active', 'border-[#FB923C]')
-                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-transparent`}
+                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
                   onClick={getProjectUpcoming}
                 >
                   <FutureIcon className="mr-10" />
