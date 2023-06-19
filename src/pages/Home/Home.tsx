@@ -178,71 +178,77 @@ const Home = () => {
     const chunkSize = 6;
     const formartArr = [];
 
-    if (overviewAnalyticStudent.status === 'fulfilled') {
-      for (let i = 0; i < dataOriginal.length; i += chunkSize) {
-        const chunk = dataOriginal.slice(i, i + chunkSize);
-        formartArr.push(chunk);
-      }
-
-      const stylesCss = {
-        titleColor: '#FB923C',
-        linearGradient:
-          'linear-gradient(180deg, #FB923C 0%, #FB923C 51.04%, rgba(251, 146, 60, 0.7) 100%)',
-        showProgress: true,
-      };
-
-      const dataCharthalfPie = {
-        totalProject: projectOverview?.data?.projectCount,
-        projectCount:
-          overviewCourseHapenning?.data?.projectsAnalysis.projectsCount,
-        studentsCount:
-          overviewCourseHapenning?.data?.projectsAnalysis.studentsCount,
-        color: ['#FB923C', '#FFE5CE'],
-        colorColumn: ['#FFE5CE', '#FFCDA3', '#FB923C'],
-      };
-
-      setOverviewCourseHap({
-        infoProjectData: formartArr,
-        stylesCss: stylesCss,
-        dataCharthalfPie: dataCharthalfPie,
-      });
+    if (!dataOriginal) {
+      return;
     }
-  }, [overviewCourseHapenning]);
+
+    // if (overviewAnalyticStudent.status === 'fulfilled') {
+    for (let i = 0; i < dataOriginal.length; i += chunkSize) {
+      const chunk = dataOriginal.slice(i, i + chunkSize);
+      formartArr.push(chunk);
+    }
+
+    const stylesCss = {
+      titleColor: '#FB923C',
+      linearGradient:
+        'linear-gradient(180deg, #FB923C 0%, #FB923C 51.04%, rgba(251, 146, 60, 0.7) 100%)',
+      showProgress: true,
+    };
+
+    const dataCharthalfPie = {
+      totalProject: projectOverview?.data?.projectCount,
+      projectCount:
+        overviewCourseHapenning?.data?.projectsAnalysis.projectsCount,
+      studentsCount:
+        overviewCourseHapenning?.data?.projectsAnalysis.studentsCount,
+      color: ['#FB923C', '#FFE5CE'],
+      colorColumn: ['#FFE5CE', '#FFCDA3', '#FB923C'],
+    };
+
+    setOverviewCourseHap({
+      infoProjectData: formartArr,
+      stylesCss: stylesCss,
+      dataCharthalfPie: dataCharthalfPie,
+    });
+
+    // }
+  }, [overviewCourseHapenning.data]);
 
   useEffect(() => {
     const dataOriginal = overviewCourseUpcoming?.data?.projects;
     const chunkSize = 6;
     const formartArr = [];
 
-    if (overviewAnalyticStudent.status === 'fulfilled') {
-      for (let i = 0; i < dataOriginal.length; i += chunkSize) {
-        const chunk = dataOriginal.slice(i, i + chunkSize);
-        formartArr.push(chunk);
-      }
-
-      const stylesCss = {
-        titleColor: '#297AFF',
-        linearGradient:
-          'linear-gradient(180deg, #3B82F6 0%, #3B82F6 51.04%, rgba(59, 130, 246, 0.7) 100%)',
-        showProgress: false,
-      };
-
-      const dataCharthalfPie = {
-        totalProject: projectOverview?.data?.projectCount,
-        projectCount:
-          overviewCourseUpcoming?.data?.projectsAnalysis.projectsCount,
-        studentsCount:
-          overviewCourseUpcoming?.data?.projectsAnalysis.studentsCount,
-        color: ['#297AFF', '#C0D8FF'],
-        colorColumn: ['#C0D8FF', '#95BDFF', '#297AFF'],
-      };
-
-      setOverviewCourseUp({
-        infoProjectData: formartArr,
-        stylesCss: stylesCss,
-        dataCharthalfPie: dataCharthalfPie,
-      });
+    if (!dataOriginal) {
+      return;
     }
+    for (let i = 0; i < dataOriginal.length; i += chunkSize) {
+      const chunk = dataOriginal.slice(i, i + chunkSize);
+      formartArr.push(chunk);
+    }
+
+    const stylesCss = {
+      titleColor: '#297AFF',
+      linearGradient:
+        'linear-gradient(180deg, #3B82F6 0%, #3B82F6 51.04%, rgba(59, 130, 246, 0.7) 100%)',
+      showProgress: false,
+    };
+
+    const dataCharthalfPie = {
+      totalProject: projectOverview?.data?.projectCount,
+      projectCount:
+        overviewCourseUpcoming?.data?.projectsAnalysis.projectsCount,
+      studentsCount:
+        overviewCourseUpcoming?.data?.projectsAnalysis.studentsCount,
+      color: ['#297AFF', '#C0D8FF'],
+      colorColumn: ['#C0D8FF', '#95BDFF', '#297AFF'],
+    };
+
+    setOverviewCourseUp({
+      infoProjectData: formartArr,
+      stylesCss: stylesCss,
+      dataCharthalfPie: dataCharthalfPie,
+    });
   }, [overviewCourseUpcoming]);
 
   return (

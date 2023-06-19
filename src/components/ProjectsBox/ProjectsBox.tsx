@@ -81,6 +81,7 @@ const Projects: React.FC<ProjectsProps> = ({
   const previous = (): void => {
     sliderRef.current?.slickPrev();
   };
+  
 
   return (
     infoProject && (

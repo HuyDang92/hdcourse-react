@@ -100,7 +100,7 @@ const ChartBar: React.FC<ChartBarProps> = ({ data }) => {
 
       setOptions(options);
     }
-  }, [data, isMobile]);
+  }, [data, isMobile.isMobile]);
 
   return (
     <ReactECharts
