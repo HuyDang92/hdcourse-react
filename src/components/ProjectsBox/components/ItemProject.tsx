@@ -36,10 +36,7 @@ const ItemProject = ({ data, styleCss }: ItemProjectProps) => {
         <div className="flex items-center gap-2.5">
           <div className="h-14 w-14 overflow-hidden rounded-full border-4 border-white">
             <img
-              src={
-                data.manager.avatar ||
-                'https://flowbite.com/docs/images/people/profile-picture-2.jpg'
-              }
+              src={data.manager.avatar || 'https://i.imgur.com/V8KE2kC.png'}
               alt=""
               className="w-full object-cover"
             />

@@ -8,8 +8,9 @@ const SearchLevel = () => {
         className="text-gray-900 block h-full w-full rounded-xl border-none bg-white py-2.5 pl-[1.875rem] pr-8 text-sm text-black shadow-border-full focus:border-blue-500 focus:ring-blue-500"
       >
         <option value="all">Level dự án</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
+        <option value="1">Dự án thực tế</option>
+        <option value="2">Luyện tập kỹ năng</option>
+        <option value="3">Thực hành môn học</option>
       </select>
     </div>
   );
