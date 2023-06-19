@@ -39,6 +39,7 @@ const Projects: React.FC<ProjectsProps> = ({
   const [newArrSlideMobi, setNewArrSlideMobi] = useState<any>([]);
 
   const { isMobile } = useCurrentViewportView();
+  const [isMobileView, setIsMobileView] = useState<boolean>(false);
 
   useEffect(() => {
     const chunkSize = 1;
@@ -52,7 +53,8 @@ const Projects: React.FC<ProjectsProps> = ({
     }
 
     setNewArrSlideMobi(formartArr);
-  }, [isMobile]);
+    setIsMobileView(isMobile);
+  }, [infoProject]);
 
   const settings = {
     dots: false,
@@ -102,7 +104,7 @@ const Projects: React.FC<ProjectsProps> = ({
               </button>
             )}
             <Slider ref={sliderRef} {...settings}>
-              {isMobile
+              {isMobileView
                 ? newArrSlideMobi.map((item: ProjectItem[], index: number) => (
                     <SliderCourseComponent
                       key={index}

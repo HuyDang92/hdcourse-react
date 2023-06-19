@@ -247,7 +247,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className="xl:container mx-auto w-full px-4 text-white xl:px-10">
+      <div className="mx-auto w-full px-4 text-white xl:container xl:px-10">
         <div className="mt-8 w-full text-black">
           <StatisticalHomeBox data={projectOverview.data} />
           <Search />
@@ -287,7 +287,7 @@ const Home = () => {
 
         <div>
           <div>
-            <h2 className="mb-7 text-3xl font-bold text-black">
+            <h2 className="my-5 text-2xl font-bold text-black lg:mb-7 lg:mt-0 lg:text-3xl">
               Thống kê dự án
             </h2>
           </div>
