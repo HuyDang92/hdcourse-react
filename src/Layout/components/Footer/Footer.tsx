@@ -4,9 +4,9 @@ import logoFPTWhite from 'assets/logo/logo-fpt-white.png';
 const Footer = () => {
   return (
     <footer className="w-full bg-[#252831] px-4 pt-8  text-white">
-      <div className="container m-auto lg:px-10">
+      <div className="xl:container m-auto xl:px-10">
         <div className="bg-blueGray-100 relative pb-4 pt-5">
-          <div className="container mx-auto ">
+          <div className="xl:container mx-auto ">
             <div className="mb-5 grid gap-4 lg:grid-cols-3 lg:text-left">
               <div className="mt-3 w-full">
                 <img

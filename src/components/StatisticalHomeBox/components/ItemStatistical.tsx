@@ -1,5 +1,6 @@
 import React from 'react';
-
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 interface ItemStatisticalProps {
   title: string;
   icon: string;
@@ -45,7 +46,7 @@ const ItemStatistical: React.FC<ItemStatisticalProps> = ({
           className="text-bigger text-[3.125rem] font-bold"
           style={{ color: colorText }}
         >
-          {count}
+          {isNaN(Number(count)) ? <Skeleton width={100} /> : count}
         </span>
       </div>
       <p className="text-text-primary text-center text-base font-medium">

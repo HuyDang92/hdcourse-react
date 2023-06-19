@@ -7,6 +7,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import ChartHalfPie from 'components/Chart/ChartHalfPie';
 import SliderCourseComponent from './components/SliderCourseComponent';
 import { ProjectItem } from 'types/Project';
+import { useCurrentViewportView } from 'hooks/useCurrentViewportView';
 
 interface ChartHalfPieProps {
   projectCount: number;
@@ -37,17 +38,9 @@ const Projects: React.FC<ProjectsProps> = ({
   const [showPreviousButton, setShowPreviousButton] = useState(true);
   const [newArrSlideMobi, setNewArrSlideMobi] = useState<any>([]);
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  const checkIfMobile = () => {
-    const isMobile = window.innerWidth <= 768;
-    setIsMobile(isMobile);
-  };
+  const { isMobile } = useCurrentViewportView();
 
   useEffect(() => {
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
-
     const chunkSize = 1;
     const formartArr = [];
 
@@ -59,10 +52,6 @@ const Projects: React.FC<ProjectsProps> = ({
     }
 
     setNewArrSlideMobi(formartArr);
-
-    return () => {
-      window.removeEventListener('resize', checkIfMobile);
-    };
   }, [isMobile]);
 
   const settings = {

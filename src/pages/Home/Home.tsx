@@ -247,7 +247,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className="container mx-auto w-full px-4 text-white lg:px-10">
+      <div className="xl:container mx-auto w-full px-4 text-white xl:px-10">
         <div className="mt-8 w-full text-black">
           <StatisticalHomeBox data={projectOverview.data} />
           <Search />
@@ -308,7 +308,7 @@ const Home = () => {
                 </button>
                 <button
                   className={`${
-                    active === 2 && cx('project_active', 'border-[#4E91FF]')
+                    active === 2 && cx('project_active', 'border-[#FB923C]')
                   } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
                   onClick={getProjectHappening}
                 >
@@ -320,7 +320,7 @@ const Home = () => {
                 </button>
                 <button
                   className={`${
-                    active === 3 && cx('project_active', 'border-[#FB923C]')
+                    active === 3 && cx('project_active', 'border-[#4E91FF]')
                   } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
                   onClick={getProjectUpcoming}
                 >
