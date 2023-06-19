@@ -9,11 +9,11 @@ import { useCurrentTabletView } from 'hooks/useCurrentViewportView';
 function App(): ReactElement {
   const isTablet = useCurrentTabletView();
   const [isTabletView, setIsTabletView] = useState<boolean>(false);
-  
+
   useEffect(() => {
     setIsTabletView(isTablet.isTablet);
   }, [isTablet]);
-  
+
   return isTabletView ? (
     <NotFound />
   ) : (

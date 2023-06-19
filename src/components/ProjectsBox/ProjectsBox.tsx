@@ -54,7 +54,7 @@ const Projects: React.FC<ProjectsProps> = ({
 
     setNewArrSlideMobi(formartArr);
     setIsMobileView(isMobile);
-  }, [infoProject]);
+  }, [infoProject, isMobile]);
 
   const settings = {
     dots: false,

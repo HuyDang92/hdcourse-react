@@ -24,6 +24,7 @@ const ChartBar: React.FC<ChartBarProps> = ({ data }) => {
           text: data.title,
           textStyle: {
             fontFamily: 'Inter, sans-serif',
+            fontSize: isMobile.isMobile ? 14 : 20,
           },
         },
         tooltip: {
@@ -37,7 +38,7 @@ const ChartBar: React.FC<ChartBarProps> = ({ data }) => {
         },
         legend: {
           icon: 'circle',
-          right: isMobile ? 'right' : 0,
+          right: isMobile.isMobile ? 'right' : 0,
           top: 'top',
           textStyle: {
             fontFamily: 'Inter, sans-serif',
@@ -99,7 +100,7 @@ const ChartBar: React.FC<ChartBarProps> = ({ data }) => {
 
       setOptions(options);
     }
-  }, [data]);
+  }, [data, isMobile]);
 
   return (
     <ReactECharts
