@@ -29,6 +29,13 @@ export const homeApi = createApi({
     getProjectOverviewTable: builder.query<StatisticalHomeBoxProps, void>({
       query: () => '/api/home/overview-table',
     }),
+    getProjectOverviewTableDetail: builder.query<any, any>({
+      query: (base) => {
+        return {
+          url: `/api/home/overview-table/${base}`,
+        };
+      },
+    }),
   }),
 });
 
@@ -38,4 +45,5 @@ export const {
   useGetOverviewStatusProjectQuery,
   useGetOverviewCourseQuery,
   useGetProjectOverviewTableQuery,
+  useGetProjectOverviewTableDetailQuery,
 } = homeApi;

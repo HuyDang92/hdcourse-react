@@ -1,25 +1,43 @@
 import ProjectIcon from 'assets/icons/project-icon.svg';
 import { StatisticalProjectTable } from 'types/Project';
+import React, { useEffect, useState } from 'react';
+import { useGetProjectOverviewTableDetailQuery } from 'features/Home/home.service';
+import { use } from 'echarts';
 
 // interface StatisticalProps {
 //   data: StatisticalProjectTable[] | undefined;
 // }
+
+interface ProjectOverviewTableDetailProps {
+  department: string;
+  projectCount: number;
+}
 
 interface StatisticalProps {
   data: any;
 }
 
 const Statistical: React.FC<StatisticalProps> = ({ data }) => {
+  const [checked, setChecked] = useState<string>('');
+  const detailTable = useGetProjectOverviewTableDetailQuery(checked);
+
+  useEffect(() => {
+    if (data) {
+      setChecked(data[0].base);
+    }
+  }, [data]);
+
   return (
-    <section className="flex flex-col items-center gap-3 sm:flex-row lg:h-[41.25rem]">
+    // <section className="flex flex-col items-center gap-3 sm:flex-row lg:h-[41.25rem]">
+    <section className="flex flex-col items-center gap-3 sm:flex-row lg:h-[38rem]">
       <div className="bg-while rounded-lg bg-white px-4 py-6 shadow-border-full sm:w-4/5 lg:h-full">
         <div className="mb-7">
           <h1 className="text-center text-[1.875rem] font-bold text-[#B5346A]">
             Thống kê dự án các cơ sở
           </h1>
-          <h3 className="mt-3 text-center text-xl font-medium leading-7 text-[#222222]">
+          {/* <h3 className="mt-3 text-center text-xl font-medium leading-7 text-[#222222]">
             Tháng 1 - Tháng 6
-          </h3>
+          </h3> */}
         </div>
         <div className="relative overflow-x-auto">
           <table className=" w-full ">
@@ -61,11 +79,14 @@ const Statistical: React.FC<StatisticalProps> = ({ data }) => {
                     <div className="mr-[1.125rem] flex items-center">
                       <input
                         id={item.base}
+                        onChange={() => setChecked(item.base)}
                         type="radio"
-                        value=""
+                        checked={checked === item.base}
+                        value={item.base}
                         name="schoolFacilities"
-                        className="bg-gray-100 border-gray-300 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
+                        className="bg-gray-100 border-gray-300 ml-2 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
                       />
+
                       <label
                         htmlFor={item.base}
                         className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
@@ -101,56 +122,31 @@ const Statistical: React.FC<StatisticalProps> = ({ data }) => {
             Thông tin dự án
           </h3>
           <h3 className="text-base font-normal text-[#222222]">
-            Cơ sở Hồ Chí Minh
+            Cơ sở {checked}
           </h3>
         </div>
         <table className="w-full">
           <thead className="border-b-[1px] border-[#B5346A]  leading-10">
             <tr>
               <th className=" py-4 text-left text-sm font-semibold">Bộ môn</th>
-              <th className=" py-4 text-right text-sm font-semibold">
+              <th className=" w-20 py-4 text-right text-sm font-semibold">
                 Số lượng
               </th>
             </tr>
           </thead>
           <tbody className="text-base font-normal leading-7">
-            <tr className="h-11 border-b-[0.063rem] border-[#0000001A] py-2 leading-5">
-              <td>Công nghệ thông tin</td>
-              <td className=" text-right">526</td>
-            </tr>
-            <tr className="h-11 border-b-[0.063rem] border-[#0000001A] py-2 leading-5">
-              <td>Ứng dụng phần mềm</td>
-              <td className="pt-4 text-right">125h</td>
-            </tr>
-
-            <tr className="h-11 border-b-[0.063rem] border-[#0000001A] py-2 leading-5">
-              <td>Thương mại điện tử</td>
-              <td className="pt-4 text-right">56</td>
-            </tr>
-            <tr className="h-11 border-b-[0.063rem] border-[#0000001A] py-2 leading-5">
-              <td>Tiếng anh</td>
-              <td className="pt-4 text-right">600</td>
-            </tr>
-            <tr className="h-11 border-b-[0.063rem] border-[#0000001A] py-2 leading-5">
-              <td>Cơ bản</td>
-              <td className="pt-4 text-right">80</td>
-            </tr>
-            <tr className="h-11 border-b-[0.063rem] border-[#0000001A] py-2 leading-5">
-              <td>Làm đẹp</td>
-              <td className="pt-4 text-right">80</td>
-            </tr>
-            <tr className="h-11 border-b-[0.063rem] border-[#0000001A] py-2 leading-5">
-              <td>Kinh tế</td>
-              <td className="pt-4 text-right">80</td>
-            </tr>
-            <tr className="h-11 border-b-[0.063rem] border-[#0000001A] py-2 leading-5">
-              <td>Quan hệ doanh nghiệp</td>
-              <td className="pt-4 text-right">80</td>
-            </tr>
-            <tr className="h-11 border-b-[0.063rem] border-[#0000001A] py-2 leading-5">
-              <td>Du lịch & Nhà hàng KS</td>
-              <td className="pt-4 text-right">80</td>
-            </tr>
+            {!detailTable.isFetching &&
+              detailTable?.data.map(
+                (item: ProjectOverviewTableDetailProps, index: number) => (
+                  <tr
+                    key={index}
+                    className="h-11 border-b-[0.063rem] border-[#0000001A] py-2 leading-5"
+                  >
+                    <td>{item.department}</td>
+                    <td className=" text-right">{item.projectCount}</td>
+                  </tr>
+                )
+              )}
           </tbody>
         </table>
       </div>
