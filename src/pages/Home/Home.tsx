@@ -27,6 +27,7 @@ const Home = () => {
   const [projectStatus, setProjectStatus] = useState<any>({
     type: 'HAPPENING',
     active: 2,
+
   });
 
   const projectOverview = useGetProjectOverviewQuery();
@@ -36,10 +37,12 @@ const Home = () => {
   const overviewCourseHapenning = useGetOverviewCourseQuery({
     type: 'HAPPENING',
     page: 1,
+    limit: 999999999999,
   });
   const overviewCourseUpcoming = useGetOverviewCourseQuery({
     type: 'UPCOMING',
     page: 1,
+    limit: 999999999999,
   });
   const overviewStatusProject = useGetOverviewStatusProjectQuery(
     projectStatus.type

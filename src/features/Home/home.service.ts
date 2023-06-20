@@ -21,7 +21,7 @@ export const homeApi = createApi({
     }),
     getOverviewCourse: builder.query<any, any>({
       query: (args) => {
-        const { type, page, limit = '' } = args;
+        const { type, page, limit = 12 } = args;
         return {
           url: `/api/projects/overview-project-by-status?type=${type}&page=${page}&limit=${limit}`,
         };
