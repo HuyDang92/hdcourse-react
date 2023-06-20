@@ -12,11 +12,13 @@ interface StatisticalProps {
 
 const Statistical: React.FC<StatisticalProps> = ({ data }) => {
   const [checked, setChecked] = useState<string>('');
+  const [nameDepartment, setNameDepartment] = useState<string>('');
   const detailTable = useGetProjectOverviewTableDetailQuery(checked);
 
   useEffect(() => {
     if (data) {
-      setChecked(data[0].base);
+      setChecked(data[0].baseId);
+      setNameDepartment(data[0].base);
     }
   }, [data]);
 
@@ -72,9 +74,9 @@ const Statistical: React.FC<StatisticalProps> = ({ data }) => {
                     <div className="mr-[1.125rem] flex items-center">
                       <input
                         id={item.base}
-                        onChange={() => setChecked(item.base)}
+                        onChange={() => {setChecked(item.baseId); setNameDepartment(item.base)}}
                         type="radio"
-                        checked={checked === item.base}
+                        checked={checked === item.baseId}
                         value={item.base}
                         name="schoolFacilities"
                         className="bg-gray-100 border-gray-300 ml-2 h-4 w-4 text-[#B5346A] focus:ring-2 focus:ring-[#B5346A]"
@@ -115,7 +117,7 @@ const Statistical: React.FC<StatisticalProps> = ({ data }) => {
             Thông tin dự án
           </h3>
           <h3 className="text-base font-normal text-[#222222]">
-            Cơ sở {checked}
+            Cơ sở {nameDepartment}
           </h3>
         </div>
         <table className="w-full">

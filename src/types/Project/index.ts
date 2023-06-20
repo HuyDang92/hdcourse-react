@@ -22,6 +22,7 @@ export interface ProjectItem {
 }
 
 export interface StatisticalProjectTable {
+  baseId: string;
   base: string;
   projectCompleted: number;
   projectHappening: number;
