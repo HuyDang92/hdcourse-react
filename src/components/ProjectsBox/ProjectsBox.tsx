@@ -81,7 +81,6 @@ const Projects: React.FC<ProjectsProps> = ({
   const previous = (): void => {
     sliderRef.current?.slickPrev();
   };
-  
 
   return (
     infoProject && (
@@ -146,6 +145,7 @@ const Projects: React.FC<ProjectsProps> = ({
                 {titleTable}
               </p>
               <ChartHalfPie
+                title={titleTable}
                 totalProject={chartHalfPieData.totalProject}
                 projectCount={chartHalfPieData.projectCount}
                 color={chartHalfPieData.color}

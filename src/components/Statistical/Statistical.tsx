@@ -2,17 +2,10 @@ import ProjectIcon from 'assets/icons/project-icon.svg';
 import { StatisticalProjectTable } from 'types/Project';
 import React, { useEffect, useState } from 'react';
 import { useGetProjectOverviewTableDetailQuery } from 'features/Home/home.service';
-import { use } from 'echarts';
-
-// interface StatisticalProps {
-//   data: StatisticalProjectTable[] | undefined;
-// }
-
 interface ProjectOverviewTableDetailProps {
   department: string;
   projectCount: number;
 }
-
 interface StatisticalProps {
   data: any;
 }
@@ -89,7 +82,7 @@ const Statistical: React.FC<StatisticalProps> = ({ data }) => {
 
                       <label
                         htmlFor={item.base}
-                        className="text-gray-900 dark:text-gray-300 ml-2 text-sm font-medium"
+                        className="text-gray-900 dark:text-gray-300 ml-2 cursor-pointer text-sm font-medium"
                       >
                         {item.base}
                       </label>

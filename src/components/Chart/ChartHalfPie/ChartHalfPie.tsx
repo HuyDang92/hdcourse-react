@@ -2,12 +2,14 @@ import React from 'react';
 import ReactECharts, { EChartsOption } from 'echarts-for-react';
 
 interface ChartHalfPieProps {
+  title: string;
   projectCount: number;
   totalProject: number;
   color: string[];
 }
 
 const ChartHalfPie: React.FC<ChartHalfPieProps> = ({
+  title,
   projectCount,
   color,
   totalProject,
@@ -20,33 +22,52 @@ const ChartHalfPie: React.FC<ChartHalfPieProps> = ({
       textStyle: {
         fontSize: 50,
         color: '#000',
+        fontFamily: 'Inter, sans-serif',
+      },
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: '{b}',
+      textStyle: {
+        fontFamily: 'Inter, sans-serif',
+        // fontWeight: 'bold',
       },
     },
     series: [
       {
-        name: 'Access From',
+        name: 'Dự án',
         type: 'pie',
         radius: ['40%', '70%'],
         center: ['50%', '70%'],
-        // adjust the start angle
         startAngle: 180,
         labelLine: {
           show: false,
         },
+        label: {
+          show: false,
+        },
+        emphasis: {
+          label: {
+            show: false,
+          },
+        },
         data: [
           {
+            name: `${
+              title.charAt(0).toUpperCase() + title.slice(1)
+            }: ${projectCount}`,
             value: projectCount,
             itemStyle: {
               color: color[0],
             },
           },
           {
+            name: `Tổng dự án: ${totalProject}`,
             value: totalProject - projectCount,
             itemStyle: {
               color: color[1],
             },
           },
-
           {
             // make an record to fill the bottom 50%
             value: totalProject,

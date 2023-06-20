@@ -24,29 +24,26 @@ const Home = () => {
   const [chartPieData, setChartPieData] = useState<any>({});
   const [overviewCourseHap, setOverviewCourseHap] = useState<any>({});
   const [overviewCourseUp, setOverviewCourseUp] = useState<any>({});
-  const [active, setActive] = useState<number>(2);
+  const [projectStatus, setProjectStatus] = useState<any>({
+    type: 'HAPPENING',
+    active: 2,
+  });
 
   const projectOverview = useGetProjectOverviewQuery();
   const overviewAnalyticStudent = useGetOverviewAnalyticByRoleQuery('student');
   const overviewAnalyticTeacher = useGetOverviewAnalyticByRoleQuery('teacher');
   const overviewProject = useGetProjectOverviewTableQuery();
-
   const overviewCourseHapenning = useGetOverviewCourseQuery({
     type: 'HAPPENING',
     page: 1,
   });
-
   const overviewCourseUpcoming = useGetOverviewCourseQuery({
     type: 'UPCOMING',
     page: 1,
   });
-
-  const overviewStatusProjectUpcoming =
-    useGetOverviewStatusProjectQuery('UPCOMING');
-  const overviewStatusProjectHappening =
-    useGetOverviewStatusProjectQuery('HAPPENING');
-  const overviewStatusProjectCompleted =
-    useGetOverviewStatusProjectQuery('COMPLETED');
+  const overviewStatusProject = useGetOverviewStatusProjectQuery(
+    projectStatus.type
+  );
 
   useEffect(() => {
     const xAxisData = overviewAnalyticStudent.data?.map(
@@ -91,8 +88,8 @@ const Home = () => {
   }, [overviewAnalyticTeacher]);
 
   useEffect(() => {
-    const totalProject = overviewStatusProjectHappening.data?.total;
-    const dataChart = overviewStatusProjectHappening.data?.baseAnalytic?.map(
+    const totalProject = overviewStatusProject.data?.total;
+    const dataChart = overviewStatusProject.data?.baseAnalytic?.map(
       (item: any) => {
         return {
           value: item.countProjects,
@@ -108,70 +105,7 @@ const Home = () => {
     };
 
     setChartPieData(chartPieData);
-  }, [overviewStatusProjectHappening]);
-
-  const getProjectUpcoming = () => {
-    const totalProject = overviewStatusProjectUpcoming.data?.total;
-    const dataChart = overviewStatusProjectUpcoming.data?.baseAnalytic?.map(
-      (item: any) => {
-        return {
-          value: item.countProjects,
-          name: item.name,
-          percent: item.percentage,
-        };
-      }
-    );
-
-    const chartPieData = {
-      subtext: totalProject,
-      data: dataChart,
-    };
-
-    setChartPieData(chartPieData);
-    setActive(3);
-  };
-
-  const getProjectHappening = () => {
-    const totalProject = overviewStatusProjectHappening.data?.total;
-    const dataChart = overviewStatusProjectHappening.data?.baseAnalytic?.map(
-      (item: any) => {
-        return {
-          value: item.countProjects,
-          name: item.name,
-          percent: item.percentage,
-        };
-      }
-    );
-
-    const chartPieData = {
-      subtext: totalProject,
-      data: dataChart,
-    };
-
-    setChartPieData(chartPieData);
-    setActive(2);
-  };
-
-  const getProjectCompleted = () => {
-    const totalProject = overviewStatusProjectCompleted.data?.total;
-    const dataChart = overviewStatusProjectCompleted.data?.baseAnalytic?.map(
-      (item: any) => {
-        return {
-          value: item.countProjects,
-          name: item.name,
-          percent: item.percentage,
-        };
-      }
-    );
-
-    const chartPieData = {
-      subtext: totalProject,
-      data: dataChart,
-    };
-
-    setChartPieData(chartPieData);
-    setActive(1);
-  };
+  }, [projectStatus, overviewStatusProject]);
 
   useEffect(() => {
     const dataOriginal = overviewCourseHapenning?.data?.projects;
@@ -182,7 +116,6 @@ const Home = () => {
       return;
     }
 
-    // if (overviewAnalyticStudent.status === 'fulfilled') {
     for (let i = 0; i < dataOriginal.length; i += chunkSize) {
       const chunk = dataOriginal.slice(i, i + chunkSize);
       formartArr.push(chunk);
@@ -210,9 +143,7 @@ const Home = () => {
       stylesCss: stylesCss,
       dataCharthalfPie: dataCharthalfPie,
     });
-
-    // }
-  }, [overviewCourseHapenning.data]);
+  }, [overviewCourseHapenning]);
 
   useEffect(() => {
     const dataOriginal = overviewCourseUpcoming?.data?.projects;
@@ -258,7 +189,7 @@ const Home = () => {
           <StatisticalHomeBox data={projectOverview.data} />
           <Search />
           <div className="mt-10">
-            {overviewCourseHapenning.status === 'fulfilled' && (
+            {!overviewCourseHapenning.isFetching && (
               <ProjectsBox
                 titleTable="đang triển khai"
                 infoProject={overviewCourseHap.infoProjectData}
@@ -268,7 +199,7 @@ const Home = () => {
             )}
           </div>
           <div className="mt-[3.125rem]">
-            {overviewCourseUpcoming.status === 'fulfilled' && (
+            {!overviewCourseUpcoming.isFetching && (
               <ProjectsBox
                 titleTable="sắp triển khai"
                 infoProject={overviewCourseUp.infoProjectData}
@@ -280,12 +211,12 @@ const Home = () => {
         </div>
         <div className="mt-5 flex flex-col gap-5 sm:flex-row lg:my-[3.125rem]">
           <div className="w-full rounded-lg bg-white p-4 shadow-border-full sm:w-1/2">
-            {overviewAnalyticStudent.status === 'fulfilled' && (
+            {!overviewAnalyticStudent.isFetching && (
               <ChartBar data={chartBarStudentData} />
             )}
           </div>
           <div className="w-full rounded-lg bg-white p-4 shadow-border-full sm:w-1/2">
-            {overviewAnalyticTeacher.status === 'fulfilled' && (
+            {!overviewAnalyticTeacher.isFetching && (
               <ChartBar data={chartBarTeacherData} />
             )}
           </div>
@@ -297,14 +228,17 @@ const Home = () => {
               Thống kê dự án
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:h-[34.375rem] lg:grid-cols-4">
             <div className="col-span-1">
               <div className="flex h-full flex-col justify-between gap-5">
                 <button
                   className={`${
-                    active === 1 && cx('project_active', 'border-[#34B53A]')
+                    projectStatus.active === 1 &&
+                    cx('project_active', 'border-[#34B53A]')
                   } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
-                  onClick={getProjectCompleted}
+                  onClick={() =>
+                    setProjectStatus({ type: 'FINISHED', active: 1 })
+                  }
                 >
                   <CompleteIcon className="mr-10" />
                   <h3 className="text-left text-xl font-bold uppercase text-gray">
@@ -314,9 +248,12 @@ const Home = () => {
                 </button>
                 <button
                   className={`${
-                    active === 2 && cx('project_active', 'border-[#FB923C]')
+                    projectStatus.active === 2 &&
+                    cx('project_active', 'border-[#FB923C]')
                   } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
-                  onClick={getProjectHappening}
+                  onClick={() =>
+                    setProjectStatus({ type: 'HAPPENING', active: 2 })
+                  }
                 >
                   <ProcessIcon className="mr-10" />
                   <h3 className="text-left text-xl font-bold uppercase text-gray">
@@ -326,9 +263,12 @@ const Home = () => {
                 </button>
                 <button
                   className={`${
-                    active === 3 && cx('project_active', 'border-[#4E91FF]')
+                    projectStatus.active === 3 &&
+                    cx('project_active', 'border-[#4E91FF]')
                   } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
-                  onClick={getProjectUpcoming}
+                  onClick={() =>
+                    setProjectStatus({ type: 'UPCOMING', active: 3 })
+                  }
                 >
                   <FutureIcon className="mr-10" />
                   <h3 className="text-left text-xl font-bold uppercase text-gray">
@@ -339,7 +279,7 @@ const Home = () => {
               </div>
             </div>
             <div className="col-span-1 rounded-lg bg-white p-4 shadow-border-full sm:col-span-2 lg:col-span-3">
-              {overviewStatusProjectUpcoming.status === 'fulfilled' && (
+              {!overviewStatusProject.isFetching && (
                 <ChartPie dataChart={chartPieData} />
               )}
             </div>
