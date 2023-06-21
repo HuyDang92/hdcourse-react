@@ -240,7 +240,7 @@ const Home = () => {
                     cx('project_active', 'border-[#34B53A]')
                   } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
                   onClick={() =>
-                    setProjectStatus({ type: 'FINISHED', active: 1 })
+                    setProjectStatus({ type: 'COMPLETED', active: 1 })
                   }
                 >
                   <CompleteIcon className="mr-10" />
