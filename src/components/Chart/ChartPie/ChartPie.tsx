@@ -32,7 +32,7 @@ const ChartPie: React.FC<ChartPieProps> = ({ dataChart }) => {
   const options: EChartsOption = {
     title: {
       text: 'Tổng số lượng',
-      subtext: dataChart.subtext.toString(),
+      subtext: dataChart.subtext !== undefined && dataChart?.subtext.toString(),
       left: 'center',
       top: '43%',
       textStyle: {
