@@ -8,7 +8,7 @@ interface DataItem {
 }
 
 interface ChartPieData {
-  subtext: string;
+  subtext: number;
   data: DataItem[];
 }
 
@@ -32,7 +32,7 @@ const ChartPie: React.FC<ChartPieProps> = ({ dataChart }) => {
   const options: EChartsOption = {
     title: {
       text: 'Tổng số lượng',
-      subtext: dataChart.subtext,
+      subtext: dataChart.subtext.toString(),
       left: 'center',
       top: '43%',
       textStyle: {

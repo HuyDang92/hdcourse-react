@@ -27,7 +27,6 @@ const Home = () => {
   const [projectStatus, setProjectStatus] = useState<any>({
     type: 'HAPPENING',
     active: 2,
-
   });
 
   const projectOverview = useGetProjectOverviewQuery();
@@ -186,112 +185,112 @@ const Home = () => {
   }, [overviewCourseUpcoming]);
 
   return (
-      <div className="mx-auto w-full px-4 text-white xl:px-10">
-        <div className="mt-8 w-full text-black">
-          <StatisticalHomeBox data={projectOverview.data} />
-          <Search />
-          <div className="mt-10">
-            {!overviewCourseHapenning.isFetching && (
-              <ProjectsBox
-                titleTable="đang triển khai"
-                infoProject={overviewCourseHap.infoProjectData}
-                chartHalfPieData={overviewCourseHap.dataCharthalfPie}
-                styleCss={overviewCourseHap.stylesCss}
-              />
-            )}
-          </div>
-          <div className="mt-[3.125rem]">
-            {!overviewCourseUpcoming.isFetching && (
-              <ProjectsBox
-                titleTable="sắp triển khai"
-                infoProject={overviewCourseUp.infoProjectData}
-                chartHalfPieData={overviewCourseUp.dataCharthalfPie}
-                styleCss={overviewCourseUp.stylesCss}
-              />
-            )}
-          </div>
+    <div className="mx-auto w-full px-4 text-white xl:px-10">
+      <div className="mt-8 w-full text-black">
+        <StatisticalHomeBox data={projectOverview.data} />
+        <Search />
+        <div className="mt-10">
+          {!overviewCourseHapenning.isFetching && (
+            <ProjectsBox
+              titleTable="đang triển khai"
+              infoProject={overviewCourseHap.infoProjectData}
+              chartHalfPieData={overviewCourseHap.dataCharthalfPie}
+              styleCss={overviewCourseHap.stylesCss}
+            />
+          )}
         </div>
-        <div className="mt-5 flex flex-col gap-5 sm:flex-row lg:my-[3.125rem]">
-          <div className="w-full rounded-lg bg-white p-4 shadow-border-full sm:w-1/2">
-            {!overviewAnalyticStudent.isFetching && (
-              <ChartBar data={chartBarStudentData} />
-            )}
-          </div>
-          <div className="w-full rounded-lg bg-white p-4 shadow-border-full sm:w-1/2">
-            {!overviewAnalyticTeacher.isFetching && (
-              <ChartBar data={chartBarTeacherData} />
-            )}
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <h2 className="my-5 text-2xl font-bold text-black lg:mb-7 lg:mt-0 lg:text-3xl">
-              Thống kê dự án
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:h-[34.375rem] lg:grid-cols-4">
-            <div className="col-span-1">
-              <div className="flex h-full flex-col justify-between gap-5">
-                <button
-                  className={`${
-                    projectStatus.active === 1 &&
-                    cx('project_active', 'border-[#34B53A]')
-                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
-                  onClick={() =>
-                    setProjectStatus({ type: 'COMPLETED', active: 1 })
-                  }
-                >
-                  <CompleteIcon className="mr-10" />
-                  <h3 className="text-left text-xl font-bold uppercase text-gray">
-                    Dự án đã
-                    <br /> hoàn thành
-                  </h3>
-                </button>
-                <button
-                  className={`${
-                    projectStatus.active === 2 &&
-                    cx('project_active', 'border-[#FB923C]')
-                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
-                  onClick={() =>
-                    setProjectStatus({ type: 'HAPPENING', active: 2 })
-                  }
-                >
-                  <ProcessIcon className="mr-10" />
-                  <h3 className="text-left text-xl font-bold uppercase text-gray">
-                    Dự án đang
-                    <br /> triển khai
-                  </h3>
-                </button>
-                <button
-                  className={`${
-                    projectStatus.active === 3 &&
-                    cx('project_active', 'border-[#4E91FF]')
-                  } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
-                  onClick={() =>
-                    setProjectStatus({ type: 'UPCOMING', active: 3 })
-                  }
-                >
-                  <FutureIcon className="mr-10" />
-                  <h3 className="text-left text-xl font-bold uppercase text-gray">
-                    Dự án sắp
-                    <br /> triển khai
-                  </h3>
-                </button>
-              </div>
-            </div>
-            <div className="col-span-1 rounded-lg bg-white p-4 shadow-border-full sm:col-span-2 lg:col-span-3">
-              {!overviewStatusProject.isFetching && (
-                <ChartPie dataChart={chartPieData} />
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="my-[3.125rem] text-black">
-          <Statistical data={overviewProject.data} />
+        <div className="mt-[3.125rem]">
+          {!overviewCourseUpcoming.isFetching && (
+            <ProjectsBox
+              titleTable="sắp triển khai"
+              infoProject={overviewCourseUp.infoProjectData}
+              chartHalfPieData={overviewCourseUp.dataCharthalfPie}
+              styleCss={overviewCourseUp.stylesCss}
+            />
+          )}
         </div>
       </div>
+      <div className="mt-5 flex flex-col gap-5 sm:flex-row lg:my-[3.125rem]">
+        <div className="w-full rounded-lg bg-white p-4 shadow-border-full sm:w-1/2">
+          {!overviewAnalyticStudent.isFetching && (
+            <ChartBar data={chartBarStudentData} />
+          )}
+        </div>
+        <div className="w-full rounded-lg bg-white p-4 shadow-border-full sm:w-1/2">
+          {!overviewAnalyticTeacher.isFetching && (
+            <ChartBar data={chartBarTeacherData} />
+          )}
+        </div>
+      </div>
+
+      <div>
+        <div>
+          <h2 className="my-5 text-2xl font-bold text-black lg:mb-7 lg:mt-0 lg:text-3xl">
+            Thống kê dự án
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:h-[34.375rem] lg:grid-cols-4">
+          <div className="col-span-1">
+            <div className="flex h-full flex-col justify-between gap-5">
+              <button
+                className={`${
+                  projectStatus.active === 1 &&
+                  cx('project_active', 'border-[#34B53A]')
+                } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
+                onClick={() =>
+                  setProjectStatus({ type: 'COMPLETED', active: 1 })
+                }
+              >
+                <CompleteIcon className="mr-10" />
+                <h3 className="text-left text-xl font-bold uppercase text-gray">
+                  Dự án đã
+                  <br /> hoàn thành
+                </h3>
+              </button>
+              <button
+                className={`${
+                  projectStatus.active === 2 &&
+                  cx('project_active', 'border-[#FB923C]')
+                } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
+                onClick={() =>
+                  setProjectStatus({ type: 'HAPPENING', active: 2 })
+                }
+              >
+                <ProcessIcon className="mr-10" />
+                <h3 className="text-left text-xl font-bold uppercase text-gray">
+                  Dự án đang
+                  <br /> triển khai
+                </h3>
+              </button>
+              <button
+                className={`${
+                  projectStatus.active === 3 &&
+                  cx('project_active', 'border-[#4E91FF]')
+                } relative flex h-full items-center rounded-lg border-4 bg-white p-10 shadow-border-full sm:border-none sm:border-transparent`}
+                onClick={() =>
+                  setProjectStatus({ type: 'UPCOMING', active: 3 })
+                }
+              >
+                <FutureIcon className="mr-10" />
+                <h3 className="text-left text-xl font-bold uppercase text-gray">
+                  Dự án sắp
+                  <br /> triển khai
+                </h3>
+              </button>
+            </div>
+          </div>
+          <div className="col-span-1 rounded-lg bg-white p-4 shadow-border-full sm:col-span-2 lg:col-span-3">
+            {!overviewStatusProject.isFetching && (
+              <ChartPie dataChart={chartPieData} />
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="my-[3.125rem] text-black">
+        <Statistical data={overviewProject.data} />
+      </div>
+    </div>
   );
 };
 
