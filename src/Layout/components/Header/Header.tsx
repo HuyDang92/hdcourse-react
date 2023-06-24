@@ -4,7 +4,7 @@ import logoFPT from 'assets/logo/logo-fpt.png';
 const Header = () => {
   return (
     <header className="supports-backdrop-blur:bg-white/95 sticky top-0 z-[70] max-h-20 w-full  border-b border-[#e5e7eb] bg-white/80 py-3 backdrop-blur transition-all duration-300 lg:z-50">
-      <nav className="mx-auto flex w-full basis-full flex-wrap items-center px-4 xl:px-10">
+      <nav className="mx-auto flex w-full basis-full flex-wrap items-center px-4 2xl:container xl:px-10">
         <Link className=" mr-auto flex-none text-slate-900" to="/">
           <img
             className="inline-block h-14"
@@ -44,7 +44,7 @@ const Header = () => {
               </svg>
             </button>
           </div>
-          <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-rounded scrollbar-w-1 fixed bottom-0 left-0 top-0 z-[50] h-full min-h-screen w-56 -translate-x-full bg-white p-4  transition-transform">
+          {/* <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-rounded scrollbar-w-1 fixed bottom-0 left-0 top-0 z-[50] h-full min-h-screen w-56 -translate-x-full bg-white p-4  transition-transform">
             <h5
               id="drawer-navigation-label"
               className="text-gray-500 text-base  font-medium uppercase"
@@ -102,7 +102,7 @@ const Header = () => {
                 </Link>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="bg-gray-500 fixed inset-0 z-40 hidden  h-full min-h-screen w-screen bg-opacity-50"></div>
         </div>
         <div className="ml-auto hidden items-center gap-x-2 sm:gap-x-3 md:order-3 md:flex md:pl-1">

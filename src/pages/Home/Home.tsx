@@ -185,7 +185,7 @@ const Home = () => {
   }, [overviewCourseUpcoming]);
 
   return (
-    <div className="mx-auto w-full px-4 text-white xl:px-10">
+    <div className="mx-auto w-full px-4 text-white 2xl:container xl:px-10">
       <div className="mt-8 w-full text-black">
         <StatisticalHomeBox data={projectOverview.data} />
         <Search />
