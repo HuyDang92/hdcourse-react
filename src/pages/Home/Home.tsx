@@ -6,8 +6,11 @@ import styles from './Home.module.css';
 const cx = className.bind(styles);
 
 const Home = () => {
+  useEffect(() => {
+    document.title = 'HDCourse'; // Thay đổi tiêu đề tại đây
+  }, []);
   return (
-    <div className="mx-auto w-full px-4 text-white 2xl:container xl:px-10">
+    <div className="">
       <h1>Home</h1>
     </div>
   );

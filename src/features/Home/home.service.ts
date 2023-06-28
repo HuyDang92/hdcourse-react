@@ -7,7 +7,7 @@ export const homeApi = createApi({
   // refetchOnMountOrArgChange: 5,
   endpoints: (builder) => ({
     getProjectOverview: builder.query<StatisticalHomeBoxProps, void>({
-      query: () => '/api/home/overview',
+      query: () => '/api',
     }),
   }),
 });
