@@ -9,42 +9,7 @@ export const homeApi = createApi({
     getProjectOverview: builder.query<StatisticalHomeBoxProps, void>({
       query: () => '/api/home/overview',
     }),
-    getOverviewAnalyticByRole: builder.query<any, string>({
-      query: (role) => ({
-        url: 'api/projects/overview-analytics-by-role?role=' + role,
-      }),
-    }),
-    getOverviewStatusProject: builder.query<any, string>({
-      query: (type) => ({
-        url: '/api/projects/overview-by-status-projects-and-base?type=' + type,
-      }),
-    }),
-    getOverviewCourse: builder.query<any, any>({
-      query: (args) => {
-        const { type, page, limit = 12 } = args;
-        return {
-          url: `/api/projects/overview-project-by-status?type=${type}&page=${page}&limit=${limit}`,
-        };
-      },
-    }),
-    getProjectOverviewTable: builder.query<StatisticalHomeBoxProps, void>({
-      query: () => '/api/home/overview-table',
-    }),
-    getProjectOverviewTableDetail: builder.query<any, string>({
-      query: (base) => {
-        return {
-          url: `/api/home/overview-table/${base}`,
-        };
-      },
-    }),
   }),
 });
 
-export const {
-  useGetProjectOverviewQuery,
-  useGetOverviewAnalyticByRoleQuery,
-  useGetOverviewStatusProjectQuery,
-  useGetOverviewCourseQuery,
-  useGetProjectOverviewTableQuery,
-  useGetProjectOverviewTableDetailQuery,
-} = homeApi;
+export const { useGetProjectOverviewQuery } = homeApi;
