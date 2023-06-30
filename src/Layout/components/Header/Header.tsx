@@ -1,17 +1,43 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import IonIcon from '@reacticons/ionicons';
 import className from 'classnames/bind';
 import styles from './Header.module.scss';
 import Button from 'components/Button';
-
+import logo from 'assets/logo/logo.svg';
+import Dropdown from 'components/Dropdown';
 const cx = className.bind(styles);
 const Header = () => {
-  const [isInputFocused, setInputFocused] = useState(false);
+  const [isInputFocused, setInputFocused] = useState<boolean>(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
+  const [prevScrollPos, setPrevScrollPos] = useState<number>(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      if (prevScrollPos > currentScrollPos) {
+        setIsNavbarVisible(true); // Cuộn lên, hiển thị navbar
+      } else {
+        setIsNavbarVisible(false); // Cuộn xuống, ẩn navbar
+      }
+      setPrevScrollPos(currentScrollPos);
+      console.log(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [prevScrollPos]);
   return (
-    <header className="border-b-[1px] border-gray-200">
-      <div className="mx-auto flex max-w-7xl items-center justify-between py-4 text-org">
-        <h1 className="text-4xl font-bold">
+    <header
+      className={`border-b-[1px] border-gray-200 bg-white shadow-lg transition-all ${
+        isNavbarVisible ? 'sticky top-0' : 'block'
+      }`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between py-3 text-org">
+        <h1 className="flex space-x-2 text-4xl font-bold">
+          <img src={logo} className="w-7" alt="logo" />
           <Link to="/">
             HD<span className="text-darkLight">Cours</span>
           </Link>
@@ -39,27 +65,29 @@ const Header = () => {
         </div>
         <div className="flex items-center space-x-5">
           <IonIcon name="cart" className="text-2xl" />
-          <Button rounded_full border>
-            Đăng nhập
-          </Button>
+          <Link to="/login">
+            <Button rounded_full border>
+              Đăng nhập
+            </Button>
+          </Link>
         </div>
       </div>
       <div className="border-t-[1px] border-gray-200">
-        <div className="relative mx-auto flex max-w-7xl items-center justify-between">
+        <div className=" mx-auto flex max-w-7xl items-center justify-between">
           <nav className="flex">
-            <div className="w-40 py-5  text-org hover:bg-slate-200">
-              <div className="flex justify-between">
-                <div className="item-center flex space-x-2">
-                  <IonIcon name="cube" className="text-2xl" />
-                  <h3 className="text-lg font-medium">Chủ đề</h3>
-                </div>
-                <IonIcon name="chevron-down" className="ps-5 text-2xl" />
-              </div>
+            <div className="py-3">
+              <Dropdown />
             </div>
             <div className="nav flex items-center space-x-5 ps-10 text-lg">
-              <Link to={'/'}>Trang chủ</Link>
-              <Link to={'/'}>Trang chủ</Link>
-              <Link to={'/'}>Trang chủ</Link>
+              <NavLink to="/" className={({ isActive }) => (isActive ? 'text-org' : '')}>
+                Trang chủ
+              </NavLink>
+              <NavLink to="/introduce" className={({ isActive }) => (isActive ? 'text-org' : '')}>
+                Giới thiệu
+              </NavLink>
+              <NavLink to="/contact" className={({ isActive }) => (isActive ? 'text-org' : '')}>
+                Liên hệ
+              </NavLink>
             </div>
           </nav>
         </div>

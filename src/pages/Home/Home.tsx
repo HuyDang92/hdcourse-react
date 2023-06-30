@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import { useFetchCategoriesQuery } from 'features/Home/home.service';
 import className from 'classnames/bind';
 import styles from './Home.module.css';
 
@@ -10,8 +10,8 @@ const Home = () => {
     document.title = 'HDCourse'; // Thay đổi tiêu đề tại đây
   }, []);
   return (
-    <div className="">
-      <h1>Home</h1>
+    <div className="h-[100vh]">
+      <div></div>
     </div>
   );
 };

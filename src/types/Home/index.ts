@@ -1,3 +1,3 @@
-export interface StatisticalHomeBoxProps {
-
+export interface Categories {
+    
 }

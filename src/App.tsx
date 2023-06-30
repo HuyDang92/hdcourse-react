@@ -7,16 +7,16 @@ import NotFound from 'pages/NotFound';
 import { useCurrentTabletView } from 'hooks/useCurrentViewportView';
 
 function App(): ReactElement {
-  const isTablet = useCurrentTabletView();
-  const [isTabletView, setIsTabletView] = useState<boolean>(false);
+  // const isTablet = useCurrentTabletView();
+  // const [isTabletView, setIsTabletView] = useState<boolean>(false);
 
-  useEffect(() => {
-    setIsTabletView(isTablet.isTablet);
-  }, [isTablet]);
-
-  return isTabletView ? (
-    <NotFound />
-  ) : (
+  // useEffect(() => {
+  //   setIsTabletView(isTablet.isTablet);
+  // }, [isTablet]);
+  return (
+    // isTabletView ? (
+    //   <NotFound />
+    // ) : (
     <Router>
       <div className="App">
         <Routes>
@@ -42,6 +42,7 @@ function App(): ReactElement {
               />
             );
           })}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>

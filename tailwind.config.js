@@ -17,7 +17,6 @@ module.exports = {
     fontFamily: {
       sans: ['Inter', 'ui-sans-serif', 'system-ui'],
     },
-    
   },
   plugins: [require('flowbite/plugin'), require('@tailwindcss/line-clamp')],
 };
