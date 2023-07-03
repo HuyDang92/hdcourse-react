@@ -1,9 +1,9 @@
 import routes from './routes';
 
-const config: {
+const configUser: {
   routes: typeof routes;
 } = {
   routes,
 };
 
-export default config;
+export default configUser;

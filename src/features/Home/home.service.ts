@@ -1,6 +1,6 @@
 // import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import db from 'firebase.jsx';
 
 export const homeApi = createApi({
@@ -22,6 +22,7 @@ export const homeApi = createApi({
         }
       },
     }),
+    
   }),
 });
 

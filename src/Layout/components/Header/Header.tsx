@@ -6,11 +6,19 @@ import styles from './Header.module.scss';
 import Button from 'components/Button';
 import logo from 'assets/logo/logo.svg';
 import Dropdown from 'components/Dropdown';
+
 const cx = className.bind(styles);
+const navigation = [
+  { name: 'Trang chủ', to: '/' },
+  { name: 'Giới thiệu', to: '/introduce' },
+  { name: 'Liên hệ', to: '/contact' },
+];
+
 const Header = () => {
   const [isInputFocused, setInputFocused] = useState<boolean>(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
   const [prevScrollPos, setPrevScrollPos] = useState<number>(0);
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -29,6 +37,7 @@ const Header = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [prevScrollPos]);
+
   return (
     <header
       className={`border-b-[1px] border-gray-200 bg-white shadow-lg transition-all ${
@@ -36,32 +45,35 @@ const Header = () => {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between py-3 text-org">
-        <h1 className="flex space-x-2 text-4xl font-bold">
-          <img src={logo} className="w-7" alt="logo" />
-          <Link to="/">
-            HD<span className="text-darkLight">Cours</span>
-          </Link>
-        </h1>
-        <div
-          className={`flex items-center overflow-hidden rounded-full border-2 ${
-            isInputFocused ? 'border-orange-400' : 'border-gray-200'
-          }`}
-        >
-          <IonIcon
-            name="search"
-            className={cx('px-4', 'py-3', 'pe-2', 'text-2xl', 'icon-search', 'hover:bg-gray-200')}
-          />
-          <input
-            className={`${cx(
-              'searchInput'
-            )} w-80 rounded-full border-0 placeholder-gray-400 outline-none focus:border-transparent focus:ring-0`}
-            type="text"
-            name="nameSearch"
-            id="nameSearch"
-            placeholder="Tìm kiếm khóa học"
-            onFocus={() => setInputFocused(true)}
-            onBlur={() => setInputFocused(false)}
-          />
+        <div className="flex items-center space-x-5">
+          <h1 className="flex space-x-2 text-3xl font-bold">
+            <img src={logo} className="w-7" alt="logo" />
+            <Link to="/">
+              HD<span className="text-darkLight">Cours</span>
+            </Link>
+          </h1>
+          <Dropdown />
+          <div
+            className={`flex items-center overflow-hidden rounded-full border-2 ${
+              isInputFocused ? 'border-orange-400' : 'border-gray-200'
+            }`}
+          >
+            <IonIcon
+              name="search"
+              className={cx('px-4', 'py-3', 'pe-2', 'text-2xl', 'icon-search', 'hover:bg-gray-200')}
+            />
+            <input
+              className={`${cx(
+                'searchInput'
+              )} w-80 rounded-full border-0 placeholder-gray-400 outline-none focus:border-transparent focus:ring-0`}
+              type="text"
+              name="nameSearch"
+              id="nameSearch"
+              placeholder="Tìm kiếm khóa học"
+              onFocus={() => setInputFocused(true)}
+              onBlur={() => setInputFocused(false)}
+            />
+          </div>
         </div>
         <div className="flex items-center space-x-5">
           <IonIcon name="cart" className="text-2xl" />
@@ -72,26 +84,26 @@ const Header = () => {
           </Link>
         </div>
       </div>
-      <div className="border-t-[1px] border-gray-200">
+      {/* <div className="border-t-[1px] border-gray-200">
         <div className=" mx-auto flex max-w-7xl items-center justify-between">
           <nav className="flex">
             <div className="py-3">
               <Dropdown />
             </div>
             <div className="nav flex items-center space-x-5 ps-10 text-lg">
-              <NavLink to="/" className={({ isActive }) => (isActive ? 'text-org' : '')}>
-                Trang chủ
-              </NavLink>
-              <NavLink to="/introduce" className={({ isActive }) => (isActive ? 'text-org' : '')}>
-                Giới thiệu
-              </NavLink>
-              <NavLink to="/contact" className={({ isActive }) => (isActive ? 'text-org' : '')}>
-                Liên hệ
-              </NavLink>
+              {navigation.map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.to}
+                  className={({ isActive }) => (isActive ? 'text-org' : '')}
+                >
+                  {item.name}
+                </NavLink>
+              ))}
             </div>
           </nav>
         </div>
-      </div>
+      </div> */}
     </header>
   );
 };

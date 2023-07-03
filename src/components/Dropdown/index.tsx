@@ -4,12 +4,11 @@ import IonIcon from '@reacticons/ionicons';
 
 export default function Dropdown() {
   const { data, isFetching } = useFetchCategoriesQuery(undefined);
-  console.log(data);
 
   return (
     <div className="relative">
       <div className="group inline-block cursor-pointer">
-        <button className="flex w-52 items-center justify-between rounded-md border bg-white px-3 py-2 outline-none focus:outline-none">
+        <button className="flex w-40 items-center justify-between rounded-md border bg-white px-3 py-2 outline-none focus:outline-none">
           <IonIcon name="cube" className="text-2xl text-org" />
           <span className="flex-1 pr-1 font-semibold">Chủ đề</span>
           <span>
@@ -22,50 +21,56 @@ export default function Dropdown() {
             </svg>
           </span>
         </button>
-        <ul className="absolute top-[110%] w-52 origin-top scale-0 transform space-y-1 rounded-sm border bg-white p-3 text-lg transition duration-150 ease-in-out group-hover:scale-100">
+        <ul className="absolute top-[110%] w-64 origin-top scale-0 transform space-y-1 rounded-sm border bg-white p-3 text-lg transition duration-150 ease-in-out group-hover:scale-100">
           {!isFetching &&
-            data?.map((item) => {
+            data?.map((item, index) => {
               return (
-                <li className="rounded-sm px-4 py-2 hover:bg-gray-200" key={item.id}>
-                  {item.name}
+                // <li className="rounded-sm px-4 py-2 hover:bg-gray-200" key={item.id}>
+                //   {item.name}
+                // </li>
+                <li key={index} className="relative rounded-sm px-4 py-2 hover:bg-gray-200">
+                  <button className="flex w-full items-center text-left outline-none focus:outline-none">
+                    <span className="flex-1 pr-1">{item.name}</span>
+                    <span className="mr-auto">
+                      <svg
+                        className="h-4 w-4 fill-current transition duration-150 ease-in-out"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                      </svg>
+                    </span>
+                  </button>
+                  <ul className="absolute right-0 top-0 w-52 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out ">
+                    {item.submenu.map((data: any, index: any) => {
+                      return (
+                        <li key={index} className="px-4 py-2 hover:bg-gray-200">
+                          {data}
+                        </li>
+                      );
+                    })}
+                    {/* <li className="relative rounded-sm px-4 py-2 hover:bg-gray-200">
+                      <button className="flex w-full items-center text-left outline-none focus:outline-none">
+                        <span className="flex-1 pr-1">Python</span>
+                        <span className="mr-auto">
+                          <svg
+                            className="h-4 w-4 fill-current transition duration-150 ease-in-out"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                          </svg>
+                        </span>
+                      </button>
+                      <ul className="absolute right-0 top-0 w-52 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out">
+                        <li className="px-4 py-2 hover:bg-gray-200">2.7</li>
+                        <li className="px-4 py-2 hover:bg-gray-200">3+</li>
+                      </ul>
+                    </li> */}
+                  </ul>
                 </li>
               );
             })}
-          <li className="relative rounded-sm px-4 py-2 hover:bg-gray-200">
-            <button className="flex w-full items-center text-left outline-none focus:outline-none">
-              <span className="flex-1 pr-1">Langauges</span>
-              <span className="mr-auto">
-                <svg
-                  className="h-4 w-4 fill-current transition duration-150 ease-in-out"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-              </span>
-            </button>
-            <ul className="absolute right-0 top-0 w-52 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out ">
-              <li className="px-4 py-2 hover:bg-gray-200">Javascript</li>
-              <li className="relative rounded-sm px-4 py-2 hover:bg-gray-200">
-                <button className="flex w-full items-center text-left outline-none focus:outline-none">
-                  <span className="flex-1 pr-1">Python</span>
-                  <span className="mr-auto">
-                    <svg
-                      className="h-4 w-4 fill-current transition duration-150 ease-in-out"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                    </svg>
-                  </span>
-                </button>
-                {/* <ul className="absolute right-0 top-0 w-52 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out">
-                  <li className="px-4 py-2 hover:bg-gray-200">2.7</li>
-                  <li className="px-4 py-2 hover:bg-gray-200">3+</li>
-                </ul> */}
-              </li>
-            </ul>
-          </li>
         </ul>
       </div>
       <style
