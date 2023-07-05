@@ -1,10 +1,1 @@
-export { ReactComponent as ProcessIcon } from './in-process-icon.svg';
-export { ReactComponent as CompleteIcon } from './complete-icon.svg';
-export { ReactComponent as FutureIcon } from './future-icon.svg';
-export { ReactComponent as Icon } from './Icon.svg';
-export { ReactComponent as Calendar } from './calendar.svg';
-export { ReactComponent as ProjectIcon } from './project-icon.svg';
-export { ReactComponent as StudentIcon } from './student-icon.svg';
-export { ReactComponent as SubjectBlueIcon } from './subject-icon-blue.svg';
-export { ReactComponent as SubjectOrageIcon } from './subjectorange.svg';
-export { ReactComponent as StudentBlueIcon } from './student-icon-blue.svg';
+export { ReactComponent as SearchIcon } from './search.svg';

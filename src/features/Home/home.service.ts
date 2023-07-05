@@ -1,7 +1,7 @@
 // import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
-import db from 'firebase.jsx';
+import { collection, setDoc, addDoc, doc, getDoc, getDocs } from 'firebase/firestore';
+import { db } from 'firebase.jsx';
 
 export const homeApi = createApi({
   reducerPath: 'categories',
@@ -22,8 +22,32 @@ export const homeApi = createApi({
         }
       },
     }),
-    
+    addUser: builder.mutation({
+      async queryFn({ data, idUser }) {
+        try {
+          const docRef = doc(db, 'users', idUser);
+          // Add the document with the provided data
+          await setDoc(docRef, {
+            ...data,
+          });
+          return { data: 'Resiregister successfully' };
+        } catch (error) {
+          return { error };
+        }
+      },
+    }),
+    getUser: builder.query({
+      async queryFn(idUser) {
+        try {
+          const docRef = doc(db, 'users', idUser);
+          const docSnap = await getDoc(docRef);
+          return { data: docSnap };
+        } catch (error) {
+          return { error };
+        }
+      },
+    }),
   }),
 });
 
-export const { useFetchCategoriesQuery } = homeApi;
+export const { useFetchCategoriesQuery, useGetUserQuery, useAddUserMutation } = homeApi;

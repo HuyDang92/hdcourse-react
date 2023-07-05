@@ -30,7 +30,7 @@ export default function Dropdown() {
                 // </li>
                 <li key={index} className="relative rounded-sm px-4 py-2 hover:bg-gray-200">
                   <button className="flex w-full items-center text-left outline-none focus:outline-none">
-                    <span className="flex-1 pr-1">{item.name}</span>
+                    <span className="flex-1 pr-1 ">{item.name}</span>
                     <span className="mr-auto">
                       <svg
                         className="h-4 w-4 fill-current transition duration-150 ease-in-out"

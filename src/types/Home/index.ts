@@ -1,3 +1,3 @@
-export interface Categories {
+export interface Course {
     
 }
