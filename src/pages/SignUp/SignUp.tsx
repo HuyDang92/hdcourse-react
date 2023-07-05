@@ -6,7 +6,7 @@ import Button from 'components/Button';
 import Loading from 'components/Loading';
 import logo from 'assets/logo/logo.svg';
 import { useNavigate, Link } from 'react-router-dom';
-import { signInWithPopup, onAuthStateChanged, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithPopup, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, provider } from 'firebase.jsx';
 import { useAddUserMutation } from 'features/Home/home.service';
 import IonIcon from '@reacticons/ionicons';
@@ -25,7 +25,7 @@ const initiaState: SignUp = {
 };
 const SignUp = () => {
   const navigate = useNavigate();
-  const [addUser, addUserResult] = useAddUserMutation();
+  const [addUser] = useAddUserMutation();
   const [formData, setForm] = useState<SignUp>(initiaState);
   const [checkSignUp, setCheckSignUp] = useState<boolean>(false);
 
@@ -46,6 +46,7 @@ const SignUp = () => {
             'https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=740&t=st=1688539006~exp=1688539606~hmac=e9521db982174d32a66a72f5c1a4565a4b0c702dca019e87e3f56e989b27206b',
         };
         await addUser({ data: userInfo, idUser: uid });
+        await updateProfile(userCredential.user, userInfo);
         localStorage.setItem('userInfo', JSON.stringify(userInfo));
         navigate('/');
       })

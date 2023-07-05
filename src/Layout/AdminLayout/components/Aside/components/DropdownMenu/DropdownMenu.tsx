@@ -1,99 +1,116 @@
-import { Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import Button from 'components/Button';
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
+import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import IonIcon from '@reacticons/ionicons';
+import { NavLink } from 'react-router-dom';
 
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(' ');
-}
-interface IUserInfo {
-  uid: string;
-  displayName: string;
-  email: string;
-  photoURL: string;
-}
+const Accordion = styled((props: AccordionProps) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  '&:not(:last-child)': {
+    borderBottom: 0,
+  },
+  '&:before': {
+    display: 'none',
+  },
+  marginBottom: '15px',
+}));
 
-interface IChildProps {
-  data: IUserInfo;
-}
-const DropdownInfo: React.FC<IChildProps> = ({ data }) => {
+const AccordionSummary = styled((props: AccordionSummaryProps) => (
+  <MuiAccordionSummary
+    expandIcon={<KeyboardArrowDownIcon sx={{ fontSize: '1.5rem' }} />}
+    {...props}
+  />
+))(({ theme }) => ({
+  boxShadow: '0px 10px 75px -3px rgba(0,0,0,0.2);',
+  borderRadius: '10px',
+  display: 'flex',
+  alignItems: 'center',
+}));
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({}));
+
+export default function CustomizedAccordions() {
+  const [expanded, setExpanded] = React.useState<string | false>('panel1');
+
+  const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+
   return (
-    <Menu as="div" className="relative inline-block text-left">
-      <div>
-        <Menu.Button className="inline-flex border-0">
-          <img className="w-8 rounded-full" src={data.photoURL} alt="avt" />
-        </Menu.Button>
-      </div>
-
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
-            <Menu.Item>
-              <div className="flex items-center space-x-3 px-4 py-2">
-                <img className="w-10 rounded-full" src={data.photoURL} alt="avt" />
-                <div className="s">
-                  <h3 className="text-lg font-semibold text-darkLight">{data.displayName}</h3>
-                  <span></span>
-                </div>
-              </div>
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'text-md block px-4 py-3'
-                  )}
-                >
-                  Account settings
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'text-md block px-4 py-3'
-                  )}
-                >
-                  Support
-                </a>
-              )}
-            </Menu.Item>
-            <div className="px-4 py-2">
-              <Button width_full primary rounded_md>
-                Đăng xuất
-              </Button>
-            </div>
-            {/* <form method="POST" action="#">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    type="submit"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'text-md block w-full px-4 py-2 text-left'
-                    )}
-                  >
-                    Sign out
-                  </button>
-                )}
-              </Menu.Item>
-            </form> */}
-          </div>
-        </Menu.Items>
-      </Transition>
-    </Menu>
+    <div>
+      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+          <IonIcon
+            name="grid"
+            className="me-4 rounded-md bg-gradient-to-br from-org to-amber-400 p-3 text-lg text-white shadow-lg"
+          />
+          <span className="mt-2 font-medium">Dashboards</span>
+        </AccordionSummary>
+        <AccordionDetails>
+          <ul className="ps-5 font-medium text-gray-400">
+            <li className="list-disc p-3 text-gray-900">
+              <NavLink className="" to="/admin">
+                Overview
+              </NavLink>
+            </li>
+            <li className="list-disc p-3 ">
+              <NavLink className="" to="/admin">
+                Overview
+              </NavLink>
+            </li>
+            <li className="list-disc p-3 ">
+              <NavLink className="" to="/admin">
+                Overview
+              </NavLink>
+            </li>
+          </ul>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+          <IonIcon
+            name="person-circle"
+            className="me-4 rounded-md bg-white p-3 text-lg text-darkLight shadow-xl"
+          />
+          <span className="mt-2 font-medium">Profile</span>
+        </AccordionSummary>
+        <AccordionDetails>
+          <ul className="ps-5 font-medium text-gray-400">
+            <li className="list-disc p-3 text-gray-900">
+              <NavLink className="" to="/admin">
+                Overview
+              </NavLink>
+            </li>
+            <li className="list-disc p-3 ">
+              <NavLink className="" to="/admin">
+                Overview
+              </NavLink>
+            </li>
+            <li className="list-disc p-3 ">
+              <NavLink className="" to="/admin">
+                Overview
+              </NavLink>
+            </li>
+          </ul>
+        </AccordionDetails>
+      </Accordion>
+      {/* <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
+          <Typography>Collapsible Group Item #3</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+            sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion> */}
+    </div>
   );
-};
-export default DropdownInfo;
+}

@@ -6,8 +6,9 @@ import Button from 'components/Button';
 import { Link } from 'react-router-dom';
 import IonIcon from '@reacticons/ionicons';
 import logo from 'assets/logo/logo.svg';
+import Loading from 'components/Loading';
 import { useNavigate } from 'react-router-dom';
-import { signInWithPopup, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, provider } from 'firebase.jsx';
 import { useGetUserQuery } from 'features/Home/home.service';
 
@@ -21,21 +22,25 @@ const initiaState: Login = {
   password: '',
 };
 const Login = () => {
+  // const { data } = useGetUserQuery('BdgqOo1drvQgYZxf2NjKs6a3LQW2');
+  // console.log(data);
   useEffect(() => {
     document.title = 'Đăng nhập'; // Thay đổi tiêu đề tại đây
   }, []);
   const navigate = useNavigate();
+  const [checkSignUp, setCheckSignUp] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<Login>(initiaState);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setCheckSignUp(true);
     signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then(async (userCredential) => {
-        const { uid, email } = userCredential.user;
-
-        // const userInfo = { uid, displayName, email, photoURL };
-        // localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        const { uid, displayName, email, photoURL } = userCredential.user;
+        const userInfo = { uid, displayName, email, photoURL };
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
         navigate('/');
+        setCheckSignUp(false);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -62,6 +67,7 @@ const Login = () => {
 
   return (
     <div className="">
+      {checkSignUp && <Loading>Đang xử lí...</Loading>}
       <div className="bg">
         <div className="fixed bottom-0 left-0 right-0 top-0 bg-darkLight">
           <img className="fixed bottom-0 left-0 right-0 top-0" src={background} alt="" />

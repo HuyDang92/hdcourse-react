@@ -4,6 +4,7 @@ import IonIcon from '@reacticons/ionicons';
 import className from 'classnames/bind';
 import styles from './Header.module.scss';
 import Button from 'components/Button';
+import InputSearch from 'components/InputSearch';
 import logo from 'assets/logo/logo.svg';
 import Dropdown from './components/Dropdown';
 import DropdownInfo from './components/DropdownInfo';
@@ -101,6 +102,7 @@ const Header = () => {
             />
           </div>
         </div>
+        <InputSearch />
         {userData !== null ? (
           <div className="flex items-center space-x-3 text-org">
             <IonIcon name="cart" className="text-3xl" />

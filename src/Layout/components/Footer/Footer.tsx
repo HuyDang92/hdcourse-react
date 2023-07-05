@@ -9,8 +9,8 @@ const Footer = () => {
     <footer className="w-full bg-[#252831] py-10 text-white ">
       <div className="mx-auto flex max-w-7xl justify-between">
         <div>
-          <h3 className="mb-7 text-xl uppercase tracking-[0.2rem] text-org flex space-x-4">
-          <img src={logo} className="w-7" alt="logo" /> <p>Thông tin</p>
+          <h3 className="mb-7 flex space-x-4 text-xl uppercase tracking-[0.2rem] text-org">
+            <img src={logo} className="w-7" alt="logo" /> <p>Thông tin</p>
           </h3>
           <ul className="listFooter space-y-4">
             <li className="flex space-x-2">
