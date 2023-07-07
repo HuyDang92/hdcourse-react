@@ -61,7 +61,7 @@ const DropdownInfo: React.FC<IChildProps> = ({ data }) => {
                     'text-md block px-4 py-3'
                   )}
                 >
-                  Account settings
+                  Trang cá nhân
                 </a>
               )}
             </Menu.Item>
@@ -74,8 +74,8 @@ const DropdownInfo: React.FC<IChildProps> = ({ data }) => {
                     'text-md block px-4 py-3'
                   )}
                 >
-                  Support
-                </a>
+                  Cài đặt
+                  </a>
               )}
             </Menu.Item>
             <div onClick={handleLogOut} className="px-4 py-2">

@@ -7,7 +7,9 @@ import Button from 'components/Button';
 import InputSearch from 'components/InputSearch';
 import logo from 'assets/logo/logo.svg';
 import Dropdown from './components/Dropdown';
-import DropdownInfo from './components/DropdownInfo';
+import DropdownInfo from '../../../components/DropdownInfo';
+import Badge from '@mui/material/Badge';
+
 const cx = className.bind(styles);
 const navigation = [
   { name: 'Trang chủ', to: '/' },
@@ -16,7 +18,6 @@ const navigation = [
 ];
 
 const Header = () => {
-  // sticky header
   const [isInputFocused, setInputFocused] = useState<boolean>(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
   const [prevScrollPos, setPrevScrollPos] = useState<number>(0);
@@ -69,44 +70,15 @@ const Header = () => {
             </Link>
           </h1>
           <Dropdown />
-          <div
-            className={`flex items-center overflow-hidden rounded-full border-2 ${
-              isInputFocused ? 'border-org' : 'border-gray-200'
-            }`}
-          >
-            <IonIcon
-              name="search"
-              className={cx(
-                'px-3',
-                'py-2',
-                'pe-2',
-                'text-2xl',
-                'text-gray-400',
-                'icon-search',
-                'transition-all',
-                'hover:text-org',
-                'hover:bg-gray-200',
-                `${isInputFocused ? 'text-org' : ''}`
-              )}
-            />
-            <input
-              className={`${cx(
-                'searchInput'
-              )} w-80 rounded-full border-0 font-medium text-darkLight placeholder-gray-400 outline-none focus:border-transparent focus:ring-0`}
-              type="text"
-              name="nameSearch"
-              id="nameSearch"
-              placeholder="Tìm kiếm khóa học"
-              onFocus={() => setInputFocused(true)}
-              onBlur={() => setInputFocused(false)}
-            />
-          </div>
+
+          <InputSearch />
         </div>
-        <InputSearch />
         {userData !== null ? (
-          <div className="flex items-center space-x-3 text-org">
+          <div className="flex items-center space-x-4 text-org">
             <IonIcon name="cart" className="text-3xl" />
-            <IonIcon name="notifications" className="text-3xl" />
+            <Badge color="info" badgeContent={2}>
+              <IonIcon name="notifications" className="text-3xl" />
+            </Badge>
             <DropdownInfo data={userData} />
           </div>
         ) : (
@@ -125,26 +97,6 @@ const Header = () => {
           </div>
         )}
       </div>
-      {/* <div className="border-t-[1px] border-gray-200">
-        <div className=" mx-auto flex max-w-7xl items-center justify-between">
-          <nav className="flex">
-            <div className="py-3">
-              <Dropdown />
-            </div>
-            <div className="nav flex items-center space-x-5 ps-10 text-lg">
-              {navigation.map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.to}
-                  className={({ isActive }) => (isActive ? 'text-org' : '')}
-                >
-                  {item.name}
-                </NavLink>
-              ))}
-            </div>
-          </nav>
-        </div>
-      </div> */}
     </header>
   );
 };

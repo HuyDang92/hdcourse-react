@@ -21,14 +21,14 @@ export default function Dropdown() {
             </svg>
           </span>
         </button>
-        <ul className="absolute top-[110%] w-64 origin-top scale-0 transform space-y-1 rounded-sm border bg-white p-3 text-lg transition duration-150 ease-in-out group-hover:scale-100">
+        <ul className="absolute top-[110%] w-56 origin-top scale-0 transform space-y-1 rounded-sm border bg-white p-2 text-sm transition duration-150 ease-in-out group-hover:scale-100">
           {!isFetching &&
             data?.map((item, index) => {
               return (
                 // <li className="rounded-sm px-4 py-2 hover:bg-gray-200" key={item.id}>
                 //   {item.name}
                 // </li>
-                <li key={index} className="relative rounded-sm px-4 py-2 hover:bg-gray-200">
+                <li key={index} className="relative rounded-sm px-2 py-2 hover:bg-gray-200">
                   <button className="flex w-full items-center text-left outline-none focus:outline-none">
                     <span className="flex-1 pr-1 ">{item.name}</span>
                     <span className="mr-auto">

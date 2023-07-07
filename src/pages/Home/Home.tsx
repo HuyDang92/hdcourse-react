@@ -8,7 +8,7 @@ const cx = className.bind(styles);
 
 const Home = () => {
   useEffect(() => {
-    document.title = 'HDCourse'; // Thay đổi tiêu đề tại đây
+    document.title = 'HDCourse - Học ngay làm luôn'; // Thay đổi tiêu đề tại đây
   }, []);
   return <div className="h-[100vh]"></div>;
 };

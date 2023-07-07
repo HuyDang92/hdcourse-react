@@ -3,11 +3,10 @@ import { styled } from '@mui/material/styles';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import IonIcon from '@reacticons/ionicons';
 import { NavLink } from 'react-router-dom';
-
+import { useState } from 'react';
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -26,17 +25,24 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
     {...props}
   />
 ))(({ theme }) => ({
-  boxShadow: '0px 10px 75px -3px rgba(0,0,0,0.2);',
   borderRadius: '10px',
   display: 'flex',
   alignItems: 'center',
+  boxShadow: '0px 10px 75px -3px rgba(0,0,0,0.2)',
 }));
+
+const navDashboard = [
+  { name: 'Trang chủ', to: '/admin' },
+  { name: 'Giới thiệu', to: '/' },
+  { name: 'Liên hệ', to: '/' },
+];
+const navProfile = [{ name: 'Trang cá nhân', to: '/admin/profile' }];
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({}));
 
 export default function CustomizedAccordions() {
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
-
+  const [activeNav, setActiveNav] = useState<boolean>(false);
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -44,7 +50,13 @@ export default function CustomizedAccordions() {
   return (
     <div>
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+        <AccordionSummary
+          sx={{
+            boxShadow: `${activeNav ? '' : ''}`,
+          }}
+          aria-controls="panel1d-content"
+          id="panel1d-header"
+        >
           <IonIcon
             name="grid"
             className="me-4 rounded-md bg-gradient-to-br from-org to-amber-400 p-3 text-lg text-white shadow-lg"
@@ -53,21 +65,19 @@ export default function CustomizedAccordions() {
         </AccordionSummary>
         <AccordionDetails>
           <ul className="ps-5 font-medium text-gray-400">
-            <li className="list-disc p-3 text-gray-900">
-              <NavLink className="" to="/admin">
-                Overview
-              </NavLink>
-            </li>
-            <li className="list-disc p-3 ">
-              <NavLink className="" to="/admin">
-                Overview
-              </NavLink>
-            </li>
-            <li className="list-disc p-3 ">
-              <NavLink className="" to="/admin">
-                Overview
-              </NavLink>
-            </li>
+            {navDashboard.map((nav, index) => (
+              <li key={index} className="list-disc p-3 text-gray-900">
+                <NavLink
+                  end
+                  className={({ isActive }) =>
+                    isActive ? 'font-semibold text-org' : 'text-gray-500'
+                  }
+                  to={nav.to}
+                >
+                  {nav.name}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </AccordionDetails>
       </Accordion>
@@ -75,27 +85,25 @@ export default function CustomizedAccordions() {
         <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
           <IonIcon
             name="person-circle"
-            className="me-4 rounded-md bg-white p-3 text-lg text-darkLight shadow-xl"
+            className="me-4 rounded-md bg-white p-3 text-lg text-darkLight"
           />
           <span className="mt-2 font-medium">Profile</span>
         </AccordionSummary>
         <AccordionDetails>
           <ul className="ps-5 font-medium text-gray-400">
-            <li className="list-disc p-3 text-gray-900">
-              <NavLink className="" to="/admin">
-                Overview
-              </NavLink>
-            </li>
-            <li className="list-disc p-3 ">
-              <NavLink className="" to="/admin">
-                Overview
-              </NavLink>
-            </li>
-            <li className="list-disc p-3 ">
-              <NavLink className="" to="/admin">
-                Overview
-              </NavLink>
-            </li>
+            {navProfile.map((nav, index) => (
+              <li key={index} className="list-disc p-3 text-gray-900">
+                <NavLink
+                  end
+                  className={({ isActive }) =>
+                    isActive ? 'font-semibold text-org' : 'text-gray-500 '
+                  }
+                  to={nav.to}
+                >
+                  {nav.name}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </AccordionDetails>
       </Accordion>

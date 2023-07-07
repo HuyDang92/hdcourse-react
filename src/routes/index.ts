@@ -6,6 +6,8 @@ import AdminLayout from 'Layout/AdminLayout';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import SignUp from 'pages/SignUp/SignUp';
+import Profile from 'Admin/pages/Profile';
+import Dashboard from 'Admin/pages/Dashboard';
 
 interface RouteConfig {
   path: string;
@@ -34,7 +36,12 @@ const publicRoutes: RouteConfig[] = [
 const privateRoutes: RouteConfig[] = [
   {
     path: configAdmin.routes.admin,
-    component: Home,
+    component: Dashboard,
+    layout: AdminLayout,
+  },
+  {
+    path: configAdmin.routes.profile,
+    component: Profile,
     layout: AdminLayout,
   },
 ];

@@ -9,9 +9,11 @@ interface AdminLayoutProps {
 
 function AdminLayout({ children }: AdminLayoutProps) {
   return (
-    <div className="relative flex px-10 py-5 w-1/5">
-      <Aside />
-      <main className="bg-slate-700 ms-16">
+    <div className="relative flex px-10 py-5">
+      <aside className="w-1/5">
+        <Aside />
+      </aside>
+      <main className="ps-16 w-4/5">
         <Header />
         {children}
       </main>

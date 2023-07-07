@@ -19,6 +19,7 @@ const Aside = () => {
         </Link>
       </div>
       <div className="pt-5">
+        <h2 className="p-5 pt-0 text-gray-600 font-bold">MENU</h2>
         <DropdownMenu />
       </div>
     </aside>
