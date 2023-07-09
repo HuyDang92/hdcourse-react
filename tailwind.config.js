@@ -9,7 +9,7 @@ module.exports = {
         navy: '#E2E8F0',
       },
       boxShadow: {
-        'border-full': '0 0 15px 0 rgba(0, 0, 0, 0.15)',
+        'border-full': '0px 0px 20px 2px rgba(0,0,0,0.1)',
       },
       dropShadow: {
         'box-course': '0px 0px 4px rgba(0, 0, 0, 0.25)',
@@ -19,5 +19,5 @@ module.exports = {
       sans: ['Inter', 'ui-sans-serif', 'system-ui'],
     },
   },
-  plugins: [require('flowbite/plugin'), require('@tailwindcss/line-clamp')],
+  plugins: [require('flowbite/plugin'), require('@tailwindcss/line-clamp')] ,
 };

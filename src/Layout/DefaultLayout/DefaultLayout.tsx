@@ -11,7 +11,7 @@ function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <div className="relative">
       <Header />
-      {children}
+      <main className="">{children}</main>
       <Footer />
     </div>
   );

@@ -8,7 +8,7 @@ import InputSearch from 'components/InputSearch';
 import logo from 'assets/logo/logo.svg';
 import Dropdown from './components/Dropdown';
 import DropdownInfo from '../../../components/DropdownInfo';
-import Badge from '@mui/material/Badge';
+import Notification from '../../../components/Notification';
 
 const cx = className.bind(styles);
 const navigation = [
@@ -35,7 +35,6 @@ const Header = () => {
         setIsNavbarVisible(false); // Cuộn xuống, ẩn navbar
       }
       setPrevScrollPos(currentScrollPos);
-      console.log(currentScrollPos);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -49,6 +48,7 @@ const Header = () => {
     const getUserInfo = localStorage.getItem('userInfo');
     if (getUserInfo !== null) {
       const userInfo = JSON.parse(getUserInfo);
+
       setUserData(userInfo);
     } else {
       setUserData(null);
@@ -58,7 +58,7 @@ const Header = () => {
   return (
     <header
       className={`border-b-[1px] border-gray-200 bg-white shadow-md transition-all ${
-        isNavbarVisible ? 'sticky top-0' : 'block'
+        isNavbarVisible ? 'sticky top-0 z-30' : 'block'
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between py-3 ">
@@ -70,20 +70,20 @@ const Header = () => {
             </Link>
           </h1>
           <Dropdown />
-
           <InputSearch />
         </div>
         {userData !== null ? (
-          <div className="flex items-center space-x-4 text-org">
-            <IonIcon name="cart" className="text-3xl" />
-            <Badge color="info" badgeContent={2}>
-              <IonIcon name="notifications" className="text-3xl" />
-            </Badge>
+          <div className="flex items-center space-x-5 text-org">
+            <IonIcon
+              name="cart-outline"
+              className="rounded-full p-2 text-2xl transition-all hover:bg-gray-100"
+            />
+            <Notification />
             <DropdownInfo data={userData} />
           </div>
         ) : (
-          <div className="flex items-center space-x-3 text-org">
-            <IonIcon name="cart" className="text-3xl" />
+          <div className="flex items-center space-x-4 text-org">
+            <IonIcon name="cart-outline" className="icon__hover text-3xl" />
             <Link to="/login">
               <Button rounded_full border>
                 Đăng nhập

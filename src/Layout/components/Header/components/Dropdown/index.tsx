@@ -21,7 +21,7 @@ export default function Dropdown() {
             </svg>
           </span>
         </button>
-        <ul className="absolute top-[110%] w-56 origin-top scale-0 transform space-y-1 rounded-sm border bg-white p-2 text-sm transition duration-150 ease-in-out group-hover:scale-100">
+        <ul className="absolute top-[110%] w-72 origin-top scale-0 transform space-y-1 rounded-sm border bg-white p-2 text-md transition duration-150 ease-in-out group-hover:scale-100">
           {!isFetching &&
             data?.map((item, index) => {
               return (
@@ -41,7 +41,7 @@ export default function Dropdown() {
                       </svg>
                     </span>
                   </button>
-                  <ul className="absolute right-0 top-0 w-52 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out ">
+                  <ul className="absolute right-0 top-0 w-72 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out ">
                     {item.submenu.map((data: any, index: any) => {
                       return (
                         <li key={index} className="px-4 py-2 hover:bg-gray-200">
