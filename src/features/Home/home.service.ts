@@ -26,7 +26,6 @@ export const homeApi = createApi({
       async queryFn({ data, idUser }) {
         try {
           const docRef = doc(db, 'users', idUser);
-          // Add the document with the provided data
           await setDoc(docRef, {
             ...data,
           });
@@ -36,7 +35,7 @@ export const homeApi = createApi({
         }
       },
     }),
-    getUser: builder.query({
+    getOneUser: builder.query({
       async queryFn(idUser) {
         try {
           const docRef = doc(db, 'users', idUser);
@@ -50,4 +49,4 @@ export const homeApi = createApi({
   }),
 });
 
-export const { useFetchCategoriesQuery, useGetUserQuery, useAddUserMutation } = homeApi;
+export const { useFetchCategoriesQuery, useGetOneUserQuery, useAddUserMutation } = homeApi;

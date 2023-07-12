@@ -3,7 +3,7 @@ import Button from 'components/Button';
 import Course from 'components/Course';
 import { Link } from 'react-router-dom';
 
-export default function Example() {
+export default function TabsComponent() {
   const data = [
     {
       label: 'HTML',
@@ -112,8 +112,8 @@ export default function Example() {
         {data.map(({ value, desc }) => (
           <TabPanel className="px-1 py-3 pt-8" key={value} value={value}>
             <div className="flex justify-between space-x-3">
-              {desc.map((item) => (
-                <Course data={item} />
+              {desc.map((item, index) => (
+                <Course key={index} data={item} />
               ))}
             </div>
             <div className="pt-6">

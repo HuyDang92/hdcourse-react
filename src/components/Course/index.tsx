@@ -13,10 +13,8 @@ interface IChildProps {
   data: Course;
 }
 const CourseComponents: React.FC<IChildProps> = ({ data }) => {
-  console.log(data);
 
   return (
-    // {data?.map((item) => )}
     <div className="mt-6 w-80 shadow-border-full rounded-2xl p-4">
       <CardHeader
         color="blue-gray"

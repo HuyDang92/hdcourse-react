@@ -5,13 +5,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAHH3ikO0vhGooIIgAn3DiFK3CimXVr5gE',
-  authDomain: 'hdcourse-10020.firebaseapp.com',
-  projectId: 'hdcourse-10020',
-  storageBucket: 'hdcourse-10020.appspot.com',
-  messagingSenderId: '69417015601',
-  appId: '1:69417015601:web:ee1191e56ca958a23f7810',
-  measurementId: 'G-LXDY4Q27TV',
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_API,
+  measurementId: process.env.REACT_APP_FIREBASE_MEANSUREMENT_ID,
 };
 
 // Initialize Firebase

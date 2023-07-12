@@ -10,7 +10,7 @@ import Loading from 'components/Loading';
 import { useNavigate } from 'react-router-dom';
 import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, provider } from 'firebase.jsx';
-import { useGetUserQuery } from 'features/Home/home.service';
+import { useGetOneUserQuery } from 'features/Home/home.service';
 
 const cx = className.bind(styles);
 interface Login {
@@ -29,6 +29,7 @@ const Login = () => {
   }, []);
   const navigate = useNavigate();
   const [checkSignUp, setCheckSignUp] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const [formData, setFormData] = useState<Login>(initiaState);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -46,6 +47,8 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+        setError(errorCode);
+        setCheckSignUp(false);
       });
   };
 
@@ -62,6 +65,8 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+        setError(errorCode);
+        setCheckSignUp(false);
       });
   };
 
@@ -88,8 +93,14 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="">
             <div className="relative bg-white  shadow-lg sm:rounded-3xl sm:px-10 sm:py-12">
               <div className="mx-auto max-w-sm ">
-                <div>
+                <div className="text-center">
                   <h1 className="text-center text-2xl font-bold">Đăng nhập</h1>
+                  {error == 'auth/wrong-password' && (
+                    <small className="text-[13px] text-red-600">Mật khẩu không chính xác</small>
+                  )}
+                  {error == 'auth/user-not-found' && (
+                    <small className="text-[13px] text-red-600">Tài khoản chưa được đăng ký</small>
+                  )}
                 </div>
                 <div className="w-96 divide-y divide-gray-200 sm:px-8">
                   <div className="space-y-4 py-8 text-base leading-6 text-gray-700 sm:text-lg sm:leading-7">
@@ -99,7 +110,9 @@ const Login = () => {
                           id="email"
                           name="email"
                           type="email"
-                          className="peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0"
+                          className={`${error !== '' && 'border-red-500'} ${
+                            error !== '' && 'focus:outline-red-500'
+                          } peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0`}
                           value={formData.email}
                           onChange={(event) =>
                             setFormData((prev) => ({ ...prev, email: event.target.value }))
@@ -121,7 +134,9 @@ const Login = () => {
                           id="password"
                           name="password"
                           type="password"
-                          className="peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0"
+                          className={`${error !== '' && 'border-red-500'} ${
+                            error !== '' && 'focus:outline-red-500'
+                          } peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0`}
                           value={formData.password}
                           onChange={(event) =>
                             setFormData((prev) => ({ ...prev, password: event.target.value }))
