@@ -22,31 +22,7 @@ export const homeApi = createApi({
         }
       },
     }),
-    addUser: builder.mutation({
-      async queryFn({ data, idUser }) {
-        try {
-          const docRef = doc(db, 'users', idUser);
-          await setDoc(docRef, {
-            ...data,
-          });
-          return { data: 'Resiregister successfully' };
-        } catch (error) {
-          return { error };
-        }
-      },
-    }),
-    getOneUser: builder.query({
-      async queryFn(idUser) {
-        try {
-          const docRef = doc(db, 'users', idUser);
-          const docSnap = await getDoc(docRef);
-          return { data: docSnap };
-        } catch (error) {
-          return { error };
-        }
-      },
-    }),
   }),
 });
 
-export const { useFetchCategoriesQuery, useGetOneUserQuery, useAddUserMutation } = homeApi;
+export const { useFetchCategoriesQuery } = homeApi;

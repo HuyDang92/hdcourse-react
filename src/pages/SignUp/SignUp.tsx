@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import background from 'assets/bglogin.png';
-import className from 'classnames/bind';
-import styles from './SignUp.module.css';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
 import logo from 'assets/logo/logo.svg';
@@ -9,17 +7,11 @@ import sendEmail from 'assets/sendemail.gif';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import {
-  useSignUp,
-  useSignUpWithGoogle,
-  useGetOneUserQuery,
-  useAddUserMutation,
-} from 'hooks/useSignUp.service';
+import { useSignUp, useSignInWithGoogle, useGetOneUserQuery, useAddUser } from 'hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from 'features/Auth/auth.slice';
 import IonIcon from '@reacticons/ionicons';
 import { RootState } from 'stores/store';
-const cx = className.bind(styles);
 interface SignUp {
   name: string;
   email: string;
@@ -34,9 +26,9 @@ const SignUp = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   const { signup, isPending, verifyEmail, error } = useSignUp();
-  const { signInGoogle, errorGG } = useSignUpWithGoogle();
+  const { signInGoogle, errorGG } = useSignInWithGoogle();
   const { getOneUserById } = useGetOneUserQuery();
-  const { addUserById } = useAddUserMutation();
+  const { addUserById } = useAddUser();
 
   useEffect(() => {
     document.title = 'Đăng ký';

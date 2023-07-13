@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import background from 'assets/bglogin.png';
-import className from 'classnames/bind';
-import styles from './Login.module.css';
 import Button from 'components/Button';
 import { Link } from 'react-router-dom';
 import IonIcon from '@reacticons/ionicons';
@@ -10,69 +8,84 @@ import Loading from 'components/Loading';
 import { useNavigate } from 'react-router-dom';
 import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, provider } from 'firebase.jsx';
-import { useGetOneUserQuery } from 'features/Home/home.service';
+import { useSignInWithGoogle, useGetOneUserQuery, useAddUser, useSignIn } from 'hooks/useAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from 'features/Auth/auth.slice';
+import { RootState } from 'stores/store';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
-const cx = className.bind(styles);
 interface Login {
   email: string;
   password: string;
 }
-const initiaState: Login = {
-  email: '',
-  password: '',
-};
 const Login = () => {
-  // const { data } = useGetUserQuery('BdgqOo1drvQgYZxf2NjKs6a3LQW2');
-  // console.log(data);
-  useEffect(() => {
-    document.title = 'Đăng nhập'; // Thay đổi tiêu đề tại đây
-  }, []);
   const navigate = useNavigate();
-  const [checkSignUp, setCheckSignUp] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  const dispatch = useDispatch();
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  const [formData, setFormData] = useState<Login>(initiaState);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setCheckSignUp(true);
-    signInWithEmailAndPassword(auth, formData.email, formData.password)
-      .then(async (userCredential) => {
-        const { uid, displayName, email, photoURL } = userCredential.user;
-        const userInfo = { uid, displayName, email, photoURL };
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
-        navigate('/');
-        setCheckSignUp(false);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        setError(errorCode);
-        setCheckSignUp(false);
-      });
-  };
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const { signInGoogle, errorGG } = useSignInWithGoogle();
+  const { signin, isPending, error } = useSignIn();
+  const { getOneUserById } = useGetOneUserQuery();
+  const { addUserById } = useAddUser();
 
-  const handleLoginGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // The signed-in user info.
-        const { uid, displayName, email, photoURL } = result.user;
+  useEffect(() => {
+    document.title = 'Đăng nhập';
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn]);
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .required('Email không được bỏ trống')
+        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Email không đúng'),
+      password: Yup.string().required('Mật khẩu không được bỏ trống'),
+    }),
+    onSubmit: async (value: Login) => {
+      console.log(value);
+      const userData = await signin(value.email, value.password);
+      if (userData) {
+        const { uid, displayName, email, photoURL } = userData;
+        if (displayName !== null && email !== null && photoURL !== null) {
+          const userInfo = { uid, displayName, email, photoURL };
+          // const checkUser = await getOneUserById(uid);
+          // if (checkUser === undefined) {
+          //   await addUserById(userInfo, uid);
+          // }
+          dispatch(login(userInfo));
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        }
+      }
+    },
+  });
+  console.log(formik.errors.email);
+
+  const handleLogInGoogle = async () => {
+    const userData = await signInGoogle();
+    if (userData) {
+      const { uid, displayName, email, photoURL } = userData;
+      if (displayName !== null && email !== null && photoURL !== null) {
         const userInfo = { uid, displayName, email, photoURL };
+        // const checkUser = await getOneUserById(uid);
+        // if (checkUser === undefined) {
+        //   await addUserById(userInfo, uid);
+        // }
+        dispatch(login(userInfo));
         localStorage.setItem('userInfo', JSON.stringify(userInfo));
-        navigate('/');
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        setError(errorCode);
-        setCheckSignUp(false);
-      });
+      }
+    }
   };
 
   return (
     <div className="">
-      {checkSignUp && <Loading>Đang xử lí...</Loading>}
+      {isPending && <Loading>Đang xử lí...</Loading>}
       <div className="bg">
         <div className="fixed bottom-0 left-0 right-0 top-0 bg-darkLight">
           <img className="fixed bottom-0 left-0 right-0 top-0" src={background} alt="" />
@@ -90,7 +103,7 @@ const Login = () => {
         <div className="relative py-3 sm:mx-auto sm:my-20 sm:max-w-xl">
           <div className="fixed bottom-0 left-0 right-0 top-0 bg-black opacity-30"></div>
           <div className="absolute inset-0 -skew-y-6 transform bg-gradient-to-r from-orange-500 to-orange-200 shadow-lg sm:rotate-6 sm:skew-y-0 sm:rounded-3xl"></div>
-          <form onSubmit={handleSubmit} className="">
+          <form onSubmit={formik.handleSubmit} className="">
             <div className="relative bg-white  shadow-lg sm:rounded-3xl sm:px-10 sm:py-12">
               <div className="mx-auto max-w-sm ">
                 <div className="text-center">
@@ -110,23 +123,26 @@ const Login = () => {
                           id="email"
                           name="email"
                           type="email"
-                          className={`${error !== '' && 'border-red-500'} ${
-                            error !== '' && 'focus:outline-red-500'
+                          className={`${isSubmitted && formik.errors.email && 'border-red-500'} ${
+                            isSubmitted && formik.errors.email && 'focus:outline-red-500'
                           } peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0`}
-                          value={formData.email}
-                          onChange={(event) =>
-                            setFormData((prev) => ({ ...prev, email: event.target.value }))
-                          }
+                          value={formik.values.email}
+                          onChange={formik.handleChange}
                         />
                         <label
                           htmlFor="email"
                           className={`peer-placeholder-shown:text-gray-440 absolute left-4 rounded-full bg-white px-2 text-sm text-gray-600  transition-all peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm peer-focus:text-gray-600 ${
-                            formData.email !== '' ? '-top-3' : 'top-[0.6rem]'
+                            formik.values.email !== '' ? '-top-3' : 'top-[0.6rem]'
                           }`}
                         >
                           <IonIcon name="person" className="pe-2 text-sm" />
                           Email
                         </label>
+                        {isSubmitted && formik.errors.email && (
+                          <small className="ps-3 text-[12px] text-red-600">
+                            {formik.errors.email}
+                          </small>
+                        )}
                       </div>
                       <div className="relative">
                         <input
@@ -134,23 +150,28 @@ const Login = () => {
                           id="password"
                           name="password"
                           type="password"
-                          className={`${error !== '' && 'border-red-500'} ${
-                            error !== '' && 'focus:outline-red-500'
+                          className={`${
+                            isSubmitted && formik.errors.password && 'border-red-500'
+                          } ${
+                            isSubmitted && formik.errors.password && 'focus:outline-red-500'
                           } peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0`}
-                          value={formData.password}
-                          onChange={(event) =>
-                            setFormData((prev) => ({ ...prev, password: event.target.value }))
-                          }
+                          value={formik.values.password}
+                          onChange={formik.handleChange}
                         />
                         <label
                           htmlFor="password"
                           className={`peer-placeholder-shown:text-gray-440 absolute left-4 rounded-full bg-white px-2 text-sm text-gray-600 transition-all peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm peer-focus:text-gray-600 ${
-                            formData.password !== '' ? '-top-3' : 'top-[0.6rem]'
+                            formik.values.password !== '' ? '-top-3' : 'top-[0.6rem]'
                           }`}
                         >
                           <IonIcon name="lock-closed" className="pe-2 text-sm" />
                           Mật khẩu
                         </label>
+                        {isSubmitted && formik.errors.password && (
+                          <small className="ps-3 text-[12px] text-red-600">
+                            {formik.errors.password}
+                          </small>
+                        )}
                       </div>
                     </div>
                     <div className="relative flex justify-between">
@@ -173,7 +194,7 @@ const Login = () => {
                         </Link>
                       </div>
                     </div>
-                    <div className="relative">
+                    <div onClick={() => setIsSubmitted(true)} className="relative">
                       <Button primary rounded_full width_full>
                         Đăng nhập
                       </Button>
@@ -184,7 +205,7 @@ const Login = () => {
                         <IonIcon name="logo-facebook" className="text-2xl" />
                       </li>
                       <li
-                        onClick={handleLoginGoogle}
+                        onClick={handleLogInGoogle}
                         className="rounded-lg border-2 border-darkLight p-2 pb-0"
                       >
                         <IonIcon name="logo-google" className="text-2xl" />

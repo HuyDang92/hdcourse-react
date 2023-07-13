@@ -3,6 +3,8 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   sendEmailVerification,
+  signOut,
+  signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { collection, setDoc, addDoc, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from 'firebase.jsx';
@@ -47,8 +49,34 @@ export const useSignUp = () => {
   };
   return { signup, isPending, verifyEmail, error };
 };
+export const useSignIn = () => {
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState<boolean>(false);
 
-export const useSignUpWithGoogle = () => {
+  const signin = async (email: string, password: string) => {
+    setError(null);
+    setIsPending(true);
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+      if (!userCredential) {
+        throw new Error('Đăng nhập thất bại!');
+      }
+      setError(null);
+      setIsPending(false);
+      return userCredential.user;
+    } catch (err: any) {
+      const errorCode = err.code;
+      const errorMessage = err.message;
+      setError(errorCode);
+      setIsPending(false);
+    }
+  };
+  return { signin, isPending, error };
+};
+
+export const useSignInWithGoogle = () => {
   const [errorGG, setError] = useState<string | null>(null);
 
   const signInGoogle = async () => {
@@ -59,7 +87,7 @@ export const useSignUpWithGoogle = () => {
       // console.log(userCredential);
 
       if (!userCredential) {
-        throw new Error('Đăng ký thất bại!');
+        throw new Error('Đăng nhập thất bại!');
       }
       setError(null);
 
@@ -97,7 +125,7 @@ export const useGetOneUserQuery = () => {
   return { getOneUserById, isPending, errorU };
 };
 
-export const useAddUserMutation = () => {
+export const useAddUser = () => {
   const [errorA, setError] = useState<string | null>(null);
 
   const addUserById = async (data: IUserInfo, idUser: string) => {
@@ -117,4 +145,22 @@ export const useAddUserMutation = () => {
     }
   };
   return { addUserById, errorA };
+};
+export const useSignOut = () => {
+  const [error, setError] = useState<string | null>(null);
+
+  const signout = async () => {
+    setError(null);
+
+    try {
+      await signOut(auth);
+
+      setError(null);
+    } catch (err: any) {
+      const errorCode = err.code;
+      const errorMessage = err.message;
+      setError(errorCode);
+    }
+  };
+  return { signout, error };
 };

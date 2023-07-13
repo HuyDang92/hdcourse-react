@@ -2,9 +2,10 @@ import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import Button from 'components/Button';
 import { useNavigate } from 'react-router-dom';
-import { signOut, onAuthStateChanged } from 'firebase/auth';
-import { auth, provider } from 'firebase.jsx';
 import { IUserInfo } from 'types/User';
+import { useDispatch } from 'react-redux';
+import { useSignOut } from 'hooks/useAuth';
+import { logout } from 'features/Auth/auth.slice';
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ');
@@ -13,23 +14,21 @@ interface IChildProps {
   data: IUserInfo;
 }
 const DropdownInfo: React.FC<IChildProps> = ({ data }) => {
-
   const navigate = useNavigate();
-  const handleLogOut = () => {
-    signOut(auth)
-      .then(() => {
-        localStorage.removeItem('userInfo');
-        navigate('/login');
-      })
-      .catch((error) => {
-        // An error happened.
-      });
+  const dispatch = useDispatch();
+  const { signout, error } = useSignOut();
+
+  const handleLogOut = async () => {
+    await signout();
+    dispatch(logout);
+    localStorage.removeItem('userInfo');
+    navigate('/login');
   };
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex border-0">
-          <img className="w-8 h-8 object-cover rounded-full" src={data.photoURL} alt="avt" />
+          <img className="h-8 w-8 rounded-full object-cover" src={data.photoURL} alt="avt" />
         </Menu.Button>
       </div>
 
@@ -46,7 +45,11 @@ const DropdownInfo: React.FC<IChildProps> = ({ data }) => {
           <div className="py-1">
             <Menu.Item>
               <div className="flex items-center space-x-3 px-4 py-2">
-                <img className="w-12 h-12 object-cover rounded-full" src={data.photoURL} alt="avt" />
+                <img
+                  className="h-12 w-12 rounded-full object-cover"
+                  src={data.photoURL}
+                  alt="avt"
+                />
                 <div className="s">
                   <h3 className="text-lg font-semibold text-darkLight">{data.displayName}</h3>
                   <span></span>
