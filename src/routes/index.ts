@@ -1,5 +1,3 @@
-import configUser from 'config/UserRoutes';
-import configAdmin from 'config/AdminRoutes';
 import { ComponentType } from 'react';
 import DefaultLayout from 'Layout/DefaultLayout';
 import AdminLayout from 'Layout/AdminLayout';
@@ -8,6 +6,7 @@ import Login from 'pages/Login';
 import SignUp from 'pages/SignUp/SignUp';
 import Profile from 'Admin/pages/Profile';
 import Dashboard from 'Admin/pages/Dashboard';
+import Categories from 'pages/Categories/Categories';
 
 interface RouteConfig {
   path: string;
@@ -17,30 +16,40 @@ interface RouteConfig {
 
 const publicRoutes: RouteConfig[] = [
   {
-    path: configUser.routes.home,
+    path: '/',
     component: Home,
     layout: DefaultLayout,
   },
   {
-    path: configUser.routes.login,
+    path: '/login',
     component: Login,
     layout: Login,
   },
   {
-    path: configUser.routes.signup,
+    path: '/signup',
     component: SignUp,
     layout: SignUp,
+  },
+  {
+    path: '/course/:nameCat',
+    component: Categories,
+    layout: DefaultLayout,
+  },
+  {
+    path: '/course/:nameCat/:nameSubCat',
+    component: Categories,
+    layout: DefaultLayout,
   },
 ];
 
 const privateRoutes: RouteConfig[] = [
   {
-    path: configAdmin.routes.admin,
+    path: '/admin',
     component: Dashboard,
     layout: AdminLayout,
   },
   {
-    path: configAdmin.routes.profile,
+    path: '/admin/profile',
     component: Profile,
     layout: AdminLayout,
   },

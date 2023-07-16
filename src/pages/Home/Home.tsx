@@ -1,10 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import className from 'classnames/bind';
-import styles from './Home.module.css';
+import { useEffect } from 'react';
 import SliderComponent from './components/Hero';
-import Loading from 'components/Loading';
-import IonIcon from '@reacticons/ionicons';
-import { useFetchCategoriesQuery } from 'features/Home/home.service';
 import section_1 from 'assets/section_2/asset_1.svg';
 import section_2 from 'assets/section_2/asset_2.svg';
 import section_3 from 'assets/section_2/asset_3.svg';
@@ -12,7 +7,6 @@ import section_4 from 'assets/section_2/asset_4.svg';
 import company from 'assets/company.png';
 import TabsComponent from '../../components/Tabs';
 import { DesignIcon, WebIcon, ItIcon, BusinessIcon } from 'assets/icons';
-import StudyRoute from 'components/StudyRoute';
 import SlideComponent from 'components/StudyRoute/Slider';
 import { Link } from 'react-router-dom';
 import Button from 'components/Button';
@@ -100,26 +94,10 @@ const Home = () => {
           <ul className="grid grid-cols-4 gap-3 text-center font-medium">
             {ListTopic.map((item, index) => {
               const Icon = item.icon;
-
               return (
                 <li
                   key={index}
                   className="flex flex-col items-center rounded-3xl p-4 shadow-border-full"
-                >
-                  <div className="w-44 transition-all hover:scale-[115%]">
-                    <Icon />
-                  </div>
-                  <span className="text-lg font-bold text-darkLight">{item.title}</span>
-                </li>
-              );
-            })}
-            {ListTopic.map((item, index) => {
-              const Icon = item.icon;
-
-              return (
-                <li
-                  key={index}
-                  className="flex flex-col items-center rounded-3xl p-5 shadow-border-full"
                 >
                   <div className="w-44 transition-all hover:scale-[115%]">
                     <Icon />

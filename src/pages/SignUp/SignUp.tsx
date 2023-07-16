@@ -7,9 +7,8 @@ import sendEmail from 'assets/sendemail.gif';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useSignUp, useSignInWithGoogle, useGetOneUserQuery, useAddUser } from 'hooks/useAuth';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from 'features/Auth/auth.slice';
+import { useSignUp, useSignInWithGoogle } from 'hooks/useAuth';
+import { useSelector } from 'react-redux';
 import IonIcon from '@reacticons/ionicons';
 import { RootState } from 'stores/store';
 interface SignUp {
@@ -21,14 +20,11 @@ interface SignUp {
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   const { signup, isPending, verifyEmail, error } = useSignUp();
   const { signInGoogle, errorGG } = useSignInWithGoogle();
-  const { getOneUserById } = useGetOneUserQuery();
-  const { addUserById } = useAddUser();
 
   useEffect(() => {
     document.title = 'Đăng ký';
@@ -63,20 +59,8 @@ const SignUp = () => {
     },
   });
 
-  const handleSignUpGoogle = async () => {
-    const userData = await signInGoogle();
-    if (userData) {
-      const { uid, displayName, email, photoURL } = userData;
-      if (displayName !== null && email !== null && photoURL !== null) {
-        const userInfo = { uid, displayName, email, photoURL };
-        const checkUser = await getOneUserById(uid);
-        if (checkUser === undefined) {
-          await addUserById(userInfo, uid);
-        }
-        dispatch(login(userInfo));
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
-      }
-    }
+  const handleLogInGoogle = async () => {
+    await signInGoogle();
   };
 
   return (
@@ -241,7 +225,7 @@ const SignUp = () => {
                           <IonIcon name="logo-facebook" className="text-2xl" />
                         </li>
                         <li
-                          onClick={handleSignUpGoogle}
+                          onClick={handleLogInGoogle}
                           className="rounded-lg border-2 border-darkLight p-2 pb-0"
                         >
                           <IonIcon name="logo-google" className="text-2xl" />

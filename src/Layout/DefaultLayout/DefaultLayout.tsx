@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';

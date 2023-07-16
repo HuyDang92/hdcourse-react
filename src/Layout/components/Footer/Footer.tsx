@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import IonIcon from '@reacticons/ionicons';
 import './Footer.scss';
 import Button from 'components/Button';

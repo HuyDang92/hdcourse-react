@@ -6,11 +6,8 @@ import IonIcon from '@reacticons/ionicons';
 import logo from 'assets/logo/logo.svg';
 import Loading from 'components/Loading';
 import { useNavigate } from 'react-router-dom';
-import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, provider } from 'firebase.jsx';
-import { useSignInWithGoogle, useGetOneUserQuery, useAddUser, useSignIn } from 'hooks/useAuth';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from 'features/Auth/auth.slice';
+import { useSignInWithGoogle, useSignIn } from 'hooks/useAuth';
+import { useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -21,14 +18,11 @@ interface Login {
 }
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const { signInGoogle, errorGG } = useSignInWithGoogle();
   const { signin, isPending, error } = useSignIn();
-  const { getOneUserById } = useGetOneUserQuery();
-  const { addUserById } = useAddUser();
 
   useEffect(() => {
     document.title = 'Đăng nhập';
@@ -49,38 +43,12 @@ const Login = () => {
       password: Yup.string().required('Mật khẩu không được bỏ trống'),
     }),
     onSubmit: async (value: Login) => {
-      console.log(value);
-      const userData = await signin(value.email, value.password);
-      if (userData) {
-        const { uid, displayName, email, photoURL } = userData;
-        if (displayName !== null && email !== null && photoURL !== null) {
-          const userInfo = { uid, displayName, email, photoURL };
-          // const checkUser = await getOneUserById(uid);
-          // if (checkUser === undefined) {
-          //   await addUserById(userInfo, uid);
-          // }
-          dispatch(login(userInfo));
-          localStorage.setItem('userInfo', JSON.stringify(userInfo));
-        }
-      }
+      await signin(value.email, value.password);
     },
   });
-  console.log(formik.errors.email);
 
   const handleLogInGoogle = async () => {
-    const userData = await signInGoogle();
-    if (userData) {
-      const { uid, displayName, email, photoURL } = userData;
-      if (displayName !== null && email !== null && photoURL !== null) {
-        const userInfo = { uid, displayName, email, photoURL };
-        // const checkUser = await getOneUserById(uid);
-        // if (checkUser === undefined) {
-        //   await addUserById(userInfo, uid);
-        // }
-        dispatch(login(userInfo));
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
-      }
-    }
+    await signInGoogle();
   };
 
   return (
@@ -108,6 +76,9 @@ const Login = () => {
               <div className="mx-auto max-w-sm ">
                 <div className="text-center">
                   <h1 className="text-center text-2xl font-bold">Đăng nhập</h1>
+                  {error == 'email-not-verified' && (
+                    <small className="text-[13px] text-red-600">Email chưa được đăng ký</small>
+                  )}
                   {error == 'auth/wrong-password' && (
                     <small className="text-[13px] text-red-600">Mật khẩu không chính xác</small>
                   )}

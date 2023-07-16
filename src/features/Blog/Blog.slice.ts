@@ -3,7 +3,7 @@ import { IUserInfo } from 'types/User';
 const initialState = {};
 
 const homeSlice = createSlice({
-  name: 'test',
+  name: 'blogs',
   initialState,
   reducers: {
     update: (state, action: PayloadAction<IUserInfo>) => {},

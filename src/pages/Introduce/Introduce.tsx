@@ -1,8 +1,4 @@
-import { useEffect, useState } from 'react';
-import className from 'classnames/bind';
-import styles from './Introduce.module.css';
-
-const cx = className.bind(styles);
+import { useEffect } from 'react';
 
 const Introduce = () => {
   useEffect(() => {

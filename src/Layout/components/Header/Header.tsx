@@ -1,30 +1,20 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import IonIcon from '@reacticons/ionicons';
-import className from 'classnames/bind';
-import styles from './Header.module.scss';
-import Button from 'components/Button';
+import ButtonComponents from 'components/Button';
 import InputSearch from 'components/InputSearch';
 import logo from 'assets/logo/logo.svg';
 import Dropdown from './components/Dropdown';
 import DropdownInfo from '../../../components/DropdownInfo';
 import Notification from '../../../components/Notification';
-
-const cx = className.bind(styles);
-const navigation = [
-  { name: 'Trang chủ', to: '/' },
-  { name: 'Giới thiệu', to: '/introduce' },
-  { name: 'Liên hệ', to: '/contact' },
-];
+import { useSelector } from 'react-redux';
+import { RootState } from 'stores/store';
+import { Tooltip, Button } from '@material-tailwind/react';
+import { useGetOneUserQuery } from 'hooks/useAuth';
 
 const Header = () => {
-  const [isInputFocused, setInputFocused] = useState<boolean>(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
   const [prevScrollPos, setPrevScrollPos] = useState<number>(0);
-
-  // state user info
-  const [userData, setUserData] = useState<any>({});
-
   // sticky header
   useEffect(() => {
     const handleScroll = () => {
@@ -44,14 +34,21 @@ const Header = () => {
     };
   }, [prevScrollPos]);
 
-  useEffect(() => {
-    const getUserInfo = localStorage.getItem('userInfo');
-    if (getUserInfo !== null) {
-      const userInfo = JSON.parse(getUserInfo);
+  // state user info
+  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
+  const [userData, setUserData] = useState<any>({});
+  const [role, setRole] = useState<string>('none');
 
-      setUserData(userInfo);
-    } else {
+  useEffect(() => {
+    if (!currentUser) {
       setUserData(null);
+    } else {
+      if (currentUser.role === 'admin') {
+        setRole('admin');
+      } else {
+        setRole('user');
+      }
+      setUserData(currentUser);
     }
   }, []);
 
@@ -73,26 +70,48 @@ const Header = () => {
           <InputSearch />
         </div>
         {userData !== null ? (
-          <div className="flex items-center space-x-5 text-org">
-            <IonIcon
-              name="cart-outline"
-              className="rounded-full p-2 text-2xl transition-all hover:bg-gray-100"
-            />
-            <Notification />
-            <DropdownInfo data={userData} />
+          <div className="flex items-center space-x-6 text-org">
+            <div className="flex items-center space-x-3">
+              <Tooltip
+                className="border border-blue-gray-50 bg-white px-4 py-3 text-org shadow-xl shadow-black/10"
+                content="Dánh sách yêu thích"
+                placement="bottom"
+              >
+                <Button className="bg-white p-0 shadow-none hover:shadow-none">
+                  <IonIcon
+                    name="heart-outline"
+                    className="rounded-full p-2 text-2xl text-org transition-all hover:bg-gray-100"
+                  />
+                </Button>
+              </Tooltip>
+              <Tooltip
+                className="border border-blue-gray-50 bg-white px-4 py-3 text-org shadow-xl shadow-black/10"
+                content="Giỏ hàng"
+                placement="bottom"
+              >
+                <Button className="bg-white p-0 shadow-none hover:shadow-none">
+                  <IonIcon
+                    name="cart-outline"
+                    className="rounded-full p-2 text-2xl text-org transition-all hover:bg-gray-100"
+                  />
+                </Button>
+              </Tooltip>
+              <Notification />
+            </div>
+            <DropdownInfo data={userData} role={role} />
           </div>
         ) : (
           <div className="flex items-center space-x-4 text-org">
             <IonIcon name="cart-outline" className="icon__hover text-3xl" />
             <Link to="/login">
-              <Button rounded_full border>
+              <ButtonComponents rounded_full border>
                 Đăng nhập
-              </Button>
+              </ButtonComponents>
             </Link>
             <Link to="/signup">
-              <Button rounded_full primary>
+              <ButtonComponents rounded_full primary>
                 Đăng ký
-              </Button>
+              </ButtonComponents>
             </Link>
           </div>
         )}

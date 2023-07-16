@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const withMT = require('@material-tailwind/react/utils/withMT');
+module.exports = withMT({
   content: ['./src/**/*.{js,jsx,ts,tsx}', './node_modules/flowbite/**/*.js'],
   theme: {
     extend: {
@@ -14,10 +15,10 @@ module.exports = {
       dropShadow: {
         'box-course': '0px 0px 4px rgba(0, 0, 0, 0.25)',
       },
-    },
-    fontFamily: {
-      sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+      fontFamily: {
+        sans: ['Montserrat', 'ui-sans-serif', 'system-ui'],
+      },
     },
   },
-  plugins: [require('flowbite/plugin'), require('@tailwindcss/line-clamp')] ,
-};
+  plugins: [require('flowbite/plugin'), require('@tailwindcss/line-clamp')],
+});

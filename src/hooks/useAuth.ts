@@ -11,6 +11,7 @@ import { db } from 'firebase.jsx';
 import { auth, provider } from 'firebase.jsx';
 import { useState } from 'react';
 import { IUserInfo } from 'types/User';
+import { useNavigate } from 'react-router-dom';
 
 export const useSignUp = () => {
   const [error, setError] = useState<string | null>(null);
@@ -23,8 +24,6 @@ export const useSignUp = () => {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(userCredential);
-
       if (!userCredential) {
         throw new Error('Đăng ký thất bại!');
       }
@@ -37,9 +36,11 @@ export const useSignUp = () => {
         url: 'http://localhost:3000/login',
         handleCodeInApp: true,
       });
+      
       setError(null);
       setIsPending(false);
       setVerifyEmail(true);
+      return userCredential.user;
     } catch (err: any) {
       const errorCode = err.code;
       const errorMessage = err.message;
@@ -59,10 +60,12 @@ export const useSignIn = () => {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userCredential);
 
       if (!userCredential) {
         throw new Error('Đăng nhập thất bại!');
       }
+
       setError(null);
       setIsPending(false);
       return userCredential.user;
@@ -128,12 +131,11 @@ export const useGetOneUserQuery = () => {
 export const useAddUser = () => {
   const [errorA, setError] = useState<string | null>(null);
 
-  const addUserById = async (data: IUserInfo, idUser: string) => {
+  const addUserById = async (data: Omit<IUserInfo, 'accessToken'>, idUser: string) => {
     setError(null);
 
     try {
       const docRef = doc(db, 'users', idUser);
-      console.log(idUser);
 
       await setDoc(docRef, {
         ...data,
@@ -154,7 +156,6 @@ export const useSignOut = () => {
 
     try {
       await signOut(auth);
-
       setError(null);
     } catch (err: any) {
       const errorCode = err.code;

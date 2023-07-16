@@ -8,26 +8,30 @@ import { Badge } from '@mui/material';
 import InputSearch from 'components/InputSearch';
 import DropdownInfo from 'components/DropdownInfo';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'stores/store';
+import Notification from 'components/Notification';
 const Aside = () => {
+  const currentUserAdmin = useSelector((state: RootState) => state.auth.currentUser);
   const [userData, setUserData] = useState<any>({});
+
   useEffect(() => {
-    const getUserInfo = localStorage.getItem('userInfo');
-    if (getUserInfo !== null) {
-      const userInfo = JSON.parse(getUserInfo);
-      setUserData(userInfo);
-    } else {
+    if (!currentUserAdmin) {
       setUserData(null);
+    } else {
+      setUserData(currentUserAdmin);
     }
   }, []);
   return (
     <header className="flex justify-between pb-5">
       <Breadcrumbs />
-      <div className="flex items-center space-x-4 text-gray-500">
+      <div className="flex items-center space-x-5 text-gray-500">
         <InputSearch />
-        <IonIcon name="settings" className="text-3xl" />
-        <Badge color="info" badgeContent={2}>
-          <IonIcon name="notifications" className="text-3xl" />
-        </Badge>
+        <IonIcon name="settings-outline" className="text-2xl" />
+        <Notification />
+        {/* <Badge color="info" badgeContent={2}>
+          <IonIcon name="notifications" className="text-2xl" />
+        </Badge> */}
         <DropdownInfo data={userData} />
       </div>
     </header>

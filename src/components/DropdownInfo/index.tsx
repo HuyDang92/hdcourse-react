@@ -1,27 +1,23 @@
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import Button from 'components/Button';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IUserInfo } from 'types/User';
-import { useDispatch } from 'react-redux';
 import { useSignOut } from 'hooks/useAuth';
-import { logout } from 'features/Auth/auth.slice';
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ');
 }
 interface IChildProps {
   data: IUserInfo;
+  role?: string;
 }
-const DropdownInfo: React.FC<IChildProps> = ({ data }) => {
+const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { signout, error } = useSignOut();
+  const { signout } = useSignOut();
 
   const handleLogOut = async () => {
     await signout();
-    dispatch(logout);
-    localStorage.removeItem('userInfo');
     navigate('/login');
   };
   return (
@@ -41,45 +37,143 @@ const DropdownInfo: React.FC<IChildProps> = ({ data }) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-80 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
             <Menu.Item>
-              <div className="flex items-center space-x-3 px-4 py-2">
+              <div className="flex items-center space-x-3 p-3">
                 <img
-                  className="h-12 w-12 rounded-full object-cover"
+                  className="h-14 w-14 rounded-full object-cover"
                   src={data.photoURL}
                   alt="avt"
                 />
-                <div className="s">
+                <div className="">
                   <h3 className="text-lg font-semibold text-darkLight">{data.displayName}</h3>
-                  <span></span>
+                  <span className="text-gray-400">{data.email}</span>
                 </div>
               </div>
             </Menu.Item>
+            {role === 'admin' ? (
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href="/admin"
+                    target="_blank"
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'text-md block px-4 py-3'
+                    )}
+                  >
+                    Quản lí trang web
+                  </a>
+                )}
+              </Menu.Item>
+            ) : (
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    to="/"
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'text-md block px-4 py-3'
+                    )}
+                  >
+                    Trang cá nhân
+                  </Link>
+                )}
+              </Menu.Item>
+            )}
+            <hr />
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <Link
+                  to="/"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'text-md block px-4 py-3'
                   )}
                 >
-                  Trang cá nhân
-                </a>
+                  Khóa học của tôi
+                </Link>
               )}
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <Link
+                  to="/"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'text-md block px-4 py-3'
                   )}
                 >
-                  Cài đặt
-                </a>
+                  Danh sách yêu thích
+                </Link>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to="/"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'text-md block px-4 py-3'
+                  )}
+                >
+                  Giỏ hàng
+                </Link>
+              )}
+            </Menu.Item>
+            <hr />
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to="/"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'text-md block px-4 py-3'
+                  )}
+                >
+                  Thông báo
+                </Link>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to="/"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'text-md block px-4 py-3'
+                  )}
+                >
+                  Tin nhắn
+                </Link>
+              )}
+            </Menu.Item>
+            <hr />
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to="/"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'text-md block px-4 py-3'
+                  )}
+                >
+                  Chỉnh sửa hồ sơ
+                </Link>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to="/"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'text-md block px-4 py-3'
+                  )}
+                >
+                  Trở giúp
+                </Link>
               )}
             </Menu.Item>
             <div onClick={handleLogOut} className="px-4 py-2">

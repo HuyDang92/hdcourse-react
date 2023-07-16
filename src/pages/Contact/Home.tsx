@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useFetchCategoriesQuery } from 'features/Home/home.service';
+import { useFetchCategoriesQuery } from 'features/Category/category.service';
 import className from 'classnames/bind';
 import styles from './Home.module.css';
 

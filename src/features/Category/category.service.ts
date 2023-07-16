@@ -3,11 +3,11 @@ import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import { collection, setDoc, addDoc, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from 'firebase.jsx';
 
-export const homeApi = createApi({
+export const categoriesApi = createApi({
   reducerPath: 'categories',
   baseQuery: fakeBaseQuery(),
   endpoints: (builder) => ({
-    fetchCategories: builder.query({
+    fetchCategories: builder.query<any, void>({
       async queryFn() {
         try {
           const categoriesRef = collection(db, 'categories');
@@ -25,4 +25,4 @@ export const homeApi = createApi({
   }),
 });
 
-export const { useFetchCategoriesQuery } = homeApi;
+export const { useFetchCategoriesQuery } = categoriesApi;

@@ -1,4 +1,4 @@
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserInfo } from 'types/User';
 export interface AuthState {
   isLoggedIn: boolean;
@@ -20,6 +20,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.isLoggedIn = false;
       state.currentUser = null;
+
     },
   },
 });
