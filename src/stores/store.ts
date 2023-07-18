@@ -3,6 +3,8 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { categoriesApi } from 'features/Category/category.service';
 import { userApi } from 'features/Auth/auth.service';
 import authReducer from '../features/Auth/auth.slice';
+import managerAdminReducer from '../features/Admin/Manager.slice';
+import layoutAdminReducer from '../features/Admin/Aside.slice';
 import {
   persistStore,
   persistReducer,
@@ -19,6 +21,7 @@ const rootReducers = combineReducers({
   [categoriesApi.reducerPath]: categoriesApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   auth: authReducer,
+  manager: managerAdminReducer,
 });
 // Cấu hình Redux Persist
 const persistConfig = {

@@ -37,8 +37,8 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-80 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-[22rem] origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="px-2 py-2">
             <Menu.Item>
               <div className="flex items-center space-x-3 p-3">
                 <img
@@ -48,7 +48,7 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
                 />
                 <div className="">
                   <h3 className="text-lg font-semibold text-darkLight">{data.displayName}</h3>
-                  <span className="text-gray-400">{data.email}</span>
+                  <div className="text-gray-400">{data.email}</div>
                 </div>
               </div>
             </Menu.Item>

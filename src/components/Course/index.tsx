@@ -1,9 +1,9 @@
 import { CardHeader, CardBody, Rating } from '@material-tailwind/react';
-import { Course } from 'types/Home';
+import { ICourse } from 'types/Home';
 import IonIcon from '@reacticons/ionicons';
 
 interface IChildProps {
-  data: Course;
+  data: ICourse;
 }
 const CourseComponents: React.FC<IChildProps> = ({ data }) => {
   return (
@@ -15,10 +15,10 @@ const CourseComponents: React.FC<IChildProps> = ({ data }) => {
         <span className="absolute bottom-0 left-0 right-0 top-0 z-10 bg-black opacity-0 transition-all group-hover:opacity-50"></span>
         <img src={data.thumb} alt="img-blur-shadow" className="h-full w-full rounded-xl" />
         <div className="hover-target absolute left-[50%] top-[50%] z-30 flex -translate-x-[50%] -translate-y-[50%] space-x-3">
-          <button className="scale-0 rounded-full bg-white px-3 pt-3 pb-1 text-xl text-org  shadow-border-full transition-all hover:bg-org hover:text-white group-hover:scale-100">
+          <button className="scale-0 rounded-full bg-white px-3 pb-1 pt-3 text-xl text-org  shadow-border-full transition-all hover:bg-org hover:text-white group-hover:scale-100">
             <IonIcon name="cart-outline" className="" />
           </button>
-          <button className="scale-0 rounded-full bg-white px-3 pt-3 pb-1  text-xl text-org shadow-border-full transition-all hover:bg-org hover:text-white group-hover:scale-100">
+          <button className="scale-0 rounded-full bg-white px-3 pb-1 pt-3  text-xl text-org shadow-border-full transition-all hover:bg-org hover:text-white group-hover:scale-100">
             <IonIcon name="heart-outline" />
           </button>
         </div>

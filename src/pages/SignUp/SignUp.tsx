@@ -105,9 +105,7 @@ const SignUp = () => {
                             type="text"
                             className={`peer h-10 w-full rounded-full border-2 ${
                               isSubmitted && formik.errors.name && 'border-red-500'
-                            } ${
-                              isSubmitted && formik.errors.name && 'focus:outline-red-500'
-                            } text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0`}
+                            }  focus:outline-slate-500 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                             value={formik.values.name}
                             onChange={formik.handleChange}
                           />
@@ -133,9 +131,7 @@ const SignUp = () => {
                             type="email"
                             className={`peer h-10 w-full rounded-full border-2 ${
                               isSubmitted && formik.errors.email && 'border-red-500'
-                            } ${
-                              isSubmitted && formik.errors.email && 'focus:outline-red-500'
-                            } text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0`}
+                            }  focus:outline-slate-500 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                             value={formik.values.email}
                             onChange={formik.handleChange}
                           />
@@ -162,9 +158,7 @@ const SignUp = () => {
                             type="password"
                             className={`peer h-10 w-full rounded-full border-2 ${
                               isSubmitted && formik.errors.password && 'border-red-500'
-                            } ${
-                              isSubmitted && formik.errors.password && 'focus:outline-red-500'
-                            } text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0`}
+                            }  focus:outline-slate-500 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                             value={formik.values.password}
                             onChange={formik.handleChange}
                           />
@@ -191,9 +185,7 @@ const SignUp = () => {
                             type="password"
                             className={`peer h-10 w-full rounded-full border-2 ${
                               isSubmitted && formik.errors.repassword && 'border-red-500'
-                            } ${
-                              isSubmitted && formik.errors.repassword && 'focus:outline-red-500'
-                            } text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0`}
+                            }  focus:outline-slate-500 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                             value={formik.values.repassword}
                             onChange={formik.handleChange}
                           />
@@ -235,7 +227,7 @@ const SignUp = () => {
                         </li>
                       </ul>
                       <p className="text-center">
-                        Bạn có tài khoản?{' '}
+                        Bạn có tài khoản?
                         <Link className="text-org" to="/login">
                           Đăng nhập
                         </Link>

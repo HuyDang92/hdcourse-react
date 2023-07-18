@@ -5,63 +5,53 @@ import { Radio, Checkbox, Button } from '@material-tailwind/react';
 import { useFetchCategoriesQuery } from 'features/Category/category.service';
 import CourseComponents from 'components/Course';
 import Pagination from 'components/Panination';
+import { ICourse } from 'types/Home';
 
-const data = [
+const data: ICourse[] = [
   {
-    thumb:
-      'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-    title: `Html/css pro`,
-    author: 'Huy Huy',
-    rating: 4.9,
-    ratingCount: 98,
-    price: 189000,
+    thumb: 'thumb2.jpg',
+    title: 'Course 2',
+    author: 'Author 2',
+    rating: 4.0,
+    ratingCount: 50,
+    price: 19.99,
+    description: 'Course 2 description',
+    tree: false,
+    totalLecture: 8,
+    totalStudent: 300,
+    totalTimeVideo: 90,
+    createdAt: new Date('2022-03-01'),
+    updatedAt: new Date('2022-04-01'),
   },
   {
-    thumb:
-      'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-    title: `Html/css pro`,
-    author: 'Huy Huy',
-    rating: 4.9,
-    ratingCount: 98,
-    price: 189000,
+    thumb: 'thumb3.jpg',
+    title: 'Course 3',
+    author: 'Author 3',
+    rating: 4.8,
+    ratingCount: 200,
+    price: 39.99,
+    description: 'Course 3 description',
+    tree: true,
+    totalLecture: 12,
+    totalStudent: 800,
+    totalTimeVideo: 150,
+    createdAt: new Date('2022-05-01'),
+    updatedAt: new Date('2022-06-01'),
   },
   {
-    thumb:
-      'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-
-    title: `Html/css pro`,
-    author: 'Huy Huy',
-    rating: 4.9,
-    ratingCount: 98,
-    price: 189000,
-  },
-  {
-    thumb:
-      'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-    title: `Html/css pro`,
-    author: 'Huy Huy',
-    rating: 4.9,
-    ratingCount: 98,
-    price: 189000,
-  },
-  {
-    thumb:
-      'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-    title: `Html/css pro`,
-    author: 'Huy Huy',
-    rating: 4.9,
-    ratingCount: 98,
-    price: 189000,
-  },
-  {
-    thumb:
-      'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-
-    title: `Html/css pro`,
-    author: 'Huy Huy',
-    rating: 4.9,
-    ratingCount: 98,
-    price: 189000,
+    thumb: 'thumb4.jpg',
+    title: 'Course 4',
+    author: 'Author 4',
+    rating: 4.2,
+    ratingCount: 80,
+    price: 24.99,
+    description: 'Course 4 description',
+    tree: false,
+    totalLecture: 6,
+    totalStudent: 200,
+    totalTimeVideo: 60,
+    createdAt: new Date('2022-07-01'),
+    updatedAt: new Date('2022-08-01'),
   },
 ];
 

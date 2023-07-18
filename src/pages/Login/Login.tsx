@@ -7,10 +7,11 @@ import logo from 'assets/logo/logo.svg';
 import Loading from 'components/Loading';
 import { useNavigate } from 'react-router-dom';
 import { useSignInWithGoogle, useSignIn } from 'hooks/useAuth';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Timestamp } from 'firebase/firestore';
 
 interface Login {
   email: string;
@@ -18,6 +19,7 @@ interface Login {
 }
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -43,7 +45,7 @@ const Login = () => {
       password: Yup.string().required('Mật khẩu không được bỏ trống'),
     }),
     onSubmit: async (value: Login) => {
-      await signin(value.email, value.password);
+      signin(value.email, value.password);
     },
   });
 
@@ -94,9 +96,9 @@ const Login = () => {
                           id="email"
                           name="email"
                           type="email"
-                          className={`${isSubmitted && formik.errors.email && 'border-red-500'} ${
-                            isSubmitted && formik.errors.email && 'focus:outline-red-500'
-                          } peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0`}
+                          className={`${
+                            isSubmitted && formik.errors.email && 'border-red-500'
+                          }  focus:outline-slate-500 peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                           value={formik.values.email}
                           onChange={formik.handleChange}
                         />
@@ -123,9 +125,7 @@ const Login = () => {
                           type="password"
                           className={`${
                             isSubmitted && formik.errors.password && 'border-red-500'
-                          } ${
-                            isSubmitted && formik.errors.password && 'focus:outline-red-500'
-                          } peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-transparent focus:outline-slate-500 focus:ring-0`}
+                          }  focus:outline-slate-500 peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                           value={formik.values.password}
                           onChange={formik.handleChange}
                         />

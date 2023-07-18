@@ -7,6 +7,8 @@ import SignUp from 'pages/SignUp/SignUp';
 import Profile from 'Admin/pages/Profile';
 import Dashboard from 'Admin/pages/Dashboard';
 import Categories from 'pages/Categories/Categories';
+import ListUser from 'Admin/pages/ListUser';
+import ListCategory from 'Admin/pages/ListCategory';
 
 interface RouteConfig {
   path: string;
@@ -49,8 +51,23 @@ const privateRoutes: RouteConfig[] = [
     layout: AdminLayout,
   },
   {
-    path: '/admin/profile',
-    component: Profile,
+    path: '/admin/manager-category',
+    component: ListCategory,
+    layout: AdminLayout,
+  },
+  {
+    path: '/admin/manager-course',
+    component: ListUser,
+    layout: AdminLayout,
+  },
+  {
+    path: '/admin/manager-blog',
+    component: ListUser,
+    layout: AdminLayout,
+  },
+  {
+    path: '/admin/manager-user',
+    component: ListUser,
     layout: AdminLayout,
   },
 ];

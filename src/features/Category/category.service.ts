@@ -22,7 +22,22 @@ export const categoriesApi = createApi({
         }
       },
     }),
+    fetchAllUser: builder.query<any, void>({
+      async queryFn() {
+        try {
+          const usersRef = collection(db, 'users');
+          const querySnapshot = await getDocs(usersRef);
+          let users: any[] = [];
+          querySnapshot.forEach((doc) => {
+            users.push(doc.data());
+          });
+          return { data: users };
+        } catch (error) {
+          return { error };
+        }
+      },
+    }),
   }),
 });
 
-export const { useFetchCategoriesQuery } = categoriesApi;
+export const { useFetchCategoriesQuery, useFetchAllUserQuery } = categoriesApi;
