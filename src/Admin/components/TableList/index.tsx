@@ -112,7 +112,7 @@ const TableList: React.FC<IChildProps> = ({ data }) => {
                   <td className={classes}>
                     <div className="flex flex-col">
                       <span color="blue-gray" className="font-normal">
-                        {user.phoneNumber}
+                        {user.phoneNumber ? user.phoneNumber : 'Chưa có số'}
                       </span>
                       <span color="blue-gray" className="font-normal opacity-70"></span>
                     </div>

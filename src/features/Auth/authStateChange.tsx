@@ -26,8 +26,8 @@ const AuthState = ({ children }: any) => {
         };
         try {
           // Lấy token trả về
-          const idTokenResult = await user.getIdToken();
-          const { token } = idTokenResult;
+          const token = await user.getIdToken();
+
           if (displayName && email && photoURL) {
             const userExists = await getOneUserById(uid);
             if (userExists) {
@@ -45,6 +45,7 @@ const AuthState = ({ children }: any) => {
               };
               await addUserById(userSetInfo, uid);
               const userStateNew = { ...userInfo, role: 'user', accessToken: token };
+
               dispatch(login(userStateNew));
             }
             // if (!userExists) {

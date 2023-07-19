@@ -3,6 +3,10 @@ import { Button, Input, Radio } from '@material-tailwind/react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Loading from '../../../../../components/Loading';
+import { useCreateUserMutation } from 'features/Auth/auth.service';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { RootState } from 'stores/store';
 
 interface SignUp {
   name: string;
@@ -15,6 +19,8 @@ interface SignUp {
 
 const AddUser = ({ setOpen, sendMess }: any) => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [addUser, addUserResult] = useCreateUserMutation();
+  const tokenId = useSelector((state: RootState) => state.auth.currentUser?.accessToken);
 
   const formik = useFormik({
     initialValues: {
@@ -41,7 +47,13 @@ const AddUser = ({ setOpen, sendMess }: any) => {
         .oneOf([Yup.ref('password')], 'Mật khẩu không trùng khớp'),
     }),
     onSubmit: async (value: SignUp, { resetForm }) => {
-      console.log(value);
+      const infoLogin = { email: value.email, password: value.password };
+      const result = await addUser(infoLogin).unwrap();
+      console.log(result);
+
+      // const result = await axios.post(`http://localhost:8000/api/current-user/create`, infoLogin, {
+      //   headers: { token: `${tokenId}` },
+      // });
 
       resetForm();
       sendMess(true, 'Thêm người dùng thành công');
@@ -150,7 +162,7 @@ const AddUser = ({ setOpen, sendMess }: any) => {
           <Button variant="text" color="orange" onClick={() => setOpen(false)} className="mr-1">
             <span>Hủy</span>
           </Button>
-          <Button onClick={() => setIsSubmitted(true)} type="submit">
+          <Button onClick={() => setIsSubmitted(true)} className="bg-org" type="submit">
             Thêm
           </Button>
         </div>

@@ -3,6 +3,9 @@ import IonIcon from '@reacticons/ionicons';
 import { NavLink } from 'react-router-dom';
 import { Fragment, useState } from 'react';
 import { Accordion, AccordionHeader, AccordionBody } from '@material-tailwind/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'stores/store';
+import { Open, Active, Title, subTitle } from 'features/Admin/Aside.slice';
 
 const navDashboard = [
   { name: 'Overview', to: '/admin' },
@@ -17,27 +20,32 @@ const navManager = [
 const navProfile = [{ name: 'Trang cá nhân', to: '/admin/profile' }];
 
 export default function DropdownMenu() {
-  const [open, setOpen] = useState<number>(1);
-  const [active, setActive] = useState<number>(1);
-  
+  const dispatch = useDispatch();
+  const activeState = useSelector((state: RootState) => state.asideAdmin.active);
+  const openState = useSelector((state: RootState) => state.asideAdmin.open);
+
   const handleOpen = (value: any) => {
-    setOpen(open === value ? 0 : value);
-    setActive(active === value ? 0 : value);
+    dispatch(Open(openState === value ? 0 : value));
+    dispatch(Active(activeState === value ? 0 : value));
+  };
+  const handleTitle = (title: string, subT: string) => {
+    dispatch(Title(title));
+    dispatch(subTitle(subT));
   };
 
   return (
     <Fragment>
-      <Accordion open={open === 1} className="mb-2">
+      <Accordion open={openState === 1} className="mb-2">
         <AccordionHeader
           onClick={() => handleOpen(1)}
-          className={`rounded-xl border-b-0 p-3  ${active === 1 ? 'shadow-border-full' : ''}`}
+          className={`rounded-xl border-b-0 p-3  ${activeState === 1 ? 'shadow-border-full' : ''}`}
         >
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center space-x-3">
               <IonIcon
                 name="grid"
                 className={`"me-4 rounded-md p-3 text-lg text-gray-500 shadow-border-blur  ${
-                  active === 1 && 'bg-gradient-to-br from-org to-amber-400 text-white'
+                  activeState === 1 && 'bg-gradient-to-br from-org to-amber-400 text-white'
                 }`}
               />
               <p className="justify-start text-lg">Thống kê</p>
@@ -51,6 +59,7 @@ export default function DropdownMenu() {
               <li key={index} className="list-disc p-3 text-gray-900">
                 <NavLink
                   end
+                  onClick={() => handleTitle(nav.name, 'Thống kê')}
                   className={({ isActive }) =>
                     isActive ? 'font-semibold text-org' : 'text-gray-500 '
                   }
@@ -63,17 +72,17 @@ export default function DropdownMenu() {
           </ul>
         </AccordionBody>
       </Accordion>
-      <Accordion open={open === 2} className="mb-2">
+      <Accordion open={openState === 2} className="mb-2">
         <AccordionHeader
           onClick={() => handleOpen(2)}
-          className={`rounded-xl border-b-0 p-3  ${active === 2 ? 'shadow-border-full' : ''}`}
+          className={`rounded-xl border-b-0 p-3  ${activeState === 2 ? 'shadow-border-full' : ''}`}
         >
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center space-x-3">
               <IonIcon
                 name="file-tray-stacked"
                 className={`"me-4 rounded-md p-3 text-lg text-gray-500 shadow-border-blur  ${
-                  active === 2 && 'bg-gradient-to-br from-org to-amber-400 text-white'
+                  activeState === 2 && 'bg-gradient-to-br from-org to-amber-400 text-white'
                 }`}
               />
               <p className="justify-start text-lg">Quản lí</p>
@@ -87,6 +96,7 @@ export default function DropdownMenu() {
               <li key={index} className="list-disc p-3 text-gray-900">
                 <NavLink
                   end
+                  onClick={() => handleTitle(nav.name, 'Quản lí')}
                   className={({ isActive }) =>
                     isActive ? 'font-semibold text-org' : 'text-gray-500 '
                   }
@@ -99,17 +109,17 @@ export default function DropdownMenu() {
           </ul>
         </AccordionBody>
       </Accordion>
-      <Accordion open={open === 3} className="mb-2">
+      <Accordion open={openState === 3} className="mb-2">
         <AccordionHeader
           onClick={() => handleOpen(3)}
-          className={`rounded-xl border-b-0 p-3  ${active === 3 ? 'shadow-border-full' : ''}`}
+          className={`rounded-xl border-b-0 p-3  ${activeState === 3 ? 'shadow-border-full' : ''}`}
         >
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center space-x-3">
               <IonIcon
                 name="person-circle"
                 className={`"me-4 rounded-md p-3 text-lg text-gray-500 shadow-border-blur  ${
-                  active === 3 && 'bg-gradient-to-br from-org to-amber-400 text-white'
+                  activeState === 3 && 'bg-gradient-to-br from-org to-amber-400 text-white'
                 }`}
               />
               <p className="justify-start text-lg">Profile</p>
@@ -120,7 +130,11 @@ export default function DropdownMenu() {
         <AccordionBody className="ps-5">
           <ul className="ps-5 text-[1rem] font-medium text-gray-400">
             {navProfile.map((nav, index) => (
-              <li key={index} className="list-disc p-3 text-gray-900">
+              <li
+                onClick={() => handleTitle(nav.name, 'Profile')}
+                key={index}
+                className="list-disc p-3 text-gray-900"
+              >
                 <NavLink
                   end
                   className={({ isActive }) =>

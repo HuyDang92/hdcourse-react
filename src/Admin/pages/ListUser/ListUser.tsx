@@ -4,21 +4,47 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { CardHeader, CardBody, CardFooter, Input, Typography } from '@material-tailwind/react';
 import DialogComponent from '../../components/Dialog';
 import AddUser from './components/AddUser';
-import { useGetAllUser } from 'hooks/useAuth';
+import { useGetAllUser, usePagination } from 'hooks/useGetData';
 import { IUserInfo } from 'types/User';
 import PaginationAdmin from '../../components/Pagination';
 import Loading from 'Admin/components/Loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const ListCategory = () => {
-  useEffect(() => {
-    document.title = 'Danh sách danh mục';
-  }, []);
   const [mess, setMess] = useState<boolean>(false);
-  const [valueInput, setValueInput] = useState<string>('');
+  const [selectedValue, setSelectedValue] = useState<number>(3);
   const [userData, setUserData] = useState<Omit<IUserInfo, 'accessToken'>[]>([]);
   const [filteredData, setFilteredData] = useState<Omit<IUserInfo, 'accessToken'>[]>([]);
+  const { getAllUser } = useGetAllUser();
+  const { data, isPending, totalPages, goToPreviousPage, goToNextPage } = usePagination(
+    'users',
+    selectedValue,
+    userData.length
+  );
 
+  useEffect(() => {
+    getAllUser('users').then((data) => {
+      if (data) {
+        setUserData(data);
+      }
+    });
+  }, []);
+  useEffect(() => {
+    document.title = 'Danh sách danh mục';
+    if (!isPending) {
+      setFilteredData(data);
+    }
+  }, [!isPending]);
+
+  const handleSearchData = (value: string) => {
+    if (value) {
+      const filteredData = userData.filter((user) => user.email.includes(value));
+      setFilteredData(filteredData);
+    } else {
+      setFilteredData(data); // Gán lại filteredData bằng userData ban đầu
+    }
+  };
   const handleToast = (value: any, title: string) => {
     setMess(value);
     toast.success(title, {
@@ -32,26 +58,10 @@ const ListCategory = () => {
       theme: 'light',
     });
   };
-  const { getAllUser, isPending, error } = useGetAllUser();
-
-  useEffect(() => {
-    getAllUser().then((data) => {
-      if (data) {
-        setUserData(data);
-        setFilteredData(data);
-      }
-    });
-  }, []);
-
-  const handleSearchData = (value: string) => {
-    if (value) {
-      const filteredData = userData.filter((user) => user.email.includes(value));
-      setFilteredData(filteredData);
-    } else {
-      setFilteredData(userData); // Gán lại filteredData bằng userData ban đầu
-    }
+  const handleSelectChange = (event: any) => {
+    const newValue = parseInt(event.target.value); // Chuyển đổi giá trị từ chuỗi sang số
+    setSelectedValue(newValue); // Cập nhật giá trị khi có thay đổi trong phần tử <select>
   };
-
   return (
     <div className="">
       <ToastContainer />
@@ -64,11 +74,21 @@ const ListCategory = () => {
                 Danh sách người dùng
               </Typography>
               <div className="flex items-center space-x-3">
-                <select name="" className="mt-5 rounded-lg border-2 border-gray-200" id="">
-                  <option value="">5</option>
-                  <option value="">10</option>
-                  <option value="">15</option>
-                  <option value="">20</option>
+                <select
+                  name="pageSize"
+                  className="mt-5 rounded-lg border-2 border-gray-200"
+                  id=""
+                  value={selectedValue.toString()} // Chuyển đổi giá trị từ số sang chuỗi khi đặt vào phần tử <select>
+                  onChange={handleSelectChange} // Bắt sự kiện khi có thay đổi trong phần tử <select>
+                >
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                  <option value={15}>15</option>
+                  <option value={20}>20</option>
                 </select>
                 <p className="mt-3 text-lg font-medium">Số mục mỗi trang</p>
               </div>
@@ -76,7 +96,7 @@ const ListCategory = () => {
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
               <div className="w-full md:w-72">
                 <Input
-                  label="Tìm kiếm user theo email"
+                  label="Tìm kiếm người dùng theo email"
                   onChange={(value) => handleSearchData(value.target.value)}
                   icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                 />
@@ -88,9 +108,15 @@ const ListCategory = () => {
             </div>
           </div>
         </CardHeader>
-        <CardBody className='p-0'>{!isPending ? <TableList data={filteredData} /> : <Loading />}</CardBody>
-        <CardFooter className='flex justify-center'>
-          <PaginationAdmin />
+        <CardBody className="p-0">
+          {!isPending ? <TableList data={filteredData} /> : <Loading />}
+        </CardBody>
+        <CardFooter className="flex justify-center">
+          <PaginationAdmin
+            totalPages={totalPages}
+            goToPreviousPage={goToPreviousPage}
+            goToNextPage={goToNextPage}
+          />
         </CardFooter>
       </div>
     </div>

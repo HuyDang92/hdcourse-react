@@ -7,10 +7,23 @@ import {
   signInWithEmailAndPassword,
   User,
 } from 'firebase/auth';
-import { collection, setDoc, addDoc, doc, getDoc, getDocs } from 'firebase/firestore';
+import {
+  collection,
+  setDoc,
+  addDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+  startAt,
+  startAfter,
+  endBefore,
+} from 'firebase/firestore';
 import { db } from 'firebase.jsx';
 import { auth, provider } from 'firebase.jsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IUserInfo } from 'types/User';
 
 export const useVerificationEmail = () => {
@@ -188,31 +201,4 @@ export const useAddUser = () => {
     }
   };
   return { addUserById, errorA };
-};
-export const useGetAllUser = () => {
-  const [isPending, setIsPending] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const getAllUser = async () => {
-    setError(null);
-    try {
-      const usersRef = collection(db, 'users');
-      const querySnapshot = await getDocs(usersRef);
-      let users: Omit<IUserInfo, 'accessToken'>[] = [];
-      querySnapshot.forEach((doc) => {
-        const { ...userInfo } = doc.data() as Omit<IUserInfo, 'accessToken'>;
-        users.push(userInfo);
-      });
-      setIsPending(false);
-
-      return users;
-    } catch (err: any) {
-      const errorCode = err.code;
-      const errorMessage = err.message;
-      console.log(errorCode, errorMessage);
-      setError(errorCode);
-      setIsPending(false);
-    }
-  };
-  return { getAllUser, isPending, error };
 };
