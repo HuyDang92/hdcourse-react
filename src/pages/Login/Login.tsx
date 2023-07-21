@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { login, logout } from '../../features/Auth/auth.slice';
 import { Timestamp } from 'firebase/firestore';
 
 interface Login {
@@ -19,12 +20,12 @@ interface Login {
 }
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const { signInGoogle, errorGG } = useSignInWithGoogle();
   const { signin, isPending, error } = useSignIn();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     document.title = 'Đăng nhập';
@@ -45,7 +46,24 @@ const Login = () => {
       password: Yup.string().required('Mật khẩu không được bỏ trống'),
     }),
     onSubmit: async (value: Login) => {
-      signin(value.email, value.password);
+      const userCre = await signin(value.email, value.password);
+
+      // if (userCre) {
+      //   const { uid, displayName, email, photoURL, phoneNumber, emailVerified } = userCre;
+      //   const currentDate = Timestamp.now();
+      //   const userInfo = {
+      //     uid,
+      //     displayName,
+      //     email,
+      //     photoURL,
+      //     phoneNumber,
+      //     active: emailVerified,
+      //   };
+      // }
+
+      // const userStateOld = { ...userInfo, role: userExists.role, accessToken: token };
+
+      // dispatch(login(userStateOld));
     },
   });
 
@@ -53,7 +71,9 @@ const Login = () => {
     await signInGoogle();
   };
 
-  return (
+  return isLoggedIn ? (
+    <div className="h-100[vh]"></div>
+  ) : (
     <div className="">
       {isPending && <Loading>Đang xử lí...</Loading>}
       <div className="bg">

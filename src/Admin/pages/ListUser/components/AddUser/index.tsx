@@ -4,9 +4,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Loading from '../../../../../components/Loading';
 import { useCreateUserMutation } from 'features/Auth/auth.service';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { RootState } from 'stores/store';
+import { useDispatch } from 'react-redux';
+import { addUserState } from '../../../../../features/Admin/Manager.slice';
 
 interface SignUp {
   name: string;
@@ -18,9 +17,11 @@ interface SignUp {
 }
 
 const AddUser = ({ setOpen, sendMess }: any) => {
+  const dispatch = useDispatch();
+  const [errServer, setErrServer] = useState<any>(undefined);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [addUser, addUserResult] = useCreateUserMutation();
-  const tokenId = useSelector((state: RootState) => state.auth.currentUser?.accessToken);
+  const [addUserAdmin, isPending] = useCreateUserMutation();
+  // const { addUserById } = useAddUser();
 
   const formik = useFormik({
     initialValues: {
@@ -47,38 +48,37 @@ const AddUser = ({ setOpen, sendMess }: any) => {
         .oneOf([Yup.ref('password')], 'Mật khẩu không trùng khớp'),
     }),
     onSubmit: async (value: SignUp, { resetForm }) => {
-      const infoLogin = { email: value.email, password: value.password };
-      const result = await addUser(infoLogin).unwrap();
-      console.log(result);
-
-      // const result = await axios.post(`http://localhost:8000/api/current-user/create`, infoLogin, {
-      //   headers: { token: `${tokenId}` },
-      // });
-
-      resetForm();
-      sendMess(true, 'Thêm người dùng thành công');
-      setOpen(false);
-      // const { uid, displayName, email, photoURL, phoneNumber, emailVerified } = userCre;
-      // const currentDate = Timestamp.now();
-      // const userInfo = {
-      //   uid,
-      //   displayName: displayName || '',
-      //   email: email || '',
-      //   photoURL: photoURL || '',
-      //   phoneNumber: phoneNumber || '',
-      //   active: emailVerified,
-      //   role: value.role,
-      //   createdAt: currentDate,
-      //   updatedAt: currentDate,
-      // };
+      dispatch(addUserState(true));
+      try {
+        const userInfo = {
+          displayName: value.name,
+          email: value.email,
+          password: value.password,
+          photoURL:
+            'https://firebasestorage.googleapis.com/v0/b/hdcourse-10020.appspot.com/o/courses%2FavtDefault.jpg?alt=media&token=f8fcab19-4e95-40bf-a2df-71014acafa51',
+          phoneNumber: value.phone,
+          active: false,
+          role: value.role,
+        };
+        const result = await addUserAdmin(userInfo);
+        resetForm();
+        sendMess(true, 'Thêm người dùng thành công');
+        setOpen(false);
+        dispatch(addUserState(false));
+      } catch (err: any) {
+        const { status } = err;
+        setErrServer(status);
+      }
     },
   });
-
   return (
     <div className="">
-      {/* {isPending && <Loading> Đang xử lí ... </Loading>} */}
+      {isPending.isLoading && <Loading> Đang xử lí ... </Loading>}
       <h1 className="mb-5 text-lg font-bold uppercase">Thêm người dùng</h1>
-      <form onSubmit={formik.handleSubmit} className="w-full">
+      {errServer !== undefined && (
+        <small className="py-2 text-[12px] text-red-600">Email đã được đăng ký</small>
+      )}
+      <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <div className="mb-4 grid grid-cols-2 gap-3">
           <div>
             <Input

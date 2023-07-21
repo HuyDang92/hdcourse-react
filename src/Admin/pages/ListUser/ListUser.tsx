@@ -4,36 +4,36 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { CardHeader, CardBody, CardFooter, Input, Typography } from '@material-tailwind/react';
 import DialogComponent from '../../components/Dialog';
 import AddUser from './components/AddUser';
-import { useGetAllUser, usePagination } from 'hooks/useGetData';
+import { usePagination } from 'hooks/useGetData';
 import { IUserInfo } from 'types/User';
 import PaginationAdmin from '../../components/Pagination';
 import Loading from 'Admin/components/Loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useGetAllDataQuery } from 'features/Auth/auth.service';
 
 const ListCategory = () => {
   const [mess, setMess] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<number>(3);
   const [userData, setUserData] = useState<Omit<IUserInfo, 'accessToken'>[]>([]);
   const [filteredData, setFilteredData] = useState<Omit<IUserInfo, 'accessToken'>[]>([]);
-  const { getAllUser } = useGetAllUser();
-  const { data, isPending, totalPages, goToPreviousPage, goToNextPage } = usePagination(
+  const { data, isFetching } = useGetAllDataQuery();
+
+  const { _userData, isPending, totalPages, goToPreviousPage, goToNextPage } = usePagination(
     'users',
     selectedValue,
     userData.length
   );
 
   useEffect(() => {
-    getAllUser('users').then((data) => {
-      if (data) {
-        setUserData(data);
-      }
-    });
-  }, []);
+    if (data) {
+      setUserData(data);
+    }
+  }, [isFetching]);
   useEffect(() => {
     document.title = 'Danh sách danh mục';
     if (!isPending) {
-      setFilteredData(data);
+      setFilteredData(_userData);
     }
   }, [!isPending]);
 
@@ -42,7 +42,7 @@ const ListCategory = () => {
       const filteredData = userData.filter((user) => user.email.includes(value));
       setFilteredData(filteredData);
     } else {
-      setFilteredData(data); // Gán lại filteredData bằng userData ban đầu
+      setFilteredData(_userData); // Gán lại filteredData bằng userData ban đầu
     }
   };
   const handleToast = (value: any, title: string) => {

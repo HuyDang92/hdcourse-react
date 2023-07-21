@@ -7,20 +7,7 @@ import {
   signInWithEmailAndPassword,
   User,
 } from 'firebase/auth';
-import {
-  collection,
-  setDoc,
-  addDoc,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  orderBy,
-  limit,
-  startAt,
-  startAfter,
-  endBefore,
-} from 'firebase/firestore';
+import { setDoc, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebase.jsx';
 import { auth, provider } from 'firebase.jsx';
 import { useEffect, useState } from 'react';
@@ -28,15 +15,16 @@ import { IUserInfo } from 'types/User';
 
 export const useVerificationEmail = () => {
   const [error, setError] = useState<string | null>(null);
-  const [isPending, setIsPending] = useState<boolean>(true);
+  const [isPending, setIsPending] = useState<boolean>(false);
 
   const verificationEmail = async (auth: User, url: string) => {
+    setIsPending(true);
     try {
       await sendEmailVerification(auth, {
         url: url,
         handleCodeInApp: true,
       });
-      setIsPending(true);
+      setIsPending(false);
       return { message: 'Đã gửi email xác nhận! Vui lòng kiểm tra trong hộp thư' };
     } catch (err: any) {
       setError(err);
@@ -98,7 +86,6 @@ export const useSignIn = () => {
       if (!userCredential) {
         throw new Error('Đăng nhập thất bại!');
       }
-
       setError(null);
       setIsPending(false);
       return userCredential.user;
@@ -156,49 +143,22 @@ export const useSignOut = () => {
   };
   return { signout, error };
 };
-export const useGetOneUserQuery = () => {
-  const [isPending, setIsPending] = useState<boolean>(false);
-  const [errorU, setError] = useState<string | null>(null);
+export const useUpdateActiveUser = () => {
+  const [error, setError] = useState<string | null>(null);
 
-  const getOneUserById = async (idUser: string) => {
-    setIsPending(true);
+  const updateActiveUserById = async (idUser: string) => {
     setError(null);
 
     try {
-      const docRef = doc(db, 'users', idUser);
-      const docSnap = await getDoc(docRef);
-      setError(null);
-      setIsPending(false);
-
-      return docSnap.data();
-    } catch (err: any) {
-      const errorCode = err.code;
-      const errorMessage = err.message;
-      console.log(errorCode, errorMessage);
-      setError(errorCode);
-    }
-  };
-  return { getOneUserById, isPending, errorU };
-};
-
-export const useAddUser = () => {
-  const [errorA, setError] = useState<string | null>(null);
-
-  const addUserById = async (data: Omit<IUserInfo, 'accessToken'>, idUser: string) => {
-    setError(null);
-
-    try {
-      const docRef = doc(db, 'users', idUser);
-
-      await setDoc(docRef, {
-        ...data,
+      const userDocRef = doc(db, 'users', idUser);
+      // Set the "capital" field of the city 'DC'
+      await updateDoc(userDocRef, {
+        active: true,
       });
     } catch (err: any) {
       const errorCode = err.code;
-      const errorMessage = err.message;
-      console.log(errorCode, errorMessage);
       setError(errorCode);
     }
   };
-  return { addUserById, errorA };
+  return { updateActiveUserById, error };
 };

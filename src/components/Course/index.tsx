@@ -6,6 +6,7 @@ interface IChildProps {
   data: ICourse;
 }
 const CourseComponents: React.FC<IChildProps> = ({ data }) => {
+
   return (
     <div className="my-5 h-fit w-80 rounded-2xl shadow-border-full">
       <CardHeader

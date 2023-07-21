@@ -74,7 +74,7 @@ const TableList: React.FC<IChildProps> = ({ data }) => {
             <tr>
               {TABLE_HEAD.map((head, index) => (
                 <th
-                  key={head}
+                  key={index}
                   onClick={() => handleSortData(head)}
                   className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
                 >
@@ -95,7 +95,7 @@ const TableList: React.FC<IChildProps> = ({ data }) => {
               const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
 
               return (
-                <tr key={user.displayName}>
+                <tr key={index}>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
                       <Avatar src={user.photoURL} alt={user.displayName} size="sm" />

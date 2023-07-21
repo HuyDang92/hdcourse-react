@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { ComponentType } from 'react';
 import DefaultLayout from 'Layout/DefaultLayout';
 import AdminLayout from 'Layout/AdminLayout';
@@ -9,12 +10,18 @@ import Dashboard from 'Admin/pages/Dashboard';
 import Categories from 'pages/Categories/Categories';
 import ListUser from 'Admin/pages/ListUser';
 import ListCategory from 'Admin/pages/ListCategory';
+import ProfileUser from 'pages/ProfileUser';
+import SettingAccount from 'pages/SettingAccount/SettingAccount';
 
 interface RouteConfig {
   path: string;
   component: ComponentType;
   layout: ComponentType<any>;
 }
+// const getLocal = localStorage.getItem('persist:root');
+// const auth = getLocal && JSON.parse(getLocal);
+// const isLogin = JSON.parse(auth.auth);
+// console.log(isLogin);
 
 const publicRoutes: RouteConfig[] = [
   {
@@ -42,6 +49,16 @@ const publicRoutes: RouteConfig[] = [
     component: Categories,
     layout: DefaultLayout,
   },
+  {
+    path: '/user/:nameuser',
+    component: ProfileUser,
+    layout: DefaultLayout,
+  },
+  {
+    path: '/user/edit-profile',
+    component: SettingAccount,
+    layout: DefaultLayout,
+  },
 ];
 
 const privateRoutes: RouteConfig[] = [
@@ -52,7 +69,7 @@ const privateRoutes: RouteConfig[] = [
   },
   {
     path: '/admin/manager-category',
-    component: ListCategory,
+    component: ListUser,
     layout: AdminLayout,
   },
   {
@@ -68,6 +85,11 @@ const privateRoutes: RouteConfig[] = [
   {
     path: '/admin/manager-user',
     component: ListUser,
+    layout: AdminLayout,
+  },
+  {
+    path: '/admin/profile',
+    component: Profile,
     layout: AdminLayout,
   },
 ];

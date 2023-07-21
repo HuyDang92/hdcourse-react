@@ -9,7 +9,7 @@ import { ICourse } from 'types/Home';
 
 const data: ICourse[] = [
   {
-    thumb: 'thumb2.jpg',
+    thumb: 'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
     title: 'Course 2',
     author: 'Author 2',
     rating: 4.0,
@@ -24,7 +24,7 @@ const data: ICourse[] = [
     updatedAt: new Date('2022-04-01'),
   },
   {
-    thumb: 'thumb3.jpg',
+    thumb: 'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
     title: 'Course 3',
     author: 'Author 3',
     rating: 4.8,
@@ -39,7 +39,7 @@ const data: ICourse[] = [
     updatedAt: new Date('2022-06-01'),
   },
   {
-    thumb: 'thumb4.jpg',
+    thumb: 'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
     title: 'Course 4',
     author: 'Author 4',
     rating: 4.2,

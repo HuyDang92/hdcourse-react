@@ -54,8 +54,19 @@ const SignUp = () => {
         .required('Xác nhận mật khẩu không được bỏ trống')
         .oneOf([Yup.ref('password')], 'Mật khẩu không trùng khớp'),
     }),
-    onSubmit: async (value: SignUp) => {
-      signup(value.email, value.password, value.name);
+    onSubmit: async (value: SignUp, { resetForm }) => {
+      // const userInfo = {
+      //   displayName: value.name,
+      //   email: value.email,
+      //   password: value.password,
+      //   photoURL:
+      //     'https://firebasestorage.googleapis.com/v0/b/hdcourse-10020.appspot.com/o/courses%2FavtDefault.jpg?alt=media&token=f8fcab19-4e95-40bf-a2df-71014acafa51',
+      //   phoneNumber: '',
+      //   active: false,
+      //   role: 'user',
+      // };
+      await signup(value.email, value.password, value.name);
+      resetForm();
     },
   });
 
@@ -72,12 +83,12 @@ const SignUp = () => {
         </div>
       </div>
       <Link to="/">
-        <h1 className="absolute z-10 m-10 flex space-x-4 text-2xl font-semibold text-org">
+        <div className="absolute z-10 m-10 flex space-x-4 text-2xl font-semibold text-org">
           <img src={logo} className="w-7" alt="logo" />
           <p>
             HD<span>Course</span>
           </p>
-        </h1>
+        </div>
       </Link>
       <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-5 sm:py-8">
         <div className="relative py-3 sm:mx-auto sm:my-20 sm:max-w-xl">
@@ -89,9 +100,9 @@ const SignUp = () => {
                 <div className="mx-auto max-w-sm">
                   <div className="text-center">
                     <h1 className="text-center text-2xl font-bold ">Đăng ký</h1>
-                    {error == 'auth/email-already-in-use' && (
+                    {/* {error == 'auth/email-already-in-use' && (
                       <small className="text-[13px] text-red-600">Email đã được đăng ký</small>
-                    )}
+                    )} */}
                   </div>
                   <div className="w-96 divide-y divide-gray-200 sm:px-8">
                     <div

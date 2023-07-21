@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import SliderComponent from './components/Hero';
 import section_1 from 'assets/section_2/asset_1.svg';
 import section_2 from 'assets/section_2/asset_2.svg';
@@ -32,8 +32,6 @@ const ListTopic = [
 ];
 
 const Home = () => {
-  // const [showPreviousButton, setShowPreviousButton] = useState(true);
-
   useEffect(() => {
     document.title = 'HDCourse - Học ngay làm luôn'; // Thay đổi tiêu đề tại đây
   }, []);

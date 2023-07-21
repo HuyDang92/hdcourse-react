@@ -10,7 +10,6 @@ import Notification from '../../../components/Notification';
 import { useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { Tooltip, Button } from '@material-tailwind/react';
-import { useGetOneUserQuery } from 'hooks/useAuth';
 
 const Header = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
@@ -38,7 +37,7 @@ const Header = () => {
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
   const [userData, setUserData] = useState<any>({});
   const [role, setRole] = useState<string>('none');
-
+  
   useEffect(() => {
     if (!currentUser) {
       setUserData(null);
@@ -50,7 +49,7 @@ const Header = () => {
       }
       setUserData(currentUser);
     }
-  }, []);
+  }, [currentUser]);
 
   return (
     <header

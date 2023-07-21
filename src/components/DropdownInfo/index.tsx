@@ -4,6 +4,8 @@ import Button from 'components/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { IUserInfo } from 'types/User';
 import { useSignOut } from 'hooks/useAuth';
+import { useSelector } from 'react-redux';
+import { RootState } from 'stores/store';
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ');
@@ -15,6 +17,8 @@ interface IChildProps {
 const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
   const navigate = useNavigate();
   const { signout } = useSignOut();
+  const userCre = useSelector((state: RootState) => state.auth.currentUser);
+  const slug = userCre && userCre.email.split('@')[0];
 
   const handleLogOut = async () => {
     await signout();
@@ -71,7 +75,7 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
               <Menu.Item>
                 {({ active }) => (
                   <Link
-                    to="/"
+                    to={`/user/${slug}`}
                     className={classNames(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'text-md block px-4 py-3'
@@ -153,13 +157,26 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  to="/"
+                  to="/user/edit-profile"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'text-md block px-4 py-3'
                   )}
                 >
                   Chỉnh sửa hồ sơ
+                </Link>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to="/user/edit-profile"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'text-md block px-4 py-3'
+                  )}
+                >
+                  Cài đặt tài khoản
                 </Link>
               )}
             </Menu.Item>
@@ -176,6 +193,7 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
                 </Link>
               )}
             </Menu.Item>
+
             <div onClick={handleLogOut} className="px-4 py-2">
               <Button width_full primary rounded_md>
                 Đăng xuất

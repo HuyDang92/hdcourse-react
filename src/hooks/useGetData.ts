@@ -1,53 +1,51 @@
 import {
   collection,
-  setDoc,
-  addDoc,
-  doc,
-  getDoc,
   getDocs,
   query,
   orderBy,
   limit,
-  startAt,
   startAfter,
   endBefore,
 } from 'firebase/firestore';
 import { db } from 'firebase.jsx';
 import { useEffect, useState } from 'react';
 import { IUserInfo } from 'types/User';
+import { useSelector } from 'react-redux';
+import { RootState } from 'stores/store';
 
-export const useGetAllUser = () => {
-  const [isPending, setIsPending] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+// export const useGetAllUser = () => {
+//   const [isPending, setIsPending] = useState<boolean>(true);
+//   const [error, setError] = useState<string | null>(null);
 
-  const getAllUser = async (collectionName: string) => {
-    setError(null);
-    try {
-      const usersRef = collection(db, collectionName);
-      const querySnapshot = await getDocs(usersRef);
-      let users: Omit<IUserInfo, 'accessToken'>[] = [];
-      querySnapshot.forEach((doc) => {
-        const { ...userInfo } = doc.data() as Omit<IUserInfo, 'accessToken'>;
-        users.push(userInfo);
-      });
-      setIsPending(false);
+//   const getAllUser = async (collectionName: string) => {
+//     setError(null);
+//     try {
+//       const usersRef = collection(db, collectionName);
+//       const querySnapshot = await getDocs(usersRef);
+//       let users: Omit<IUserInfo, 'accessToken'>[] = [];
+//       querySnapshot.forEach((doc) => {
+//         const { ...userInfo } = doc.data() as Omit<IUserInfo, 'accessToken'>;
+//         users.push(userInfo);
+//       });
+//       setIsPending(false);
 
-      return users;
-    } catch (err: any) {
-      const errorCode = err.code;
-      const errorMessage = err.message;
-      console.log(errorCode, errorMessage);
-      setError(errorCode);
-      setIsPending(false);
-    }
-  };
-  return { getAllUser, isPending, error };
-};
+//       return users;
+//     } catch (err: any) {
+//       const errorCode = err.code;
+//       const errorMessage = err.message;
+//       console.log(errorCode, errorMessage);
+//       setError(errorCode);
+//       setIsPending(false);
+//     }
+//   };
+//   return { getAllUser, isPending, error };
+// };
 
 export const usePagination = (collectionName: string, pageSize: number, totalSize: number) => {
   const totalPages = Math.ceil(totalSize / pageSize);
-
-  const [data, setData] = useState<Omit<IUserInfo, 'accessToken'>[]>([]);
+  const addUserState = useSelector((state: RootState) => state.manager.addUserPending);
+  const deleteUserState = useSelector((state: RootState) => state.manager.deleteUserPending);
+  const [_userData, setData] = useState<Omit<IUserInfo, 'accessToken'>[]>([]);
   const [_startAfter, setStartAfter] = useState<any | null>(null);
   const [_startBefore, setStartBefore] = useState<any | null>(null);
   const [saveLastItem, setSaveLastItem] = useState<any | null>(null);
@@ -60,7 +58,7 @@ export const usePagination = (collectionName: string, pageSize: number, totalSiz
       try {
         setIsPending(true);
         const collectionRef = collection(db, collectionName);
-        let queryCollection = query(collectionRef, orderBy('createdAt'), limit(pageSize));
+        let queryCollection = query(collectionRef, orderBy('createdAt', 'asc'), limit(pageSize));
         if (_startAfter) {
           queryCollection = query(
             collectionRef,
@@ -103,7 +101,7 @@ export const usePagination = (collectionName: string, pageSize: number, totalSiz
     };
 
     fetchData();
-  }, [collectionName, pageSize, _startAfter, _startBefore]);
+  }, [collectionName, pageSize, !addUserState, !deleteUserState, _startAfter, _startBefore]);
 
   const goToPreviousPage = (): void => {
     setStartBefore(saveFirstItem);
@@ -114,7 +112,7 @@ export const usePagination = (collectionName: string, pageSize: number, totalSiz
   };
 
   return {
-    data,
+    _userData,
     isPending,
     totalPages,
     error,
