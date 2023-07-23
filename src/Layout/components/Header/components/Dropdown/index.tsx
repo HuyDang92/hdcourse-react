@@ -1,10 +1,11 @@
-import { useFetchCategoriesQuery } from 'features/Category/category.service';
+import { useGetAllCatQuery } from 'features/Category/category.service';
 import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
-import slugify from 'slugify';
+import { useEffect, useState } from 'react';
+import { ICategories } from 'types/Home';
 
 export default function Dropdown() {
-  const categories = useFetchCategoriesQuery();
+  const { data, isFetching } = useGetAllCatQuery();
 
   return (
     <div className="relative">
@@ -23,9 +24,9 @@ export default function Dropdown() {
           </span>
         </button>
         <ul className="text-md absolute top-[110%] w-72 origin-top scale-0 transform space-y-1 rounded-md border bg-white p-1 transition duration-150 ease-in-out group-hover:scale-100">
-          {!categories.isFetching &&
-            categories.data?.map((item: any, index: number) => {
-              const slug = slugify(item.name, { lower: true });
+          {!isFetching &&
+            data.map((item: any, index: number) => {
+              const slug = item.name.replace(/\s/g, '-');
               return (
                 <li key={index} className="relative rounded-sm hover:bg-gray-200">
                   <Link to={`/course/${slug}`}>
@@ -43,34 +44,48 @@ export default function Dropdown() {
                     </button>
                   </Link>
                   <ul className="absolute right-0 top-0 w-72 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out">
-                    {item.submenu.map((data: any, subIndex: number) => {
-                      const subSlug = data.replace(/\s/g, '-');
-                      const combinedSlug = `${slug}/${subSlug}`;
-                      return (
-                        <Link key={subIndex} to={`/course/${combinedSlug}`}>
-                          <li className="px-4 py-3 hover:bg-gray-200">{data}</li>
-                        </Link>
-                      );
-                    })}
+                    {item.subcategories &&
+                      Array.from(item.subcategories).map((dataTwo: any, subIndex: number) => {
+                        const subSlug = dataTwo.name.replace(/\s/g, '-');
+                        const combinedSlug = `${slug}/${subSlug}`;
+                        return (
+                          <div key={subIndex}>
+                            <li className="relative rounded-sm px-4 py-2 hover:bg-gray-200">
+                              <Link to={`/course/${combinedSlug}`}>
+                                <button className="flex w-full items-center text-left outline-none focus:outline-none">
+                                  <span className="flex-1 pr-1">{dataTwo.name}</span>
+                                  <span className="mr-auto">
+                                    <svg
+                                      className="h-4 w-4 fill-current transition duration-150 ease-in-out"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 20 20"
+                                    >
+                                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                    </svg>
+                                  </span>
+                                </button>
+                              </Link>
+                              <ul className="absolute right-0 top-0 w-52 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out">
+                                {dataTwo.subcategories &&
+                                  Array.from(dataTwo.subcategories).map(
+                                    (dataThree: any, subIndex: number) => {
+                                      const subSlug = dataThree.name.replace(/\s/g, '-');
+                                      const combinedSlug = `${slug}/${subSlug}`;
+                                      return (
+                                        <Link key={subIndex} to={`/course/${combinedSlug}`}>
+                                          <li className="px-4 py-3 hover:bg-gray-200">
+                                            {dataThree.name}
+                                          </li>
+                                        </Link>
+                                      );
+                                    }
+                                  )}
+                              </ul>
+                            </li>
+                          </div>
+                        );
+                      })}
                   </ul>
-                  {/* <li className="relative rounded-sm px-4 py-2 hover:bg-gray-200">
-                      <button className="flex w-full items-center text-left outline-none focus:outline-none">
-                        <span className="flex-1 pr-1">Python</span>
-                        <span className="mr-auto">
-                          <svg
-                            className="h-4 w-4 fill-current transition duration-150 ease-in-out"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                          </svg>
-                        </span>
-                      </button>
-                      <ul className="absolute right-0 top-0 w-52 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out">
-                        <li className="px-4 py-2 hover:bg-gray-200">2.7</li>
-                        <li className="px-4 py-2 hover:bg-gray-200">3+</li>
-                      </ul>
-                    </li> */}
                 </li>
               );
             })}

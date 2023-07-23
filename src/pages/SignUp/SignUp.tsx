@@ -66,7 +66,7 @@ const SignUp = () => {
       //   role: 'user',
       // };
       await signup(value.email, value.password, value.name);
-      resetForm();
+      // resetForm();
     },
   });
 
@@ -100,9 +100,9 @@ const SignUp = () => {
                 <div className="mx-auto max-w-sm">
                   <div className="text-center">
                     <h1 className="text-center text-2xl font-bold ">Đăng ký</h1>
-                    {/* {error == 'auth/email-already-in-use' && (
+                    {error == 'auth/email-already-in-use' && (
                       <small className="text-[13px] text-red-600">Email đã được đăng ký</small>
-                    )} */}
+                    )}
                   </div>
                   <div className="w-96 divide-y divide-gray-200 sm:px-8">
                     <div

@@ -1,4 +1,7 @@
+import { Timestamp } from 'firebase/firestore';
+
 export interface ICourse {
+  id_category: string;
   thumb: string;
   title: string;
   author: string;
@@ -10,8 +13,8 @@ export interface ICourse {
   totalLecture: number;
   totalStudent: number;
   totalTimeVideo: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
 }
 export interface IBlog {
   avatar: string;
@@ -21,6 +24,19 @@ export interface IBlog {
   topic: string;
   shortDescription: string;
   price: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+export interface ICategories {
+  name: string;
+  submenu: string[];
+  subcategories: {
+    id: string;
+    name: string;
+    parent_ID: string;
+    subcategories: {
+      name: string;
+      parent_ID: string;
+    }[];
+  }[];
 }

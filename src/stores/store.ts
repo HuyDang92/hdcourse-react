@@ -1,4 +1,5 @@
 import { userApi } from 'features/Auth/auth.service';
+import { courseApi } from 'features/Course/course.service';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { categoriesApi } from 'features/Category/category.service';
@@ -20,6 +21,7 @@ import storage from 'redux-persist/lib/storage';
 const rootReducers = combineReducers({
   [categoriesApi.reducerPath]: categoriesApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
+  [courseApi.reducerPath]: courseApi.reducer,
   auth: authReducer,
   manager: managerAdminReducer,
   asideAdmin: layoutAdminReducer,
@@ -41,7 +43,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(categoriesApi.middleware, userApi.middleware),
+    }).concat(categoriesApi.middleware, userApi.middleware, courseApi.middleware),
 });
 // Tạo persisted store
 export const persistor = persistStore(store);

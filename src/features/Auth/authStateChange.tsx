@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { auth } from 'firebase.jsx';
 import { onAuthStateChanged, onIdTokenChanged } from 'firebase/auth';
 import { login, logout } from './auth.slice';
-import { Timestamp } from 'firebase/firestore';
 import { useAddUserMutation, useGetUserByIdMutation } from 'features/Auth/auth.service';
 
 const AuthState = ({ children }: any) => {
@@ -14,6 +13,9 @@ const AuthState = ({ children }: any) => {
 
   useEffect(() => {
     const handleAuthStateChanged = async (user: any) => {
+      if (user && user.emailVerified === false) {
+        return;
+      }
       if (user) {
         const userInfo = {
           uid: user.uid,

@@ -15,7 +15,7 @@ import { IUserInfo } from 'types/User';
 
 export const useVerificationEmail = () => {
   const [error, setError] = useState<string | null>(null);
-  const [isPending, setIsPending] = useState<boolean>(false);
+  const [isLoading, setIsPending] = useState<boolean>(false);
 
   const verificationEmail = async (auth: User, url: string) => {
     setIsPending(true);
@@ -31,7 +31,7 @@ export const useVerificationEmail = () => {
       setIsPending(false);
     }
   };
-  return { verificationEmail, isPending, error };
+  return { verificationEmail, isLoading, error };
 };
 
 export const useSignUp = () => {
@@ -49,7 +49,7 @@ export const useSignUp = () => {
         await updateProfile(userCredential.user, {
           displayName: displayName,
           photoURL:
-            'https://firebasestorage.googleapis.com/v0/b/hdcourse-10020.appspot.com/o/courses%2FavtDefault.jpg?alt=media&token=f8fcab19-4e95-40bf-a2df-71014acafa51',
+            'https://res.cloudinary.com/dbppi7qw4/image/upload/v1690097671/users_avatar/yvwnylf4e3svysfexxgi.jpg',
         });
 
         await sendEmailVerification(userCredential.user, {

@@ -1,30 +1,33 @@
 import Button from 'components/Button';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { useUpdateProfileMutation } from 'features/Auth/auth.service';
 import Loading from 'components/Loading';
 import { toast } from 'react-toastify';
+import { update } from 'features/Auth/auth.slice';
+import { IUserInfo } from 'types/User';
+import { storage } from '../../../../firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+type UserOmit = Omit<IUserInfo, 'createdAt' | 'updatedAt'>;
 
-interface IProfile {
-  uid: string;
-  displayName: string;
-  email: string;
-  photoURL: string;
-  phoneNumber: string;
-  role: string;
-  active: boolean;
-  accessToken: string;
-}
-const initialvalues = {
+const initialvalues: UserOmit = {
+  uid: '',
   displayName: '',
   email: '',
   photoURL: '',
   phoneNumber: '',
+  role: '',
+  active: true,
+  accessToken: '',
 };
 const EditProfile = () => {
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState<UserOmit>(initialvalues);
+  const [upload, setUpload] = useState<File | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+
   const userCre = useSelector((state: RootState) => state.auth.currentUser);
-  const [formData, setFormData] = useState<any>(initialvalues);
   const [updateProfile, isPending] = useUpdateProfileMutation();
 
   useEffect(() => {
@@ -36,24 +39,30 @@ const EditProfile = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const userInfo = {
-      uid: formData.uid,
-      displayName: formData.displayName,
-      photoURL:
-        'https://firebasestorage.googleapis.com/v0/b/hdcourse-10020.appspot.com/o/courses%2FavtDefault.jpg?alt=media&token=f8fcab19-4e95-40bf-a2df-71014acafa51',
-      phoneNumber: formData.phoneNumber,
-    };
-    await updateProfile(userInfo);
-    toast.success('Chỉnh sửa thành công', {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
+    const formDataFormat = new FormData();
+    formDataFormat.append('uid', formData.uid);
+    formDataFormat.append('displayName', formData.displayName);
+    formDataFormat.append('phoneNumber', formData.phoneNumber);
+    formDataFormat.append('photoURL', formData.photoURL);
+    if (upload !== null) {
+      formDataFormat.append('photoURLNew', upload);
+    }
+    try {
+      await updateProfile(formDataFormat).unwrap();
+      dispatch(update(formData));
+      toast.success('Chỉnh sửa thành công', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div className="">
@@ -64,11 +73,19 @@ const EditProfile = () => {
             <h1 className="text-lg font-bold uppercase">Thông tin cơ bản</h1>
             <div className="info relative flex items-center justify-between space-x-5">
               <div className="flex items-center space-x-5 ">
-                <img
-                  className="h-32 w-32 rounded-full object-cover shadow-border-blur"
-                  src={formData?.photoURL}
-                  alt=""
-                />
+                {imagePreviewUrl ? (
+                  <img
+                    className="h-32 w-32 rounded-full object-cover shadow-border-blur"
+                    src={imagePreviewUrl}
+                    alt="Preview"
+                  />
+                ) : (
+                  <img
+                    className="h-32 w-32 rounded-full object-cover shadow-border-blur"
+                    src={formData?.photoURL}
+                    alt=""
+                  />
+                )}
                 <div className="text-xl font-bold">
                   <h3>Avatar</h3>
                   <p className="text-lg font-medium">
@@ -77,7 +94,29 @@ const EditProfile = () => {
                 </div>
               </div>
               <div className="">
-                <input className="w-64 border-[1px]" type="file" placeholder="Đổi ảnh avatar" />
+                <input
+                  id="upload"
+                  className="w-64 border-[1px]"
+                  hidden
+                  onChange={(event) => {
+                    const selectedFile = event.target.files?.[0];
+                    if (selectedFile) {
+                      setUpload(selectedFile);
+
+                      // Create a temporary URL for the selected image and set it as the image preview
+                      const previewUrl = URL.createObjectURL(selectedFile);
+                      setImagePreviewUrl(previewUrl);
+                    }
+                  }}
+                  type="file"
+                  placeholder="Đổi ảnh avatar"
+                />
+                <label
+                  htmlFor="upload"
+                  className="rounded-md bg-org px-4 py-3 text-white transition-all hover:border-[1px] hover:border-org hover:bg-white hover:text-org"
+                >
+                  Đổi ảnh
+                </label>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-5">

@@ -6,13 +6,18 @@ import IonIcon from '@reacticons/ionicons';
 import logo from 'assets/logo/logo.svg';
 import Loading from 'components/Loading';
 import { useNavigate } from 'react-router-dom';
-import { useSignInWithGoogle, useSignIn } from 'hooks/useAuth';
+import {
+  useSignInWithGoogle,
+  useSignIn,
+  useVerificationEmail,
+  useUpdateActiveUser,
+} from 'hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { login, logout } from '../../features/Auth/auth.slice';
 import { Timestamp } from 'firebase/firestore';
+import sendEmail from 'assets/sendemail.gif';
 
 interface Login {
   email: string;
@@ -21,11 +26,15 @@ interface Login {
 const Login = () => {
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [veryfy, setVeryfy] = useState<boolean | undefined>(undefined);
+  const [user, setUser] = useState<any | undefined>(undefined);
+  const { verificationEmail, isLoading } = useVerificationEmail();
+  const { updateActiveUserById } = useUpdateActiveUser();
+  const [mess, setMess] = useState<any>(null);
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const { signInGoogle, errorGG } = useSignInWithGoogle();
   const { signin, isPending, error } = useSignIn();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     document.title = 'Đăng nhập';
@@ -47,23 +56,12 @@ const Login = () => {
     }),
     onSubmit: async (value: Login) => {
       const userCre = await signin(value.email, value.password);
-
-      // if (userCre) {
-      //   const { uid, displayName, email, photoURL, phoneNumber, emailVerified } = userCre;
-      //   const currentDate = Timestamp.now();
-      //   const userInfo = {
-      //     uid,
-      //     displayName,
-      //     email,
-      //     photoURL,
-      //     phoneNumber,
-      //     active: emailVerified,
-      //   };
-      // }
-
-      // const userStateOld = { ...userInfo, role: userExists.role, accessToken: token };
-
-      // dispatch(login(userStateOld));
+      if (userCre?.emailVerified === false) {
+        setUser(userCre);
+        setVeryfy(false);
+      } else {
+        setVeryfy(true);
+      }
     },
   });
 
@@ -71,8 +69,51 @@ const Login = () => {
     await signInGoogle();
   };
 
-  return isLoggedIn ? (
-    <div className="h-100[vh]"></div>
+  const handleSendEmail = async () => {
+    if (user) {
+      const result = await verificationEmail(user, 'http://localhost:3000');
+      await updateActiveUserById(user?.uid);
+      console.log(result);
+      setMess(result);
+    }
+  };
+  return veryfy === false ? (
+    <div className="flex items-center justify-center">
+      {isLoading && <Loading />}
+      <div className="absolute top-0 m-10 flex space-x-4 text-2xl font-semibold text-org">
+        <img src={logo} className="w-7" alt="logo" />
+        <p>
+          HD<span>Course</span>
+        </p>
+      </div>
+      <div className="space-y-5 text-center">
+        {mess === null ? (
+          <div className=" space-y-4 p-[15rem]">
+            <span className="text-xl font-bold">
+              Vui lòng xác minh email trước khi sử dụng dịch vụ của chúng tôi
+            </span>
+            <br />
+            <span className="cursor-pointer text-org underline">Không nhận được email?</span>
+            <div onClick={handleSendEmail}>
+              <Button rounded_md primary>
+                Gửi lại email xác minh
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="relative mt-24 bg-white px-4 py-6 shadow-border-full sm:rounded-3xl sm:px-32 sm:py-10">
+            <div className="mx-auto max-w-sm text-center">
+              <img className="w-72" src={sendEmail} alt="" />
+              <div className="text-lg font-semibold">Chúng tôi đã gửi email xác minh </div>
+              <div className="text-lg font-semibold">Vui lòng kiểm tra trong hộp thư</div>
+              <span className="cursor-pointer text-sm text-org underline">
+                Không nhận được thư?
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   ) : (
     <div className="">
       {isPending && <Loading>Đang xử lí...</Loading>}

@@ -2,14 +2,34 @@ import { useParams } from 'react-router-dom';
 import IonIcon from '@reacticons/ionicons';
 import BreadcrumbComponent from './components/Breakcrumb';
 import { Radio, Checkbox, Button } from '@material-tailwind/react';
-import { useFetchCategoriesQuery } from 'features/Category/category.service';
+import { useGetCatLevelOneQuery } from 'features/Category/category.service';
 import CourseComponents from 'components/Course';
 import Pagination from 'components/Panination';
 import { ICourse } from 'types/Home';
+import { Timestamp } from 'firebase/firestore';
 
 const data: ICourse[] = [
   {
-    thumb: 'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
+    id_category: '12345yhgfdx',
+    thumb:
+      'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
+    title: 'Course 1',
+    author: 'Author 1',
+    rating: 4.5,
+    ratingCount: 100,
+    price: 29.99,
+    description: 'Course 1 description',
+    tree: true,
+    totalLecture: 10,
+    totalStudent: 500,
+    totalTimeVideo: 120,
+    createdAt: Timestamp.fromDate(new Date()),
+    updatedAt: Timestamp.fromDate(new Date()),
+  },
+  {
+    id_category: '12345yhgfdx',
+    thumb:
+      'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
     title: 'Course 2',
     author: 'Author 2',
     rating: 4.0,
@@ -20,11 +40,13 @@ const data: ICourse[] = [
     totalLecture: 8,
     totalStudent: 300,
     totalTimeVideo: 90,
-    createdAt: new Date('2022-03-01'),
-    updatedAt: new Date('2022-04-01'),
+    createdAt: Timestamp.fromDate(new Date()),
+    updatedAt: Timestamp.fromDate(new Date()),
   },
   {
-    thumb: 'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
+    id_category: '12345yhgfdx',
+    thumb:
+      'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
     title: 'Course 3',
     author: 'Author 3',
     rating: 4.8,
@@ -35,11 +57,13 @@ const data: ICourse[] = [
     totalLecture: 12,
     totalStudent: 800,
     totalTimeVideo: 150,
-    createdAt: new Date('2022-05-01'),
-    updatedAt: new Date('2022-06-01'),
+    createdAt: Timestamp.fromDate(new Date()),
+    updatedAt: Timestamp.fromDate(new Date()),
   },
   {
-    thumb: 'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
+    id_category: '12345yhgfdx',
+    thumb:
+      'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
     title: 'Course 4',
     author: 'Author 4',
     rating: 4.2,
@@ -50,8 +74,8 @@ const data: ICourse[] = [
     totalLecture: 6,
     totalStudent: 200,
     totalTimeVideo: 60,
-    createdAt: new Date('2022-07-01'),
-    updatedAt: new Date('2022-08-01'),
+    createdAt: Timestamp.fromDate(new Date()),
+    updatedAt: Timestamp.fromDate(new Date()),
   },
 ];
 
@@ -60,7 +84,7 @@ const Categories = () => {
   const catName = nameCat && nameCat.replace(/-/g, ' ');
   const subCatName = nameSubCat && nameSubCat.replace(/-/g, ' ');
 
-  const categories = useFetchCategoriesQuery();
+  const categories = useGetCatLevelOneQuery();
 
   return (
     <div className="mx-auto max-w-7xl text-darkLight">

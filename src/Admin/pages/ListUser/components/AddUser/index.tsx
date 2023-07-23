@@ -55,7 +55,7 @@ const AddUser = ({ setOpen, sendMess }: any) => {
           email: value.email,
           password: value.password,
           photoURL:
-            'https://firebasestorage.googleapis.com/v0/b/hdcourse-10020.appspot.com/o/courses%2FavtDefault.jpg?alt=media&token=f8fcab19-4e95-40bf-a2df-71014acafa51',
+            'https://res.cloudinary.com/dbppi7qw4/image/upload/v1690097671/users_avatar/yvwnylf4e3svysfexxgi.jpg',
           phoneNumber: value.phone,
           active: false,
           role: value.role,

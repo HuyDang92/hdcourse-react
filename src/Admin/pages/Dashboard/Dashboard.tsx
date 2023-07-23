@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import className from 'classnames/bind';
-import React from 'react';
 import { storage } from '../../../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 const Dashboard = () => {

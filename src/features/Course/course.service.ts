@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'stores/store';
 
-export const userApi = createApi({
-  reducerPath: 'user',
+export const courseApi = createApi({
+  reducerPath: 'course',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API,
     prepareHeaders: (headers, { getState }) => {
@@ -59,16 +59,24 @@ export const userApi = createApi({
         };
       },
     }),
-    getAllData: builder.query<any, void>({
-      query: () => '/api/current-user/getAllData',
+    getAllCourse: builder.query<any, void>({
+      query: () => '/api/course/getAllData',
+    }),
+    getAllDataByIdCat: builder.query<any, void>({
+      query: () => '/api/course/getAllDataByIdCat',
     }),
   }),
 });
+// const result = await axios.post(`http://localhost:8000/api/current-user/create`, infoLogin, {
+//   headers: { token: `${tokenId}` },
+// });
 export const {
   useCreateUserMutation,
   useAddUserMutation,
   useDeleteUserMutation,
-  useGetAllDataQuery,
+  useGetAllCourseQuery,
+  useLazyGetAllCourseQuery,
+  useGetAllDataByIdCatQuery,
   useGetUserByIdMutation,
   useUpdateProfileMutation,
-} = userApi;
+} = courseApi;
