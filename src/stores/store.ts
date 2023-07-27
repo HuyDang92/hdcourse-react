@@ -17,6 +17,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import courseReducer from 'features/Course/Course.slice';
 
 const rootReducers = combineReducers({
   [categoriesApi.reducerPath]: categoriesApi.reducer,
@@ -25,12 +26,13 @@ const rootReducers = combineReducers({
   auth: authReducer,
   manager: managerAdminReducer,
   asideAdmin: layoutAdminReducer,
+  courseState: courseReducer,
 });
 // Cấu hình Redux Persist
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'],
+  whitelist: ['auth', 'courseState'],
 };
 // Tạo persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducers);

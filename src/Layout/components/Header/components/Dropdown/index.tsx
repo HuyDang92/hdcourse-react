@@ -3,6 +3,7 @@ import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ICategories } from 'types/Home';
+import LoadingLocal from 'components/LoadingLocal';
 
 export default function Dropdown() {
   const { data, isFetching } = useGetAllCatQuery();
@@ -23,18 +24,19 @@ export default function Dropdown() {
             </svg>
           </span>
         </button>
-        <ul className="text-md absolute top-[110%] w-72 origin-top scale-0 transform space-y-1 rounded-md border bg-white p-1 transition duration-150 ease-in-out group-hover:scale-100">
+        <ul className="text-md absolute  top-[110%] w-72 origin-top scale-0 transform space-y-1 rounded-md border bg-white p-1 shadow-border-full transition duration-150 ease-in-out group-hover:scale-100">
+          {isFetching && <LoadingLocal />}
           {!isFetching &&
             data.map((item: any, index: number) => {
               const slug = item.name.replace(/\s/g, '-');
               return (
-                <li key={index} className="relative rounded-sm hover:bg-gray-200">
-                  <Link to={`/course/${slug}`}>
-                    <button className="flex w-full items-center p-3 text-left outline-none focus:outline-none">
+                <li key={index} className=" relative rounded-sm hover:bg-gray-200">
+                  <Link to={`/categories/${slug}`}>
+                    <button className="group flex w-full items-center p-3 text-left outline-none focus:outline-none">
                       <span className="flex-1 pr-1 ">{item.name}</span>
                       <span className="mr-auto">
                         <svg
-                          className="h-4 w-4 fill-current transition duration-150 ease-in-out"
+                          className="h-4 w-4 fill-current transition duration-150 ease-in-out hover:-rotate-180"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
                         >
@@ -43,15 +45,15 @@ export default function Dropdown() {
                       </span>
                     </button>
                   </Link>
-                  <ul className="absolute right-0 top-0 w-72 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out">
+                  <ul className="absolute right-0  top-0 w-72 origin-top-left rounded-md border bg-white shadow-border-full transition duration-150 ease-in-out">
                     {item.subcategories &&
                       Array.from(item.subcategories).map((dataTwo: any, subIndex: number) => {
                         const subSlug = dataTwo.name.replace(/\s/g, '-');
                         const combinedSlug = `${slug}/${subSlug}`;
                         return (
                           <div key={subIndex}>
-                            <li className="relative rounded-sm px-4 py-2 hover:bg-gray-200">
-                              <Link to={`/course/${combinedSlug}`}>
+                            <li className="relative rounded-sm px-4 py-3 hover:bg-gray-200">
+                              <Link to={`/categories/${combinedSlug}`}>
                                 <button className="flex w-full items-center text-left outline-none focus:outline-none">
                                   <span className="flex-1 pr-1">{dataTwo.name}</span>
                                   <span className="mr-auto">
@@ -65,14 +67,14 @@ export default function Dropdown() {
                                   </span>
                                 </button>
                               </Link>
-                              <ul className="absolute right-0 top-0 w-52 origin-top-left rounded-sm border bg-white transition duration-150 ease-in-out">
+                              <ul className="absolute right-0  top-0 w-64 origin-top-left rounded-md bg-white shadow-border-full transition duration-150 ease-in-out">
                                 {dataTwo.subcategories &&
                                   Array.from(dataTwo.subcategories).map(
                                     (dataThree: any, subIndex: number) => {
                                       const subSlug = dataThree.name.replace(/\s/g, '-');
                                       const combinedSlug = `${slug}/${subSlug}`;
                                       return (
-                                        <Link key={subIndex} to={`/course/${combinedSlug}`}>
+                                        <Link key={subIndex} to={`/categories/${combinedSlug}`}>
                                           <li className="px-4 py-3 hover:bg-gray-200">
                                             {dataThree.name}
                                           </li>

@@ -48,6 +48,8 @@ const EditProfile = () => {
       formDataFormat.append('photoURLNew', upload);
     }
     try {
+      console.log(formDataFormat);
+
       await updateProfile(formDataFormat).unwrap();
       dispatch(update(formData));
       toast.success('Chỉnh sửa thành công', {

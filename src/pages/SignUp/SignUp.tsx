@@ -55,16 +55,6 @@ const SignUp = () => {
         .oneOf([Yup.ref('password')], 'Mật khẩu không trùng khớp'),
     }),
     onSubmit: async (value: SignUp, { resetForm }) => {
-      // const userInfo = {
-      //   displayName: value.name,
-      //   email: value.email,
-      //   password: value.password,
-      //   photoURL:
-      //     'https://firebasestorage.googleapis.com/v0/b/hdcourse-10020.appspot.com/o/courses%2FavtDefault.jpg?alt=media&token=f8fcab19-4e95-40bf-a2df-71014acafa51',
-      //   phoneNumber: '',
-      //   active: false,
-      //   role: 'user',
-      // };
       await signup(value.email, value.password, value.name);
       // resetForm();
     },

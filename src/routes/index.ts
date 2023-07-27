@@ -12,6 +12,7 @@ import ListUser from 'Admin/pages/ListUser';
 import ListCategory from 'Admin/pages/ListCategory';
 import ProfileUser from 'pages/ProfileUser';
 import SettingAccount from 'pages/SettingAccount/SettingAccount';
+import CourseOverView from 'pages/CourseOverView/CourseOverView';
 
 interface RouteConfig {
   path: string;
@@ -40,12 +41,12 @@ const publicRoutes: RouteConfig[] = [
     layout: SignUp,
   },
   {
-    path: '/course/:nameCat',
+    path: '/categories/:nameCat',
     component: Categories,
     layout: DefaultLayout,
   },
   {
-    path: '/course/:nameCat/:nameSubCat',
+    path: '/categories/:nameCat/:nameSubCat',
     component: Categories,
     layout: DefaultLayout,
   },
@@ -59,6 +60,12 @@ const publicRoutes: RouteConfig[] = [
     component: SettingAccount,
     layout: DefaultLayout,
   },
+  {
+    path: '/course/:nameCourse',
+    component: CourseOverView,
+    layout: DefaultLayout,
+  },
+
 ];
 
 const privateRoutes: RouteConfig[] = [

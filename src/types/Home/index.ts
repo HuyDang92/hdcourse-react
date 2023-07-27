@@ -1,18 +1,23 @@
 import { Timestamp } from 'firebase/firestore';
 
 export interface ICourse {
+  id: string;
   id_category: string;
+  idIntructor: string;
   thumb: string;
   title: string;
   author: string;
   rating: number;
   ratingCount: number;
   price: number;
+  level: string;
   description: string;
   tree: boolean;
   totalLecture: number;
   totalStudent: number;
   totalTimeVideo: number;
+  learned: string[];
+  requiments: string[];
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
@@ -23,7 +28,6 @@ export interface IBlog {
   author: string;
   topic: string;
   shortDescription: string;
-  price: number;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }

@@ -8,8 +8,8 @@ export default function BreadcrumbComponent({ nameCat }: any) {
       <Link to="/category" className="pe-2 text-lg opacity-60">
         <IonIcon name="home" />
       </Link>
-      <Link to="/category" className="pe-2 text-lg font-medium opacity-60">
-        Course
+      <Link to="/" className="pe-2 text-lg font-medium opacity-60">
+        Categories
       </Link>
       <Link to="/category" className="text-lg font-medium">
         {nameCat}

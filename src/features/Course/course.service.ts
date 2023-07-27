@@ -50,14 +50,8 @@ export const courseApi = createApi({
         };
       },
     }),
-    getUserById: builder.mutation<any, any>({
-      query(body) {
-        return {
-          url: `/api/current-user/getUserById`,
-          method: 'POST',
-          body,
-        };
-      },
+    getCourseById: builder.query<any, string>({
+      query: (id) => `/api/course/getCourseById/${id}`,
     }),
     getAllCourse: builder.query<any, void>({
       query: () => '/api/course/getAllData',
@@ -77,6 +71,6 @@ export const {
   useGetAllCourseQuery,
   useLazyGetAllCourseQuery,
   useGetAllDataByIdCatQuery,
-  useGetUserByIdMutation,
+  useGetCourseByIdQuery,
   useUpdateProfileMutation,
 } = courseApi;

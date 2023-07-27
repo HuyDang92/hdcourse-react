@@ -1,13 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-const initialState = {};
+interface ICourseProps {
+  idCourse: string;
+}
 
-const categoriesSlice = createSlice({
-  name: 'categories',
+const initialState: ICourseProps = {
+  idCourse: '',
+};
+
+const courseSlice = createSlice({
+  name: 'courseState',
   initialState,
   reducers: {
-    update: (state, action: PayloadAction<any>) => {},
+    getCourse: (state, action: PayloadAction<any>) => {
+      state.idCourse = action.payload;
+    },
   },
 });
-export const { update } = categoriesSlice.actions;
-const homeReducer = categoriesSlice.reducer;
-export default homeReducer;
+export const { getCourse } = courseSlice.actions;
+const courseReducer = courseSlice.reducer;
+export default courseReducer;
