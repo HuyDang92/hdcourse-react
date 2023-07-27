@@ -18,11 +18,13 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import courseReducer from 'features/Course/Course.slice';
+import { instructorApi } from 'features/Instructor/Instructor.service';
 
 const rootReducers = combineReducers({
   [categoriesApi.reducerPath]: categoriesApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [courseApi.reducerPath]: courseApi.reducer,
+  [instructorApi.reducerPath]: instructorApi.reducer,
   auth: authReducer,
   manager: managerAdminReducer,
   asideAdmin: layoutAdminReducer,
@@ -45,7 +47,12 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(categoriesApi.middleware, userApi.middleware, courseApi.middleware),
+    }).concat(
+      categoriesApi.middleware,
+      userApi.middleware,
+      courseApi.middleware,
+      instructorApi.middleware
+    ),
 });
 // Tạo persisted store
 export const persistor = persistStore(store);

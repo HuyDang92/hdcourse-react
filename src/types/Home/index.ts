@@ -21,6 +21,20 @@ export interface ICourse {
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
+export interface IInstructor {
+  id: string;
+  idUser: string;
+  avatar: string;
+  field: string;
+  rating: number;
+  linkSocialMedia: string[];
+  description: string;
+  totalCourses: number;
+  totalStudents: number;
+  reviewCount: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
 export interface IBlog {
   avatar: string;
   title: string;

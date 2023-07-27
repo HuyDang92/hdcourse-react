@@ -62,6 +62,9 @@ export const userApi = createApi({
     getAllData: builder.query<any, void>({
       query: () => '/api/current-user/getAllData',
     }),
+    getUserByIdQuery: builder.query<any, string>({
+      query: (id) => `/api/current-user/getUserByIdQuery/${id}`,
+    }),
   }),
 });
 export const {
@@ -71,4 +74,5 @@ export const {
   useGetAllDataQuery,
   useGetUserByIdMutation,
   useUpdateProfileMutation,
+  useGetUserByIdQueryQuery,
 } = userApi;
