@@ -53,8 +53,8 @@ export const courseApi = createApi({
     getCourseById: builder.query<any, string>({
       query: (id) => `/api/course/getCourseById/${id}`,
     }),
-    getAllCourse: builder.query<any, void>({
-      query: () => '/api/course/getAllData',
+    getAllCourse: builder.query<any, number>({
+      query: (limit) => `/api/course/getAllData/${limit}`,
     }),
     getAllDataByIdCat: builder.query<any, void>({
       query: () => '/api/course/getAllDataByIdCat',

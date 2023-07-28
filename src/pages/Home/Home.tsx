@@ -90,7 +90,7 @@ const Home = () => {
         <div className=" mx-auto max-w-7xl space-y-10">
           <h1 className="text-3xl font-extrabold text-darkLight">Các thể loại hàng đầu</h1>
           <ul className="grid grid-cols-4 gap-3 text-center font-medium">
-            {ListTopic.map((item, index) => {
+            {ListTopic?.map((item, index) => {
               const Icon = item.icon;
               return (
                 <li

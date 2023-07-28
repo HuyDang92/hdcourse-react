@@ -24,6 +24,7 @@ export interface ICourse {
 export interface IInstructor {
   id: string;
   idUser: string;
+  name: string;
   avatar: string;
   field: string;
   rating: number;

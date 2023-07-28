@@ -12,7 +12,7 @@ export default function TabsComponent() {
     <Tabs className="rounded-2xl p-3 shadow-border-full" value="SEO">
       <TabsHeader className="bg-gray-200">
         {!isFetching &&
-          data.map(({ label, value }: any) => (
+          data?.map(({ label, value }: any) => (
             <Tab key={value} value={value}>
               <span className="font-bold text-darkLight">{label}</span>
             </Tab>
@@ -21,11 +21,11 @@ export default function TabsComponent() {
       <TabsBody>
         {isFetching && <LoadingLocal />}
         {!isFetching &&
-          data.map(({ value, courses }: any) => {
+          data?.map(({ value, courses }: any) => {
             return (
               <TabPanel className="px-1 py-3 pt-8" key={value} value={value}>
                 <div className="flex justify-between space-x-3">
-                  {courses.map((item: any, index: any) => (
+                  {courses?.map((item: any, index: any) => (
                     <Course key={index} data={item} />
                   ))}
                 </div>

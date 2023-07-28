@@ -27,7 +27,7 @@ export default function Dropdown() {
         <ul className="text-md absolute  top-[110%] w-72 origin-top scale-0 transform space-y-1 rounded-md border bg-white p-1 shadow-border-full transition duration-150 ease-in-out group-hover:scale-100">
           {isFetching && <LoadingLocal />}
           {!isFetching &&
-            data.map((item: any, index: number) => {
+            data?.map((item: any, index: number) => {
               const slug = item.name.replace(/\s/g, '-');
               return (
                 <li key={index} className=" relative rounded-sm hover:bg-gray-200">
@@ -47,7 +47,7 @@ export default function Dropdown() {
                   </Link>
                   <ul className="absolute right-0  top-0 w-72 origin-top-left rounded-md border bg-white shadow-border-full transition duration-150 ease-in-out">
                     {item.subcategories &&
-                      Array.from(item.subcategories).map((dataTwo: any, subIndex: number) => {
+                      Array.from(item.subcategories)?.map((dataTwo: any, subIndex: number) => {
                         const subSlug = dataTwo.name.replace(/\s/g, '-');
                         const combinedSlug = `${slug}/${subSlug}`;
                         return (
@@ -69,7 +69,7 @@ export default function Dropdown() {
                               </Link>
                               <ul className="absolute right-0  top-0 w-64 origin-top-left rounded-md bg-white shadow-border-full transition duration-150 ease-in-out">
                                 {dataTwo.subcategories &&
-                                  Array.from(dataTwo.subcategories).map(
+                                  Array.from(dataTwo.subcategories)?.map(
                                     (dataThree: any, subIndex: number) => {
                                       const subSlug = dataThree.name.replace(/\s/g, '-');
                                       const combinedSlug = `${slug}/${subSlug}`;
