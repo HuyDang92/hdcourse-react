@@ -19,16 +19,20 @@ import {
 import storage from 'redux-persist/lib/storage';
 import courseReducer from 'features/Course/Course.slice';
 import { instructorApi } from 'features/Instructor/Instructor.service';
+import { lectureApi } from 'features/Course/lecture.service';
+import lectureReducer from 'features/Course/Lecture.slice';
 
 const rootReducers = combineReducers({
   [categoriesApi.reducerPath]: categoriesApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [courseApi.reducerPath]: courseApi.reducer,
+  [lectureApi.reducerPath]: lectureApi.reducer,
   [instructorApi.reducerPath]: instructorApi.reducer,
   auth: authReducer,
   manager: managerAdminReducer,
   asideAdmin: layoutAdminReducer,
   courseState: courseReducer,
+  lectureState: lectureReducer,
 });
 // Cấu hình Redux Persist
 const persistConfig = {
@@ -51,7 +55,8 @@ export const store = configureStore({
       categoriesApi.middleware,
       userApi.middleware,
       courseApi.middleware,
-      instructorApi.middleware
+      instructorApi.middleware,
+      lectureApi.middleware
     ),
 });
 // Tạo persisted store

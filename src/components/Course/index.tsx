@@ -1,9 +1,11 @@
-import { CardHeader, CardBody, Rating } from '@material-tailwind/react';
+import { CardHeader, CardBody, Rating, IconButton } from '@material-tailwind/react';
 import { ICourse } from 'types/Home';
 import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getCourse } from 'features/Course/Course.slice';
+import AddWhistList from 'components/AddWishList';
+
 interface IChildProps {
   data: ICourse;
 }
@@ -22,12 +24,14 @@ const CourseComponents: React.FC<IChildProps> = ({ data }) => {
         </Link>
         <img src={data.thumb} alt="img-blur-shadow" className="h-full w-full rounded-xl" />
         <div className="hover-target absolute left-[50%] top-[50%] z-30 flex -translate-x-[50%] -translate-y-[50%] space-x-3">
-          <button className="scale-0 rounded-full bg-white px-3 pb-1 pt-3 text-xl text-org  shadow-border-full transition-all hover:bg-org hover:text-white group-hover:scale-100">
-            <IonIcon name="cart-outline" className="" />
-          </button>
-          <button className="scale-0 rounded-full bg-white px-3 pb-1 pt-3  text-xl text-org shadow-border-full transition-all hover:bg-org hover:text-white group-hover:scale-100">
-            <IonIcon name="heart-outline" />
-          </button>
+          <div className="scale-0 rounded-full bg-white shadow-border-full transition-all  group-hover:scale-100">
+            <IconButton variant="outlined" size="lg" color="orange" className="rounded-full">
+              <IonIcon name="cart" className={`pt-2 text-xl`} />
+            </IconButton>
+          </div>
+          <div className="scale-0 rounded-full bg-white shadow-border-full transition-all  group-hover:scale-100">
+            <AddWhistList data={{ idCourse: data.id }} />
+          </div>
         </div>
       </CardHeader>
       <CardBody className="-mt-2 space-y-2 overflow-hidden">

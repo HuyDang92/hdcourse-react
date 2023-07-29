@@ -7,7 +7,6 @@ export const userApi = createApi({
     baseUrl: process.env.REACT_APP_API,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.currentUser?.accessToken;
-
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
       }
@@ -59,11 +58,23 @@ export const userApi = createApi({
         };
       },
     }),
+    getUserByIdQuery: builder.query<any, string>({
+      query: (id) => `/api/current-user/getUserByIdQuery/${id}`,
+    }),
     getAllData: builder.query<any, void>({
       query: () => '/api/current-user/getAllData',
     }),
-    getUserByIdQuery: builder.query<any, string>({
-      query: (id) => `/api/current-user/getUserByIdQuery/${id}`,
+    addWishList: builder.mutation<any, any>({
+      query(body) {
+        return {
+          url: `/api/current-user/addWishList`,
+          method: 'POST',
+          body,
+        };
+      },
+    }),
+    getWishList: builder.query<any, any>({
+      query: (idUser) => `/api/current-user/getWishList/${idUser}`,
     }),
   }),
 });
@@ -75,4 +86,6 @@ export const {
   useGetUserByIdMutation,
   useUpdateProfileMutation,
   useGetUserByIdQueryQuery,
+  useAddWishListMutation,
+  useGetWishListQuery,
 } = userApi;

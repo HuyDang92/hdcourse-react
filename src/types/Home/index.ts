@@ -21,6 +21,25 @@ export interface ICourse {
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
+
+export interface ILecture {
+  id: string;
+  idCourse: string;
+  name: string;
+  index: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  lectures: {
+    id: string;
+    idSection: string;
+    description: string;
+    name: string;
+    index: number;
+    createdAt: Timestamp;
+    updatedAt: Timestamp;
+  }[];
+}
+
 export interface IInstructor {
   id: string;
   idUser: string;

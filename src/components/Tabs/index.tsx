@@ -30,7 +30,7 @@ export default function TabsComponent() {
                   ))}
                 </div>
                 <div className="pt-6">
-                  <Link to={`/course/${value}`} className="text-center">
+                  <Link to={`/categories/${value}`} className="text-center">
                     <Button rounded_md border>
                       Xem thêm
                     </Button>

@@ -1,12 +1,5 @@
-import { Breadcrumbs } from '@material-tailwind/react';
-import { Link } from 'react-router-dom';
-import IonIcon from '@reacticons/ionicons';
-import { useSelector } from 'react-redux';
-import { RootState } from 'stores/store';
 import { IInstructor } from 'types/Home';
-import { useGetUserByIdMutation } from 'features/Auth/auth.service';
-import { useEffect, useState } from 'react';
-import { IUserInfo } from 'types/User';
+import { useState } from 'react';
 
 interface IChildProps {
   data: IInstructor;
