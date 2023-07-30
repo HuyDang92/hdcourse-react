@@ -56,8 +56,12 @@ export const courseApi = createApi({
     getAllCourse: builder.query<any, number>({
       query: (limit) => `/api/course/getAllData/${limit}`,
     }),
-    getAllDataByIdCat: builder.query<any, void>({
-      query: () => '/api/course/getAllDataByIdCat',
+    getAllDataCatHot: builder.query<any, void>({
+      query: () => '/api/course/getAllDataCatHot',
+    }),
+    getAllDataByIdCat: builder.query<any, any>({
+      query: ({ idCategory, pageSize, currentPage }) =>
+        `/api/course/getAllDataByIdCat/${idCategory}/${pageSize}/${currentPage}`,
     }),
   }),
 });
@@ -70,7 +74,8 @@ export const {
   useDeleteUserMutation,
   useGetAllCourseQuery,
   useLazyGetAllCourseQuery,
-  useGetAllDataByIdCatQuery,
+  useGetAllDataCatHotQuery,
   useGetCourseByIdQuery,
   useUpdateProfileMutation,
+  useGetAllDataByIdCatQuery,
 } = courseApi;

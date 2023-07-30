@@ -1,13 +1,27 @@
 import { useGetAllCatQuery } from 'features/Category/category.service';
 import IonIcon from '@reacticons/ionicons';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { ICategories } from 'types/Home';
 import LoadingLocal from 'components/LoadingLocal';
+import { useDispatch } from 'react-redux';
+import { getIdCat, getNameCat, getNameCatC2, getNameCatC3 } from 'features/Category/Category.slice';
+import slugify from 'slugify';
 
 export default function Dropdown() {
+  const dispatch = useDispatch();
   const { data, isFetching } = useGetAllCatQuery();
+  const handleRouteUrl = (
+    idCat: string,
+    nameCat: string,
+    nameCatC2?: string,
+    nameCatC3?: string
+  ) => {
+    console.log(idCat);
 
+    dispatch(getIdCat(idCat));
+    dispatch(getNameCat(nameCat));
+    dispatch(getNameCatC2(nameCatC2));
+    dispatch(getNameCatC3(nameCatC3));
+  };
   return (
     <div className="relative">
       <div className="group inline-block cursor-pointer">
@@ -28,10 +42,18 @@ export default function Dropdown() {
           {isFetching && <LoadingLocal />}
           {!isFetching &&
             data?.map((item: any, index: number) => {
-              const slug = item.name.replace(/\s/g, '-');
+              // const slug = item.name.replace(/\s/g, '-');
+              const slug = slugify(item.name, {
+                replacement: '-',
+                lower: true,
+                strict: true,
+              });
               return (
                 <li key={index} className=" relative rounded-sm hover:bg-gray-200">
-                  <Link to={`/categories/${slug}`}>
+                  <Link
+                    onClick={() => handleRouteUrl(item.id, item.name)}
+                    to={`/categories/${slug}`}
+                  >
                     <button className="group flex w-full items-center p-3 text-left outline-none focus:outline-none">
                       <span className="flex-1 pr-1 ">{item.name}</span>
                       <span className="mr-auto">
@@ -48,12 +70,19 @@ export default function Dropdown() {
                   <ul className="absolute right-0  top-0 w-72 origin-top-left rounded-md border bg-white shadow-border-full transition duration-150 ease-in-out">
                     {item.subcategories &&
                       Array.from(item.subcategories)?.map((dataTwo: any, subIndex: number) => {
-                        const subSlug = dataTwo.name.replace(/\s/g, '-');
-                        const combinedSlug = `${slug}/${subSlug}`;
+                        const subSlugC2 = slugify(dataTwo.name, {
+                          replacement: '-',
+                          lower: true,
+                          strict: true,
+                        });
+                        const combinedSlug = `${slug}/${subSlugC2}`;
                         return (
                           <div key={subIndex}>
                             <li className="relative rounded-sm px-4 py-3 hover:bg-gray-200">
-                              <Link to={`/categories/${combinedSlug}`}>
+                              <Link
+                                onClick={() => handleRouteUrl(dataTwo.id, item.name, dataTwo.name)}
+                                to={`/categories/${combinedSlug}`}
+                              >
                                 <button className="flex w-full items-center text-left outline-none focus:outline-none">
                                   <span className="flex-1 pr-1">{dataTwo.name}</span>
                                   <span className="mr-auto">
@@ -71,10 +100,21 @@ export default function Dropdown() {
                                 {dataTwo.subcategories &&
                                   Array.from(dataTwo.subcategories)?.map(
                                     (dataThree: any, subIndex: number) => {
-                                      const subSlug = dataThree.name.replace(/\s/g, '-');
-                                      const combinedSlug = `${slug}/${subSlug}`;
+                                      const subSlugC3 = dataThree.name.replace(/\s/g, '-');
+                                      const combinedSlug = `${slug}/${subSlugC2}/${subSlugC3}`;
                                       return (
-                                        <Link key={subIndex} to={`/categories/${combinedSlug}`}>
+                                        <Link
+                                          onClick={() =>
+                                            handleRouteUrl(
+                                              dataThree.id,
+                                              item.name,
+                                              dataTwo.name,
+                                              dataThree.name
+                                            )
+                                          }
+                                          key={subIndex}
+                                          to={`/categories/${combinedSlug}`}
+                                        >
                                           <li className="px-4 py-3 hover:bg-gray-200">
                                             {dataThree.name}
                                           </li>

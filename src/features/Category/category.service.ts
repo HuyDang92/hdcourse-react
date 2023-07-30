@@ -45,6 +45,7 @@ export const categoriesApi = createApi({
     getAllCat: builder.query<any, void>({
       query: () => '/api/category/getAllCat',
     }),
+
     getCatLevelOne: builder.query<any, void>({
       query: () => '/api/category/getCatLevelOne',
     }),

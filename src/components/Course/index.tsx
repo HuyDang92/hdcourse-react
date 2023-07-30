@@ -10,7 +10,7 @@ interface IChildProps {
   data: ICourse;
 }
 const CourseComponents: React.FC<IChildProps> = ({ data }) => {
-  const slug = data.title.replace(/\s/g, '-');
+  const slug = data.title?.replace(/\s/g, '-');
   const dispatch = useDispatch();
 
   return (
@@ -44,14 +44,18 @@ const CourseComponents: React.FC<IChildProps> = ({ data }) => {
           <Rating unratedColor="amber" ratedColor="amber" value={4} readonly />
           <span className=" font-normal text-gray-600">({data.ratingCount})</span>
         </div>
-        <div className="flex items-center space-x-5 font-medium">
-          <span className="text-xl font-bold text-darkLight">
-            {new Intl.NumberFormat('vi-VN').format(data.price)}đ
-          </span>
-          <span className="text-sm font-medium text-gray-400 line-through">
-            {new Intl.NumberFormat('vi-VN').format(data.price * 1.5)}đ
-          </span>
-        </div>
+        {data.free ? (
+          <span className=" text-center text-xl font-bold text-darkLight">Miễn phí</span>
+        ) : (
+          <div className="flex items-center space-x-5 font-medium">
+            <span className="text-xl font-bold text-darkLight">
+              {new Intl.NumberFormat('vi-VN').format(data.price)}đ
+            </span>
+            <span className="text-sm font-medium text-gray-400 line-through">
+              {new Intl.NumberFormat('vi-VN').format(data.price * 1.5)}đ
+            </span>
+          </div>
+        )}
       </CardBody>
     </div>
   );

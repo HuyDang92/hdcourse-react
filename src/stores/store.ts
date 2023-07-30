@@ -21,6 +21,7 @@ import courseReducer from 'features/Course/Course.slice';
 import { instructorApi } from 'features/Instructor/Instructor.service';
 import { lectureApi } from 'features/Course/lecture.service';
 import lectureReducer from 'features/Course/Lecture.slice';
+import categoryReducer from 'features/Category/Category.slice';
 
 const rootReducers = combineReducers({
   [categoriesApi.reducerPath]: categoriesApi.reducer,
@@ -32,13 +33,14 @@ const rootReducers = combineReducers({
   manager: managerAdminReducer,
   asideAdmin: layoutAdminReducer,
   courseState: courseReducer,
+  categoriesState: categoryReducer,
   lectureState: lectureReducer,
 });
 // Cấu hình Redux Persist
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'courseState'],
+  whitelist: ['auth', 'courseState', 'categoriesState'],
 };
 // Tạo persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducers);

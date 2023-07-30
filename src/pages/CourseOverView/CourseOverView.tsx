@@ -64,14 +64,14 @@ const CourseOverView = () => {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative pb-10">
       <section className="bg-gradient-to-r from-[#db6968] to-[#F6D794] py-5">
         <div className="mx-auto max-w-7xl text-white">
           <BreadcrumbComponent nameCourse={courseName} />
           {!isFetching && (
             <div className="space-y-3 font-medium">
               <h1 className="text-4xl font-bold">{data?.title}</h1>
-              <p className="text-xl">{data?.description}</p>
+              <p className="w-2/3 text-xl">{data?.description}</p>
               <div className="flex items-center space-x-2">
                 <span className="rounded-md bg-white px-4 py-2 text-sm text-org">
                   Bán chạy nhất
@@ -197,7 +197,7 @@ const CourseOverView = () => {
         <div
           className={`${
             !displayStyle ? 'z-0 -translate-y-[35%]' : 'z-[100] translate-y-8'
-          } sticky top-0  my-10 h-fit w-1/3 rounded-2xl bg-white shadow-border-full transition-all duration-300 ease-in`}
+          } sticky top-0 h-fit w-1/3 rounded-2xl bg-white shadow-border-full transition-all duration-300 ease-in`}
         >
           {isFetching ? (
             <LoadingLocal />

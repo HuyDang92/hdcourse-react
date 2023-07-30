@@ -12,7 +12,7 @@ export interface ICourse {
   price: number;
   level: string;
   description: string;
-  tree: boolean;
+  free: boolean;
   totalLecture: number;
   totalStudent: number;
   totalTimeVideo: number;

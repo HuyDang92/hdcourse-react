@@ -2,106 +2,49 @@ import { useParams } from 'react-router-dom';
 import IonIcon from '@reacticons/ionicons';
 import BreadcrumbComponent from './components/Breakcrumb';
 import { Radio, Checkbox, Button } from '@material-tailwind/react';
-import { useGetCatLevelOneQuery } from 'features/Category/category.service';
+import { useGetAllDataByIdCatQuery } from 'features/Course/course.service';
 import CourseComponents from 'components/Course';
 import Pagination from 'components/Panination';
 import { ICourse } from 'types/Home';
-import { Timestamp } from 'firebase/firestore';
-
-// const data: ICourse[] = [
-//   {
-//     id: 'fhjsku5e787',
-//     id_category: '12345yhgfdx',
-//     thumb:
-//       'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-//     title: 'Course 1',
-//     author: 'Author 1',
-//     rating: 4.5,
-//     ratingCount: 100,
-//     price: 29.99,
-//     description: 'Course 1 description',
-//     tree: true,
-//     level: 'Cơ bản',
-//     totalLecture: 10,
-//     totalStudent: 500,
-//     totalTimeVideo: 120,
-//     createdAt: Timestamp.fromDate(new Date()),
-//     updatedAt: Timestamp.fromDate(new Date()),
-//   },
-//   {
-//     id: 'fhjsku5e787',
-//     id_category: '12345yhgfdx',
-//     thumb:
-//       'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-//     title: 'Course 2',
-//     author: 'Author 2',
-//     rating: 4.0,
-//     ratingCount: 50,
-//     price: 19.99,
-//     description: 'Course 2 description',
-//     tree: false,
-//     level: 'Cơ bản',
-//     totalLecture: 8,
-//     totalStudent: 300,
-//     totalTimeVideo: 90,
-//     createdAt: Timestamp.fromDate(new Date()),
-//     updatedAt: Timestamp.fromDate(new Date()),
-//   },
-//   {
-//     id: 'fhjsku5e787',
-//     id_category: '12345yhgfdx',
-//     thumb:
-//       'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-//     title: 'Course 3',
-//     author: 'Author 3',
-//     rating: 4.8,
-//     ratingCount: 200,
-//     price: 39.99,
-//     description: 'Course 3 description',
-//     tree: true,
-//     level: 'Cơ bản',
-//     totalLecture: 12,
-//     totalStudent: 800,
-//     totalTimeVideo: 150,
-//     createdAt: Timestamp.fromDate(new Date()),
-//     updatedAt: Timestamp.fromDate(new Date()),
-//   },
-//   {
-//     id: 'fhjsku5e787',
-//     id_category: '12345yhgfdx',
-//     thumb:
-//       'https://img.freepik.com/free-photo/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it_188544-27011.jpg?size=626&ext=jpg&uid=R54452486&semt=sph',
-//     title: 'Course 4',
-//     author: 'Author 4',
-//     rating: 4.2,
-//     ratingCount: 80,
-//     price: 24.99,
-//     level: 'Cơ bản',
-//     description: 'Course 4 description',
-//     tree: false,
-//     totalLecture: 6,
-//     totalStudent: 200,
-//     totalTimeVideo: 60,
-//     createdAt: Timestamp.fromDate(new Date()),
-//     updatedAt: Timestamp.fromDate(new Date()),
-//   },
-// ];
+import { useSelector } from 'react-redux';
+import { RootState } from 'stores/store';
+import { useState } from 'react';
+import LoadingLocal from 'components/LoadingLocal';
+import { useGetAllCatLevelThreeQuery } from 'features/Category/category.service';
+import SkeletonComp from 'components/Skeleton';
 
 const Categories = () => {
-  const { nameCat, nameSubCat } = useParams();
-  const catName = nameCat && nameCat.replace(/-/g, ' ');
-  const subCatName = nameSubCat && nameSubCat.replace(/-/g, ' ');
+  const nameCat = useSelector((state: RootState) => state.categoriesState.nameCatgory);
+  const nameCatC2 = useSelector((state: RootState) => state.categoriesState.nameCatgoryC2);
+  const nameCatC3 = useSelector((state: RootState) => state.categoriesState.nameCatgoryC3);
 
-  const categories = useGetCatLevelOneQuery();
-
+  const [pageSize, setPageSize] = useState<number>(3);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const categories = useGetAllCatLevelThreeQuery();
+  const idCategory = useSelector((state: RootState) => state.categoriesState.idCatgory);
+  const { data, isFetching, isSuccess } = useGetAllDataByIdCatQuery({
+    idCategory,
+    pageSize,
+    currentPage,
+  });
+  console.log(data);
+  const handleTitle = () => {
+    if (nameCat && nameCatC2 && nameCatC3) {
+      return nameCatC3;
+    } else if (nameCat && nameCatC2 && !nameCatC3) {
+      return nameCatC2;
+    } else {
+      return nameCat;
+    }
+  };
   return (
     <div className="mx-auto max-w-7xl text-darkLight">
       <section className="my-4">
-        <BreadcrumbComponent nameCat={subCatName ? subCatName : catName} />
+        <BreadcrumbComponent nameCat={nameCat} nameCatC2={nameCatC2} nameCatC3={nameCatC3} />
       </section>
       <section>
         <h1 className="text-2xl font-extrabold ">
-          Tất cả các khóa học <span className="uppercase">{subCatName ? subCatName : catName}</span>
+          Tất cả các khóa học <span className="uppercase">{handleTitle()}</span>
         </h1>
         <div className="my-10 flex items-center justify-between space-x-3 text-lg font-bold">
           <div className="flex space-x-3">
@@ -116,7 +59,7 @@ const Categories = () => {
               <option value="">Mới nhất</option>
             </select>
           </div>
-          <p className="">100 kết quả</p>
+          <p className="">{data?.totalCourseCount} kết quả</p>
         </div>
       </section>
       <section className="flex">
@@ -151,7 +94,7 @@ const Categories = () => {
             <h3 className="mb-3 text-lg font-bold">Chủ đề</h3>
             <div className="flex flex-col">
               {!categories.isFetching &&
-                categories.data?.map((item: any, index: number) => {
+                categories?.data?.map((item: any, index: number) => {
                   return <Checkbox key={index} id="topic" label={item.name} />;
                   // item.submenu.map((data: any, subIndex: number) => {
                   // });
@@ -160,13 +103,26 @@ const Categories = () => {
           </div>
         </div>
         <div className="w-[80%]">
-          <div className=" grid h-fit grid-cols-3 gap-3">
-            {/* {data.map((item, index) => (
-              <CourseComponents key={index} data={item} />
-            ))} */}
+          <h1 className="text-center text-2xl font-bold text-gray-300">
+            {!isFetching && data?.totalCourseCount == 0 && 'Không tìm thấy khóa học'}
+          </h1>
+          <div className={`${!isFetching && 'grid h-fit grid-cols-3 gap-3'}`}>
+            {isFetching ? (
+              <SkeletonComp />
+            ) : (
+              data?.data?.map((item: ICourse, index: number) => {
+                return <CourseComponents key={index} data={item} />;
+              })
+            )}
           </div>
           <div className="my-10 flex justify-center">
-            <Pagination />
+            {!isFetching && data?.totalCourseCount !== 0 && (
+              <Pagination
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                totalPages={data?.totalPage}
+              />
+            )}
           </div>
         </div>
       </section>

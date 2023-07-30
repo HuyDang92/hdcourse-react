@@ -51,6 +51,11 @@ const publicRoutes: RouteConfig[] = [
     layout: DefaultLayout,
   },
   {
+    path: '/categories/:nameCat/:nameSubCat/:nameCatC3',
+    component: Categories,
+    layout: DefaultLayout,
+  },
+  {
     path: '/user/:nameuser',
     component: ProfileUser,
     layout: DefaultLayout,
@@ -65,7 +70,6 @@ const publicRoutes: RouteConfig[] = [
     component: CourseOverView,
     layout: DefaultLayout,
   },
-
 ];
 
 const privateRoutes: RouteConfig[] = [

@@ -2,11 +2,11 @@ import { Tabs, TabsHeader, TabsBody, Tab, TabPanel, TabsProps } from '@material-
 import Button from 'components/Button';
 import Course from 'components/Course';
 import { Link } from 'react-router-dom';
-import { useGetAllDataByIdCatQuery } from 'features/Course/course.service';
+import { useGetAllDataCatHotQuery } from 'features/Course/course.service';
 import { useEffect } from 'react';
 import LoadingLocal from 'components/LoadingLocal';
 export default function TabsComponent() {
-  const { data, isFetching } = useGetAllDataByIdCatQuery();
+  const { data, isFetching } = useGetAllDataCatHotQuery();
 
   return (
     <Tabs className="rounded-2xl p-3 shadow-border-full" value="SEO">
