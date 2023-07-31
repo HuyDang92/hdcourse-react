@@ -6,19 +6,25 @@ const App = () => {
   const routing = useRoutes([
     ...publicRoutes.map((route, index) => ({
       path: route.path,
-      element: (
-        <route.layout>
+      element:
+        route.layout === null ? (
           <route.component />
-        </route.layout>
-      ),
+        ) : (
+          <route.layout>
+            <route.component />
+          </route.layout>
+        ),
     })),
     ...privateRoutes.map((route, index) => ({
       path: route.path,
-      element: (
-        <route.layout>
+      element:
+        route.layout === null ? (
           <route.component />
-        </route.layout>
-      ),
+        ) : (
+          <route.layout>
+            <route.component />
+          </route.layout>
+        ),
     })),
     { path: '*', element: <NotFound /> },
   ]);

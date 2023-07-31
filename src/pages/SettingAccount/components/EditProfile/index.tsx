@@ -7,8 +7,6 @@ import Loading from 'components/Loading';
 import { toast } from 'react-toastify';
 import { update } from 'features/Auth/auth.slice';
 import { IUserInfo } from 'types/User';
-import { storage } from '../../../../firebase';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 type UserOmit = Omit<IUserInfo, 'createdAt' | 'updatedAt'>;
 
 const initialvalues: UserOmit = {
@@ -19,6 +17,7 @@ const initialvalues: UserOmit = {
   phoneNumber: '',
   role: '',
   active: true,
+  // linkSocial: [],
   accessToken: '',
 };
 const EditProfile = () => {
@@ -63,6 +62,16 @@ const EditProfile = () => {
         theme: 'light',
       });
     } catch (err) {
+      toast.error('Chỉnh sửa thất bại', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
       console.log(err);
     }
   };
@@ -156,6 +165,46 @@ const EditProfile = () => {
                   type="text"
                   className="mt-3 w-full rounded-lg text-lg font-medium"
                   placeholder="Bio hiển thị trên trang cá nhân và trong các bài viết (blog) của bạn."
+                />
+              </div>
+              <div className="w-full">
+                <h3 className="text-xl font-bold">Link Facebook</h3>
+                <input
+                  type="text"
+                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  placeholder="Nhập link Facebook của bạn"
+                />
+              </div>
+              <div className="w-full">
+                <h3 className="text-xl font-bold">Link Twitter</h3>
+                <input
+                  type="text"
+                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  placeholder="Nhập link Twitter của bạn"
+                />
+              </div>
+              <div className="w-full">
+                <h3 className="text-xl font-bold">Link LinkedIn</h3>
+                <input
+                  type="text"
+                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  placeholder="Nhập link LinkedIn của bạn"
+                />
+              </div>
+              <div className="w-full">
+                <h3 className="text-xl font-bold">Link YouTube</h3>
+                <input
+                  type="text"
+                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  placeholder="Nhập link YouTube của bạn"
+                />
+              </div>
+              <div className="w-full">
+                <h3 className="text-xl font-bold">Link Website</h3>
+                <input
+                  type="text"
+                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  placeholder="Nhập link Website của bạn"
                 />
               </div>
             </div>

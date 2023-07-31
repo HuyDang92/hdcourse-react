@@ -11,16 +11,17 @@ export default function Dropdown() {
   const { data, isFetching } = useGetAllCatQuery();
   const handleRouteUrl = (
     idCat: string,
-    nameCat: string,
+    nameCatC1: string,
+    idCatC1?: string,
     nameCatC2?: string,
-    nameCatC3?: string
+    idCatC2?: string,
+    nameCatC3?: string,
+    idCatC3?: string
   ) => {
-    console.log(idCat);
-
     dispatch(getIdCat(idCat));
-    dispatch(getNameCat(nameCat));
-    dispatch(getNameCatC2(nameCatC2));
-    dispatch(getNameCatC3(nameCatC3));
+    dispatch(getNameCat({ name: nameCatC1, id: idCatC1 }));
+    dispatch(getNameCatC2({ name: nameCatC2, id: idCatC2 }));
+    dispatch(getNameCatC3({ name: nameCatC3, id: idCatC3 }));
   };
   return (
     <div className="relative">
@@ -42,7 +43,6 @@ export default function Dropdown() {
           {isFetching && <LoadingLocal />}
           {!isFetching &&
             data?.map((item: any, index: number) => {
-              // const slug = item.name.replace(/\s/g, '-');
               const slug = slugify(item.name, {
                 replacement: '-',
                 lower: true,
@@ -51,7 +51,7 @@ export default function Dropdown() {
               return (
                 <li key={index} className=" relative rounded-sm hover:bg-gray-200">
                   <Link
-                    onClick={() => handleRouteUrl(item.id, item.name)}
+                    onClick={() => handleRouteUrl(item.id, item.name, item.id)}
                     to={`/categories/${slug}`}
                   >
                     <button className="group flex w-full items-center p-3 text-left outline-none focus:outline-none">
@@ -80,7 +80,15 @@ export default function Dropdown() {
                           <div key={subIndex}>
                             <li className="relative rounded-sm px-4 py-3 hover:bg-gray-200">
                               <Link
-                                onClick={() => handleRouteUrl(dataTwo.id, item.name, dataTwo.name)}
+                                onClick={() =>
+                                  handleRouteUrl(
+                                    dataTwo.id,
+                                    item.name,
+                                    item.id,
+                                    dataTwo.name,
+                                    dataTwo.id
+                                  )
+                                }
                                 to={`/categories/${combinedSlug}`}
                               >
                                 <button className="flex w-full items-center text-left outline-none focus:outline-none">
@@ -100,7 +108,11 @@ export default function Dropdown() {
                                 {dataTwo.subcategories &&
                                   Array.from(dataTwo.subcategories)?.map(
                                     (dataThree: any, subIndex: number) => {
-                                      const subSlugC3 = dataThree.name.replace(/\s/g, '-');
+                                      const subSlugC3 = slugify(dataThree.name, {
+                                        replacement: '-',
+                                        lower: true,
+                                        strict: true,
+                                      });
                                       const combinedSlug = `${slug}/${subSlugC2}/${subSlugC3}`;
                                       return (
                                         <Link
@@ -108,8 +120,11 @@ export default function Dropdown() {
                                             handleRouteUrl(
                                               dataThree.id,
                                               item.name,
+                                              item.id,
                                               dataTwo.name,
-                                              dataThree.name
+                                              dataTwo.id,
+                                              dataThree.name,
+                                              dataThree.id
                                             )
                                           }
                                           key={subIndex}

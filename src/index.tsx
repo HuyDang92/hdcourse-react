@@ -8,6 +8,7 @@ import AuthState from './features/Auth/authStateChange';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@material-tailwind/react';
+import { ToastContainer } from 'react-toastify';
 
 const rootElement: HTMLElement | null = document.getElementById('root');
 const root = createRoot(rootElement!);
@@ -19,6 +20,7 @@ root.render(
         <AuthState>
           <BrowserRouter>
             <ThemeProvider>
+              <ToastContainer />
               <App />
             </ThemeProvider>
           </BrowserRouter>

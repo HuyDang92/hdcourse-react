@@ -11,7 +11,6 @@ interface IChildProps {
 }
 const AddWishList: React.FC<IChildProps> = ({ data }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
   const idUser = useSelector((state: RootState) => state.auth.currentUser);
   const [addWishList, result] = useAddWishListMutation();
@@ -24,7 +23,7 @@ const AddWishList: React.FC<IChildProps> = ({ data }) => {
       setIsFavorite(existingIndex !== undefined);
     }
   }, [wishLists.data, data?.idCourse]);
-  
+
   const handleIsFavorite = async () => {
     if (!idUser) {
       navigate('/login');

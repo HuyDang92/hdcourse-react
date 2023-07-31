@@ -6,6 +6,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
   User,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { setDoc, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebase.jsx';
@@ -124,6 +125,35 @@ export const useSignInWithGoogle = () => {
     }
   };
   return { signInGoogle, errorGG };
+};
+export const useResetPassword = () => {
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState<boolean>(false);
+  const [isSuccess, setSuccess] = useState<boolean>(false);
+
+  const resetPassword = async (email: string, url: string) => {
+    setError(null);
+    setIsPending(true);
+
+    try {
+      await sendPasswordResetEmail(auth, email, {
+        url: url,
+        handleCodeInApp: true,
+      });
+      setError(null);
+      setSuccess(true);
+      setIsPending(false);
+      return { mess: 'Đã gửi email đặt lại mật khẩu' };
+    } catch (err: any) {
+      const errorCode = err.code;
+      const errorMessage = err.message;
+      console.log(errorCode, errorMessage);
+      setIsPending(false);
+      setError(errorCode);
+      setSuccess(false);
+    }
+  };
+  return { resetPassword, isPending, isSuccess, error };
 };
 export const useSignOut = () => {
   const [error, setError] = useState<string | null>(null);

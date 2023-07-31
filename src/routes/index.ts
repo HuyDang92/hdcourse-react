@@ -13,22 +13,24 @@ import ListCategory from 'Admin/pages/ListCategory';
 import ProfileUser from 'pages/ProfileUser';
 import SettingAccount from 'pages/SettingAccount/SettingAccount';
 import CourseOverView from 'pages/CourseOverView/CourseOverView';
+import ForgotPassword from 'pages/ForgotPassword/ForgotPassword';
 
 interface RouteConfig {
   path: string;
   component: ComponentType;
-  layout: ComponentType<any>;
+  layout: ComponentType<any> | null;
 }
-// const getLocal = localStorage.getItem('persist:root');
-// const auth = getLocal && JSON.parse(getLocal);
-// const isLogin = JSON.parse(auth.auth);
-// console.log(isLogin);
 
 const publicRoutes: RouteConfig[] = [
   {
     path: '/',
     component: Home,
     layout: DefaultLayout,
+  },
+  {
+    path: '/forgotPassword',
+    component: ForgotPassword,
+    layout: ForgotPassword,
   },
   {
     path: '/login',

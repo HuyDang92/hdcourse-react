@@ -2,16 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ICatProps {
   idCatgory: string;
-  nameCatgory: string;
-  nameCatgoryC2: string;
-  nameCatgoryC3: string;
+  nameCatgory: any;
+  nameCatgoryC2: any;
+  nameCatgoryC3: any;
 }
 
 const initialState: ICatProps = {
   idCatgory: '',
-  nameCatgory: '',
-  nameCatgoryC2: '',
-  nameCatgoryC3: '',
+  nameCatgory: null,
+  nameCatgoryC2: null,
+  nameCatgoryC3: null,
 };
 const categoriesSlice = createSlice({
   name: 'categoriesState',

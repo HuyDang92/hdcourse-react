@@ -139,13 +139,13 @@ const Login = () => {
               <div className="mx-auto max-w-sm ">
                 <div className="text-center">
                   <h1 className="text-center text-2xl font-bold">Đăng nhập</h1>
-                  {error == 'email-not-verified' && (
+                  {error === 'email-not-verified' && (
                     <small className="text-[13px] text-red-600">Email chưa được đăng ký</small>
                   )}
-                  {error == 'auth/wrong-password' && (
+                  {error === 'auth/wrong-password' && (
                     <small className="text-[13px] text-red-600">Mật khẩu không chính xác</small>
                   )}
-                  {error == 'auth/user-not-found' && (
+                  {error === 'auth/user-not-found' && (
                     <small className="text-[13px] text-red-600">Tài khoản chưa được đăng ký</small>
                   )}
                 </div>
@@ -221,7 +221,7 @@ const Login = () => {
                         </label>
                       </div>
                       <div className="">
-                        <Link className="text-sm" to="/forgotPassword">
+                        <Link className="text-sm underline" to="/forgotPassword">
                           Quên mật khẩu?
                         </Link>
                       </div>

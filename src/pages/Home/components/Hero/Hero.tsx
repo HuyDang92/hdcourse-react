@@ -17,15 +17,6 @@ function Hero() {
     autoplay: true,
     autoplaySpeed: 4000,
     arrows: false,
-
-    // afterChange: (currentSlide: number) => {
-    //   // Kiểm tra chỉ số hiện tại của slider
-    //   if (currentSlide === 0) {
-    //     setShowPreviousButton(false); // Ẩn nút previous
-    //   } else {
-    //     setShowPreviousButton(true); // Hiển thị nút previous
-    //   }
-    // },
   };
   const next = (): void => {
     sliderRef.current?.slickNext();

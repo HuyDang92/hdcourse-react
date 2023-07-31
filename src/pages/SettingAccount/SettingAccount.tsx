@@ -37,7 +37,6 @@ export default function Example() {
 
   return (
     <div className="mx-auto mb-5 max-w-7xl text-darkLight">
-      <ToastContainer />
       <h1 className="my-10 text-3xl font-semibold">Cài đặt</h1>
       <Tabs value="settingAccount" orientation="vertical">
         <TabsHeader className="w-60 bg-gray-200 p-2">

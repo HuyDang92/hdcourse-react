@@ -15,6 +15,7 @@ export interface IUserInfo {
   phoneNumber: string;
   role: string;
   active: boolean;
+  // linkSocial: string[];
   accessToken: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;

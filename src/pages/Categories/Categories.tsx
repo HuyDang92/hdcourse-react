@@ -2,13 +2,16 @@ import { useParams } from 'react-router-dom';
 import IonIcon from '@reacticons/ionicons';
 import BreadcrumbComponent from './components/Breakcrumb';
 import { Radio, Checkbox, Button } from '@material-tailwind/react';
-import { useGetAllDataByIdCatQuery } from 'features/Course/course.service';
+import {
+  useGetAllDataByIdCatQuery,
+  useLazyGetAllDataFreeQuery,
+} from 'features/Course/course.service';
 import CourseComponents from 'components/Course';
 import Pagination from 'components/Panination';
 import { ICourse } from 'types/Home';
 import { useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LoadingLocal from 'components/LoadingLocal';
 import { useGetAllCatLevelThreeQuery } from 'features/Category/category.service';
 import SkeletonComp from 'components/Skeleton';
@@ -17,9 +20,20 @@ const Categories = () => {
   const nameCat = useSelector((state: RootState) => state.categoriesState.nameCatgory);
   const nameCatC2 = useSelector((state: RootState) => state.categoriesState.nameCatgoryC2);
   const nameCatC3 = useSelector((state: RootState) => state.categoriesState.nameCatgoryC3);
+  const handleTitle = () => {
+    if (nameCat && nameCatC2 && nameCatC3) {
+      return nameCatC3.nameCat;
+    } else if (nameCat && nameCatC2 && !nameCatC3) {
+      return nameCatC2.nameCat;
+    } else {
+      return nameCat.nameCat;
+    }
+  };
 
   const [pageSize, setPageSize] = useState<number>(3);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [free, setFree] = useState<number | null>(null);
+  const [dataCourse, setDataCourse] = useState<any | null>(null);
   const categories = useGetAllCatLevelThreeQuery();
   const idCategory = useSelector((state: RootState) => state.categoriesState.idCatgory);
   const { data, isFetching, isSuccess } = useGetAllDataByIdCatQuery({
@@ -27,16 +41,36 @@ const Categories = () => {
     pageSize,
     currentPage,
   });
-  console.log(data);
-  const handleTitle = () => {
-    if (nameCat && nameCatC2 && nameCatC3) {
-      return nameCatC3;
-    } else if (nameCat && nameCatC2 && !nameCatC3) {
-      return nameCatC2;
-    } else {
-      return nameCat;
+  const [trigger, result] = useLazyGetAllDataFreeQuery();
+
+  useEffect(() => {
+    document.title = `Danh mục khóa học ${handleTitle()}`;
+  }, [idCategory]);
+
+  useEffect(() => {
+    if (data) {
+      setDataCourse(data);
+      setFree(null);
     }
-  };
+  }, [data]);
+
+  useEffect(() => {
+    if (free === 1 || free === 0) {
+      trigger({
+        idCategory,
+        pageSize,
+        currentPage,
+        free,
+      });
+    }
+  }, [free, trigger]);
+
+  useEffect(() => {
+    if (result.isSuccess && result.data) {
+      setDataCourse(result.data);
+    }
+  }, [result]);
+
   return (
     <div className="mx-auto max-w-7xl text-darkLight">
       <section className="my-4">
@@ -59,7 +93,7 @@ const Categories = () => {
               <option value="">Mới nhất</option>
             </select>
           </div>
-          <p className="">{data?.totalCourseCount} kết quả</p>
+          <p className="">{dataCourse?.totalCourseCount} kết quả</p>
         </div>
       </section>
       <section className="flex">
@@ -67,8 +101,18 @@ const Categories = () => {
           <div className="filter-1">
             <h3 className="mb-3 text-lg font-bold">Giá</h3>
             <div className="flex flex-col ">
-              <Checkbox id="free" label="Miễn phí" />
-              <Checkbox id="fee" label="Trả phí" />
+              <Checkbox
+                id="free"
+                label="Miễn phí"
+                checked={free === 1}
+                onChange={() => setFree(1)} // Chọn miễn phí, đặt giá trị là 1
+              />
+              <Checkbox
+                id="fee"
+                label="Trả phí"
+                checked={free === 0}
+                onChange={() => setFree(0)} // Chọn trả phí, đặt giá trị là 0
+              />
             </div>
           </div>
           <div className="filter-2">
@@ -92,35 +136,33 @@ const Categories = () => {
           </div>
           <div className="filter-3">
             <h3 className="mb-3 text-lg font-bold">Chủ đề</h3>
-            <div className="flex flex-col">
+            <div className="flex h-[50vh] flex-col overflow-hidden">
               {!categories.isFetching &&
                 categories?.data?.map((item: any, index: number) => {
                   return <Checkbox key={index} id="topic" label={item.name} />;
-                  // item.submenu.map((data: any, subIndex: number) => {
-                  // });
                 })}
             </div>
           </div>
         </div>
         <div className="w-[80%]">
           <h1 className="text-center text-2xl font-bold text-gray-300">
-            {!isFetching && data?.totalCourseCount == 0 && 'Không tìm thấy khóa học'}
+            {!isFetching && dataCourse?.totalCourseCount === 0 && 'Không tìm thấy khóa học'}
           </h1>
           <div className={`${!isFetching && 'grid h-fit grid-cols-3 gap-3'}`}>
-            {isFetching ? (
+            {isFetching || result.isFetching ? (
               <SkeletonComp />
             ) : (
-              data?.data?.map((item: ICourse, index: number) => {
+              dataCourse?.data?.map((item: ICourse, index: number) => {
                 return <CourseComponents key={index} data={item} />;
               })
             )}
           </div>
           <div className="my-10 flex justify-center">
-            {!isFetching && data?.totalCourseCount !== 0 && (
+            {!isFetching && dataCourse?.totalCourseCount !== 0 && (
               <Pagination
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
-                totalPages={data?.totalPage}
+                totalPages={dataCourse?.totalPage}
               />
             )}
           </div>

@@ -63,11 +63,13 @@ export const courseApi = createApi({
       query: ({ idCategory, pageSize, currentPage }) =>
         `/api/course/getAllDataByIdCat/${idCategory}/${pageSize}/${currentPage}`,
     }),
+    getAllDataFree: builder.query<any, any>({
+      query: ({ idCategory, pageSize, currentPage, free }) =>
+        `/api/course/getAllDataFree/${idCategory}/${pageSize}/${currentPage}/${free}`,
+    }),
   }),
 });
-// const result = await axios.post(`http://localhost:8000/api/current-user/create`, infoLogin, {
-//   headers: { token: `${tokenId}` },
-// });
+
 export const {
   useCreateUserMutation,
   useAddUserMutation,
@@ -78,4 +80,5 @@ export const {
   useGetCourseByIdQuery,
   useUpdateProfileMutation,
   useGetAllDataByIdCatQuery,
+  useLazyGetAllDataFreeQuery,
 } = courseApi;
