@@ -10,20 +10,21 @@ import PaginationAdmin from '../../components/Pagination';
 import Loading from 'Admin/components/Loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useGetAllDataQuery } from 'features/Auth/auth.service';
+import { useGetAllDataQuery, useGetDataLimitQuery } from 'features/Auth/auth.service';
 
 const ListCategory = () => {
   const [mess, setMess] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<number>(3);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [userData, setUserData] = useState<Omit<IUserInfo, 'accessToken'>[]>([]);
-  const [filteredData, setFilteredData] = useState<Omit<IUserInfo, 'accessToken'>[]>([]);
+  const [filteredData, setFilteredData] = useState<any>([]);
   const { data, isFetching } = useGetAllDataQuery();
 
-  const { _userData, isPending, totalPages, goToPreviousPage, goToNextPage } = usePagination(
-    'users',
-    selectedValue,
-    userData.length
-  );
+  const userPagination = useGetDataLimitQuery({
+    pageSize: selectedValue,
+    currentPage: currentPage,
+  });
+  console.log(userPagination.data);
 
   useEffect(() => {
     if (data) {
@@ -32,17 +33,17 @@ const ListCategory = () => {
   }, [isFetching]);
   useEffect(() => {
     document.title = 'Danh sách danh mục';
-    if (!isPending) {
-      setFilteredData(_userData);
+    if (!userPagination?.isFetching) {
+      setFilteredData(userPagination?.data?.data);
     }
-  }, [!isPending]);
+  }, [!userPagination?.isFetching, currentPage, selectedValue]);
 
   const handleSearchData = (value: string) => {
     if (value) {
       const filteredData = userData.filter((user) => user.email.includes(value));
       setFilteredData(filteredData);
     } else {
-      setFilteredData(_userData); // Gán lại filteredData bằng userData ban đầu
+      setFilteredData(userPagination?.data?.data); // Gán lại filteredData bằng userData ban đầu
     }
   };
   const handleToast = (value: any, title: string) => {
@@ -109,13 +110,13 @@ const ListCategory = () => {
           </div>
         </CardHeader>
         <CardBody className="p-0">
-          {!isPending ? <TableList data={filteredData} /> : <Loading />}
+          {!userPagination?.isFetching ? <TableList data={filteredData} /> : <Loading />}
         </CardBody>
         <CardFooter className="flex justify-center">
           <PaginationAdmin
-            totalPages={totalPages}
-            goToPreviousPage={goToPreviousPage}
-            goToNextPage={goToNextPage}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            totalPages={userPagination?.data?.totalPage}
           />
         </CardFooter>
       </div>

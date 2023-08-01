@@ -3,6 +3,7 @@ import { RootState } from 'stores/store';
 
 export const userApi = createApi({
   reducerPath: 'user',
+  tagTypes: ['userApi'],
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API,
     prepareHeaders: (headers, { getState }) => {
@@ -22,6 +23,7 @@ export const userApi = createApi({
           body,
         };
       },
+      invalidatesTags: (result, error, body) => [{ type: 'userApi', id: 'listUser' }],
     }),
     addUser: builder.mutation<any, any>({
       query(body) {
@@ -76,6 +78,20 @@ export const userApi = createApi({
     getWishList: builder.query<any, any>({
       query: (idUser) => `/api/current-user/getWishList/${idUser}`,
     }),
+    getDataLimit: builder.query<any, any>({
+      query: ({ pageSize, currentPage }) =>
+        `/api/current-user/getDataLimit/${pageSize}/${currentPage}`,
+      providesTags: (result) => {
+        // if (result) {
+        //   const final = [
+        //     ...result.map(({ id }: any) => ({ type: 'userApi' as const, id: 'listUser' })),
+        //     { type: 'userApi' as const, id: 'listUser' },
+        //   ];
+        //   return final;
+        // }
+        return [{ type: 'userApi' as const, id: 'listUser' }];
+      },
+    }),
   }),
 });
 export const {
@@ -88,4 +104,5 @@ export const {
   useGetUserByIdQueryQuery,
   useAddWishListMutation,
   useGetWishListQuery,
+  useGetDataLimitQuery,
 } = userApi;

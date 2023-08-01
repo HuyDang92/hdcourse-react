@@ -90,7 +90,7 @@ const TableList: React.FC<IChildProps> = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-            {funcSort.map((user, index) => {
+            {funcSort?.map((user, index) => {
               const isLast = index === funcSort.length - 1;
               const classes = isLast ? 'p-4' : 'p-4 border-b border-blue-gray-50';
 

@@ -3,34 +3,32 @@ import { Button, IconButton } from '@material-tailwind/react';
 import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 interface PaginationAdminProps {
   totalPages: number;
-  goToPreviousPage: () => void;
-  goToNextPage: () => void;
+  setCurrentPage: any;
+  currentPage: number;
 }
 
 const PaginationAdmin: React.FC<PaginationAdminProps> = ({
   totalPages,
-  goToPreviousPage,
-  goToNextPage,
+  currentPage,
+  setCurrentPage,
 }) => {
   const [active, setActive] = React.useState(1);
 
   const getItemProps = (index: any) =>
     ({
-      variant: active === index ? 'filled' : 'text',
-      color: active === index ? 'orange' : 'blue-gray',
-      onClick: () => setActive(index),
+      variant: currentPage === index ? 'filled' : 'text',
+      color: currentPage === index ? 'orange' : 'blue-gray',
+      onClick: () => setCurrentPage(index),
     } as any);
 
   const next = () => {
-    if (active === totalPages) return;
-    setActive(active + 1);
-    goToNextPage();
+    if (currentPage === totalPages) return;
+    setCurrentPage(currentPage + 1);
   };
 
   const prev = () => {
-    if (active === 1) return;
-    setActive(active - 1);
-    goToPreviousPage();
+    if (currentPage === 1) return;
+    setCurrentPage(currentPage - 1);
   };
 
   return (
@@ -40,7 +38,7 @@ const PaginationAdmin: React.FC<PaginationAdminProps> = ({
         color="blue-gray"
         className="flex items-center gap-2"
         onClick={prev}
-        disabled={active === 1}
+        disabled={currentPage === 1}
       >
         <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
       </Button>
@@ -56,7 +54,7 @@ const PaginationAdmin: React.FC<PaginationAdminProps> = ({
         color="blue-gray"
         className="flex items-center gap-2"
         onClick={next}
-        disabled={active === totalPages}
+        disabled={currentPage === totalPages}
       >
         Next
         <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
