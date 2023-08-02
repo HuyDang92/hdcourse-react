@@ -1,27 +1,54 @@
 import { CardHeader, CardBody, Rating, IconButton } from '@material-tailwind/react';
 import { ICourse } from 'types/Home';
 import IonIcon from '@reacticons/ionicons';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCourse } from 'features/Course/Course.slice';
 import AddWhistList from 'components/AddWishList';
+import { RootState } from 'stores/store';
+import { useGetUserCourseQuery } from 'features/Auth/auth.service';
+import slugify from 'slugify';
+import { useGetAllLectureQuery } from 'features/Course/lecture.service';
 
 interface IChildProps {
   data: ICourse;
+  row?: boolean;
 }
-const CourseComponents: React.FC<IChildProps> = ({ data }) => {
-  const slug = data.title?.replace(/\s/g, '-');
+const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
+  const slug = slugify(data.title, {
+    replacement: '-',
+    lower: true,
+    strict: true,
+  });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.auth.currentUser);
+  const userCourses = useGetUserCourseQuery(user?.uid);
+  const lectures = useGetAllLectureQuery(data?.id);
 
-  return (
+  const handleRoute = (idCourse: string) => {
+    const existingIndex = userCourses.data.findIndex((item: any) => item.id === idCourse);
+    if (existingIndex == -1) {
+      navigate(`/course/${slug}`);
+      dispatch(getCourse(idCourse));
+    } else {
+      navigate(
+        `/course/${slug}/lecture/${!lectures.isFetching && lectures?.data[0]?.lectures[0]?.id}`
+      );
+      dispatch(getCourse(idCourse));
+    }
+  };
+  return !row ? (
     <div className="my-5 h-fit w-80 rounded-2xl shadow-border-full">
       <CardHeader
         color="blue-gray"
         className="group relative h-44 overflow-hidden transition-all hover:scale-[105%]"
       >
-        <Link onClick={() => dispatch(getCourse(data.id))} to={`/course/${slug}`}>
-          <span className="absolute bottom-0 left-0 right-0 top-0 z-10 bg-black opacity-0 transition-all group-hover:opacity-50"></span>
-        </Link>
+        <span
+          onClick={() => handleRoute(data.id)}
+          className="absolute bottom-0 left-0 right-0 top-0 z-10 bg-black opacity-0 transition-all group-hover:opacity-50"
+        ></span>
+
         <img src={data.thumb} alt="img-blur-shadow" className="h-full w-full rounded-xl" />
         <div className="hover-target absolute left-[50%] top-[50%] z-30 flex -translate-x-[50%] -translate-y-[50%] space-x-3">
           <div className="scale-0 rounded-full bg-white shadow-border-full transition-all  group-hover:scale-100">
@@ -57,6 +84,44 @@ const CourseComponents: React.FC<IChildProps> = ({ data }) => {
           </div>
         )}
       </CardBody>
+    </div>
+  ) : (
+    <div className="flex items-center justify-between border-b-[1px] pb-4">
+      <Link onClick={() => dispatch(getCourse(data.id))} to={`/course/${slug}`}>
+        <div className="flex items-center space-x-3">
+          <div className="">
+            <img src={data.thumb} alt="" className="h-20 w-28 rounded-xl" />
+          </div>
+          <div className="space-y-1 font-medium">
+            <span className="text-xl font-bold line-clamp-2">{data.title}</span>
+            <ul className="flex items-center space-x-7">
+              <li className="font-semibold">Tổng {data.totalTimeVideo} giờ</li>
+              <li className=" list-disc">
+                Cập nhật{' '}
+                {new Date(
+                  (data.updatedAt as any)._seconds * 1000 +
+                    (data.updatedAt as any)._nanoseconds / 1000000
+                ).toLocaleDateString()}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </Link>
+      <div className="flex items-center space-x-1 font-bold text-org">
+        <span>{data.rating}</span> <IonIcon name="star" />
+      </div>
+      <div className="flex items-center space-x-1 font-bold ">
+        <IonIcon name="people" className="text-xl" /> <span>{data.totalStudent}</span>
+      </div>
+      <div className="flex flex-col items-end space-y-1">
+        <span className="block font-bold text-darkLight">
+          {new Intl.NumberFormat('vi-VN').format(data.price)}đ
+        </span>
+        <span className="block text-sm font-medium text-gray-400 line-through">
+          {new Intl.NumberFormat('vi-VN').format(data.price * 1.5)}đ
+        </span>
+      </div>
+      <AddWhistList data={{ idCourse: data.id }} />
     </div>
   );
 };

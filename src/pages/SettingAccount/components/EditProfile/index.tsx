@@ -135,7 +135,7 @@ const EditProfile = () => {
                 <h3 className="text-xl font-bold">Họ tên</h3>
                 <input
                   type="text"
-                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  className="mt-3 border-2 border-gray-300 p-2 w-full rounded-lg text-lg font-medium"
                   value={formData?.displayName ?? ''}
                   onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
                 />
@@ -144,7 +144,7 @@ const EditProfile = () => {
                 <h3 className="text-xl font-bold">Email</h3>
                 <input
                   type="text"
-                  className="mt-3 w-full rounded-lg border-0 bg-blue-gray-100 text-lg font-medium"
+                  className="mt-3 w-full rounded-lg border-0  bg-blue-gray-100 p-2 text-lg font-medium"
                   defaultValue={formData?.email ?? ''}
                   readOnly
                 />
@@ -153,7 +153,7 @@ const EditProfile = () => {
                 <h3 className="text-xl font-bold">SDT</h3>
                 <input
                   type="text"
-                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  className="mt-3 w-full rounded-lg border-2 border-gray-400 p-2 text-lg font-medium"
                   value={formData?.phoneNumber ?? ''}
                   onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
                   placeholder="Thêm số điện thoại"
@@ -163,7 +163,7 @@ const EditProfile = () => {
                 <h3 className="text-xl font-bold">Bio</h3>
                 <input
                   type="text"
-                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  className="mt-3 w-full rounded-lg border-2 border-gray-400 p-2 text-lg font-medium"
                   placeholder="Bio hiển thị trên trang cá nhân và trong các bài viết (blog) của bạn."
                 />
               </div>
@@ -171,7 +171,7 @@ const EditProfile = () => {
                 <h3 className="text-xl font-bold">Link Facebook</h3>
                 <input
                   type="text"
-                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  className="mt-3 w-full rounded-lg border-2 border-gray-400 p-2 text-lg font-medium"
                   placeholder="Nhập link Facebook của bạn"
                 />
               </div>
@@ -179,7 +179,7 @@ const EditProfile = () => {
                 <h3 className="text-xl font-bold">Link Twitter</h3>
                 <input
                   type="text"
-                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  className="mt-3 w-full rounded-lg border-2 border-gray-400 p-2 text-lg font-medium"
                   placeholder="Nhập link Twitter của bạn"
                 />
               </div>
@@ -187,7 +187,7 @@ const EditProfile = () => {
                 <h3 className="text-xl font-bold">Link LinkedIn</h3>
                 <input
                   type="text"
-                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  className="mt-3 w-full rounded-lg border-2 border-gray-400 p-2 text-lg font-medium"
                   placeholder="Nhập link LinkedIn của bạn"
                 />
               </div>
@@ -195,7 +195,7 @@ const EditProfile = () => {
                 <h3 className="text-xl font-bold">Link YouTube</h3>
                 <input
                   type="text"
-                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  className="mt-3 w-full rounded-lg border-2 border-gray-400 p-2 text-lg font-medium"
                   placeholder="Nhập link YouTube của bạn"
                 />
               </div>
@@ -203,7 +203,7 @@ const EditProfile = () => {
                 <h3 className="text-xl font-bold">Link Website</h3>
                 <input
                   type="text"
-                  className="mt-3 w-full rounded-lg text-lg font-medium"
+                  className="mt-3 w-full rounded-lg border-2 border-gray-400 p-2 text-lg font-medium"
                   placeholder="Nhập link Website của bạn"
                 />
               </div>

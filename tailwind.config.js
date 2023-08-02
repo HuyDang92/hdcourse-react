@@ -21,5 +21,5 @@ module.exports = withMT({
       },
     },
   },
-  plugins: [require('flowbite/plugin'), require('@tailwindcss/line-clamp')],
+  plugins: [require('@tailwindcss/line-clamp'), require('vidstack/tailwind.cjs')],
 });

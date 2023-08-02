@@ -14,6 +14,7 @@ import ProfileUser from 'pages/ProfileUser';
 import SettingAccount from 'pages/SettingAccount/SettingAccount';
 import CourseOverView from 'pages/CourseOverView/CourseOverView';
 import ForgotPassword from 'pages/ForgotPassword/ForgotPassword';
+import Lectures from 'pages/Lectures/Lectures';
 
 interface RouteConfig {
   path: string;
@@ -71,6 +72,11 @@ const publicRoutes: RouteConfig[] = [
     path: '/course/:nameCourse',
     component: CourseOverView,
     layout: DefaultLayout,
+  },
+  {
+    path: '/course/:nameCourse/lecture/:idLeature',
+    component: Lectures,
+    layout: null,
   },
 ];
 

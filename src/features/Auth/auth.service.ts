@@ -78,17 +78,22 @@ export const userApi = createApi({
     getWishList: builder.query<any, any>({
       query: (idUser) => `/api/current-user/getWishList/${idUser}`,
     }),
+    addUserCourse: builder.mutation<any, any>({
+      query(body) {
+        return {
+          url: `/api/current-user/addUserCourse`,
+          method: 'POST',
+          body,
+        };
+      },
+    }),
+    getUserCourse: builder.query<any, any>({
+      query: (idUser) => `/api/current-user/getUserCourse/${idUser}`,
+    }),
     getDataLimit: builder.query<any, any>({
       query: ({ pageSize, currentPage }) =>
         `/api/current-user/getDataLimit/${pageSize}/${currentPage}`,
       providesTags: (result) => {
-        // if (result) {
-        //   const final = [
-        //     ...result.map(({ id }: any) => ({ type: 'userApi' as const, id: 'listUser' })),
-        //     { type: 'userApi' as const, id: 'listUser' },
-        //   ];
-        //   return final;
-        // }
         return [{ type: 'userApi' as const, id: 'listUser' }];
       },
     }),
@@ -104,5 +109,7 @@ export const {
   useGetUserByIdQueryQuery,
   useAddWishListMutation,
   useGetWishListQuery,
+  useAddUserCourseMutation,
+  useGetUserCourseQuery,
   useGetDataLimitQuery,
 } = userApi;

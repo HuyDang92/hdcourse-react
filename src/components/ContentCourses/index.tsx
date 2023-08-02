@@ -6,73 +6,34 @@ import { useGetAllLectureQuery } from 'features/Course/lecture.service';
 import LoadingLocal from 'components/LoadingLocal';
 import { ILecture } from 'types/Home';
 
-const section = [
-  {
-    name: 'Section 1',
-    lectures: [
-      { name: 'Overview', to: '/admin' },
-      { name: 'Chi tiết', to: '/' },
-    ],
-  },
-  {
-    name: 'Section 2',
-    lectures: [
-      { name: 'Danh mục', to: '/admin/manager-category' },
-      { name: 'Khóa học', to: '/admin/manager-course' },
-      { name: 'Người dùng', to: '/admin/manager-user' },
-      { name: 'Bài viết', to: '/admin/manager-blog' },
-    ],
-  },
-  {
-    name: 'Section 3',
-    lectures: [
-      { name: 'Danh mục', to: '/admin/manager-category' },
-      { name: 'Khóa học', to: '/admin/manager-course' },
-      { name: 'Người dùng', to: '/admin/manager-user' },
-      { name: 'Bài viết', to: '/admin/manager-blog' },
-    ],
-  },
-  {
-    name: 'Section 4',
-    lectures: [
-      { name: 'Danh mục', to: '/admin/manager-category' },
-      { name: 'Khóa học', to: '/admin/manager-course' },
-      { name: 'Người dùng', to: '/admin/manager-user' },
-      { name: 'Bài viết', to: '/admin/manager-blog' },
-    ],
-  },
-];
-
 interface IChildProps {
   props: any;
 }
 const ContentCourses: React.FC<IChildProps> = ({ props }) => {
-  const { data, isFetching } = useGetAllLectureQuery(props.idCourse);
-
   const [openAccordions, setOpenAccordions] = useState<any>([]);
 
   useEffect(() => {
-    if (data) {
-      setOpenAccordions(data.map((item: any, index: number) => index === 0));
+    if (props?.data) {
+      setOpenAccordions(props?.data.map((item: any, index: number) => index === 0));
     }
-  }, [data]);
+  }, [props?.data]);
 
   const toggleAccordion = (index: number) => {
     setOpenAccordions((prevState: any) =>
-      prevState.map((item: any, i: number) => (i === index ? !item : false))
+      prevState.map((item: any, i: number) => (i === index ? !item : item))
     );
   };
 
   return (
     <Fragment>
-      {isFetching ? (
+      {props.isFetching ? (
         <LoadingLocal />
       ) : (
-        data?.map((item: ILecture, index: number) => {
+        props?.data?.map((item: ILecture, index: number) => {
           const numberOfLectures = item?.lectures?.length;
 
           return (
-            <Accordion key={index} open={openAccordions[index] ?? false} className="">
+            <Accordion key={index} open={openAccordions[index]} className="">
               <AccordionHeader
                 onClick={() => toggleAccordion(index)}
                 className={`rounded-lg border-b-0 bg-gray-200 p-3`}

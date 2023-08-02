@@ -4,7 +4,6 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { CardHeader, CardBody, CardFooter, Input, Typography } from '@material-tailwind/react';
 import DialogComponent from '../../components/Dialog';
 import AddUser from './components/AddUser';
-import { usePagination } from 'hooks/useGetData';
 import { IUserInfo } from 'types/User';
 import PaginationAdmin from '../../components/Pagination';
 import Loading from 'Admin/components/Loading';

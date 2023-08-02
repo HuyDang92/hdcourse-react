@@ -32,10 +32,18 @@ export const lectureApi = createApi({
         };
       },
     }),
-    getAllLecture: builder.query<any, number>({
+    getAllLecture: builder.query<any, any>({
       query: (idCourse) => `/api/lecture/getAllLecture/${idCourse}`,
+    }),
+    getLectureById: builder.query<any, string>({
+      query: (id) => `/api/lecture/getLectureById/${id}`,
     }),
   }),
 });
 
-export const { useAddUserMutation, useDeleteUserMutation, useGetAllLectureQuery } = lectureApi;
+export const {
+  useAddUserMutation,
+  useDeleteUserMutation,
+  useGetAllLectureQuery,
+  useGetLectureByIdQuery,
+} = lectureApi;

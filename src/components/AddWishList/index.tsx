@@ -9,17 +9,19 @@ import { RootState } from 'stores/store';
 interface IChildProps {
   data: any;
 }
+
 const AddWishList: React.FC<IChildProps> = ({ data }) => {
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
   const idUser = useSelector((state: RootState) => state.auth.currentUser);
   const [addWishList, result] = useAddWishListMutation();
   const wishLists = useGetWishListQuery(idUser?.uid);
+  console.log(isFavorite);
 
   useEffect(() => {
     if (wishLists.data) {
       // Nếu đã fetch dữ liệu thành công
-      const existingIndex = wishLists.data.find((item: any) => item.idCourse === data?.idCourse);
+      const existingIndex = wishLists.data.find((item: any) => item.id === data?.idCourse);
       setIsFavorite(existingIndex !== undefined);
     }
   }, [wishLists.data, data?.idCourse]);
@@ -33,6 +35,7 @@ const AddWishList: React.FC<IChildProps> = ({ data }) => {
       setIsFavorite((cur) => !cur);
     }
   };
+
   return (
     <IconButton
       variant={isFavorite ? undefined : 'outlined'}
@@ -45,4 +48,5 @@ const AddWishList: React.FC<IChildProps> = ({ data }) => {
     </IconButton>
   );
 };
+
 export default AddWishList;
