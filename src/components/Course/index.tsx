@@ -76,11 +76,18 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="-mt-2 space-y-2 overflow-hidden">
+      <CardBody className="-mt-2 h-48 space-y-2 overflow-hidden">
         <div className="min-h-[25px] cursor-pointer text-lg font-semibold line-clamp-2">
-          <Link to={`/course/${slug}`}>{data.title}</Link>
+          <span onClick={() => handleRoute(data.id)}>{data.title}</span>
         </div>
-        <div className="text-sm font-medium text-gray-400">{data.author}</div>
+        <div className="flex items-center space-x-3">
+          <div className="text-sm font-medium text-gray-400">{data.author}</div>
+          {enroll ? (
+            <span className="flex items-center space-x-2">
+              <IonIcon name="checkmark-circle" className="text-org" /> <span>Đã đăng ký</span>
+            </span>
+          ) : null}
+        </div>
         <div className="text-md flex items-center space-x-2 font-medium">
           <span className="font-semibold text-gray-600">{data.rating}</span>
           <Rating unratedColor="amber" ratedColor="amber" value={4} readonly />
@@ -107,16 +114,11 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
           <div className="">
             <img src={data.thumb} alt="" className="h-20 w-28 rounded-xl" />
           </div>
-          <div className="space-y-1 font-medium">
-            <p className="flex items-center space-x-4">
+          <div className="font-medium space-y-2">
+            <p className="flex w-72 items-center space-x-4">
               <span className="text-xl font-bold line-clamp-2">{data.title}</span>
-              {enroll ? (
-                <span className="flex items-center space-x-2">
-                  <IonIcon name="checkmark-circle" className="text-org" /> <span>Đã đăng ký</span>
-                </span>
-              ) : null}
             </p>
-            <ul className="flex items-center space-x-7">
+            <ul className="flex items-center space-x-7 text-sm">
               <li className="font-semibold">Tổng {data.totalTimeVideo} giờ</li>
               <li className=" list-disc">
                 Cập nhật{' '}
@@ -135,7 +137,7 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
       <div className="flex items-center space-x-1 font-bold ">
         <IonIcon name="people" className="text-xl" /> <span>{data.totalStudent}</span>
       </div>
-      {data.free ? (
+      {!data.free ? (
         <div className="flex flex-col items-end space-y-1">
           <span className="block font-bold text-darkLight">
             {new Intl.NumberFormat('vi-VN').format(data.price)}đ
@@ -145,7 +147,15 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
           </span>
         </div>
       ) : (
-        <div className="block font-bold text-darkLight">Miễn phí</div>
+        <div className="block font-bold text-darkLight">
+          {enroll ? (
+            <span className="flex items-center space-x-2">
+              <IonIcon name="checkmark-circle" className="text-org" /> <span>Đã đăng ký</span>
+            </span>
+          ) : (
+            'Miễn phí'
+          )}
+        </div>
       )}
 
       <AddWhistList data={{ idCourse: data.id }} />

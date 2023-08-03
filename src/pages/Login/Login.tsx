@@ -133,7 +133,7 @@ const Login = () => {
       <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-5 sm:py-8">
         <div className="relative py-3 sm:mx-auto sm:my-20 sm:max-w-xl">
           <div className="fixed bottom-0 left-0 right-0 top-0 bg-black opacity-30"></div>
-          <div className="absolute inset-0 -skew-y-6 transform bg-gradient-to-r from-orange-500 to-orange-200 shadow-lg sm:rotate-6 sm:skew-y-0 sm:rounded-3xl"></div>
+          <div className="absolute inset-0 -skew-y-6 transform bg-gradient-to-r from-org to-orange-200 shadow-lg sm:rotate-6 sm:skew-y-0 sm:rounded-3xl"></div>
           <form onSubmit={formik.handleSubmit} className="">
             <div className="relative bg-white  shadow-lg sm:rounded-3xl sm:px-10 sm:py-12">
               <div className="mx-auto max-w-sm ">
