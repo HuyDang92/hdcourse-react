@@ -69,7 +69,7 @@ const publicRoutes: RouteConfig[] = [
     layout: DefaultLayout,
   },
   {
-    path: '/course/:nameCourse',
+    path: '/course/:nameCourse/:idCourse',
     component: CourseOverView,
     layout: DefaultLayout,
   },

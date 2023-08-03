@@ -39,14 +39,14 @@ const datariview = [
   },
 ];
 const CourseOverView = () => {
-  const { nameCourse } = useParams();
+  const { nameCourse, idCourse } = useParams();
   const navigate = useNavigate();
   const [userData, setUserData] = useState<any | null>(null);
   const [limitCourse, setLimitCourse] = useState<boolean>(false);
   const [displayStyle, setDisplayStyle] = useState<boolean>(false);
   const user = useSelector((state: RootState) => state.auth.currentUser);
-  const idCourse = useSelector((state: RootState) => state.courseState.idCourse);
-  const { data, isFetching } = useGetCourseByIdQuery(idCourse);
+  // const idCourse = useSelector((state: RootState) => state.courseState.idCourse);
+  const { data, isFetching } = useGetCourseByIdQuery(idCourse as string);
   const lectures = useGetAllLectureQuery(idCourse);
   const [trigger, result] = useLazyGetInstructorByIdQuery();
   const courses = useGetAllCourseQuery(limitCourse ? 10 : 5);
@@ -57,7 +57,7 @@ const CourseOverView = () => {
       setUserData(data);
       trigger(data?.idInstructor);
     }
-  }, [isFetching, nameCourse, userData]);
+  }, [isFetching, idCourse]);
 
   useEffect(() => {
     document.title = 'Thông tin khóa học';

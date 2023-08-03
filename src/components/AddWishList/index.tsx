@@ -12,11 +12,10 @@ interface IChildProps {
 
 const AddWishList: React.FC<IChildProps> = ({ data }) => {
   const navigate = useNavigate();
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const idUser = useSelector((state: RootState) => state.auth.currentUser);
   const [addWishList, result] = useAddWishListMutation();
   const wishLists = useGetWishListQuery(idUser?.uid);
-  console.log(isFavorite);
 
   useEffect(() => {
     if (wishLists.data) {
