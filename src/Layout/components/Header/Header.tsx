@@ -37,8 +37,9 @@ const Header = () => {
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
   const [userData, setUserData] = useState<any>({});
   const [role, setRole] = useState<string>('none');
-  
+
   useEffect(() => {
+      
     if (!currentUser) {
       setUserData(null);
     } else {
@@ -62,7 +63,7 @@ const Header = () => {
           <h1 className="flex space-x-2 text-3xl font-bold text-org">
             <img src={logo} className="w-7" alt="logo" />
             <Link to="/">
-              HD<span className="text-darkLight">Cours</span>
+              HD<span className="text-darkLight">Course</span>
             </Link>
           </h1>
           <Dropdown />

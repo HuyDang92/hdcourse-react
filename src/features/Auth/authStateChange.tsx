@@ -9,9 +9,10 @@ const AuthState = ({ children }: any) => {
   const dispatch = useDispatch();
   const [getOneUserById] = useGetUserByIdMutation();
   const [addUserById] = useAddUserMutation();
-  // const { addUserById } = useAddUser();
 
   useEffect(() => {
+    console.log('state change re-render');
+
     const handleAuthStateChanged = async (user: any) => {
       if (user && user.emailVerified === false) {
         return;

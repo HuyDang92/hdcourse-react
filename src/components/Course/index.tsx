@@ -27,13 +27,12 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
   const userCourses = useGetUserCourseQuery(user?.uid);
   const lectures = useGetAllLectureQuery(data?.id);
   const [enroll, setEnroll] = useState<boolean>(false);
-
   useEffect(() => {
     if (userCourses.data) {
       const existingIndex = userCourses.data.findIndex((item: any) => item.id === data?.id);
       setEnroll(existingIndex !== -1);
     }
-  }, [data]);
+  }, [userCourses.isFetching]);
 
   const handleRoute = (idCourse: string) => {
     if (user) {
@@ -114,7 +113,7 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
           <div className="">
             <img src={data.thumb} alt="" className="h-20 w-28 rounded-xl" />
           </div>
-          <div className="font-medium space-y-2">
+          <div className="space-y-2 font-medium">
             <p className="flex w-72 items-center space-x-4">
               <span className="text-xl font-bold line-clamp-2">{data.title}</span>
             </p>

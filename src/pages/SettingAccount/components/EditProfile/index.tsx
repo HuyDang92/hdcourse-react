@@ -47,10 +47,19 @@ const EditProfile = () => {
       formDataFormat.append('photoURLNew', upload);
     }
     try {
-      console.log(formDataFormat);
-
-      await updateProfile(formDataFormat).unwrap();
-      dispatch(update(formData));
+      const res = await updateProfile(formDataFormat).unwrap();
+      const { photoURL } = res;
+      const data = {
+        uid: formData.uid,
+        displayName: formData.displayName,
+        email: formData.email,
+        photoURL: photoURL,
+        phoneNumber: formData.phoneNumber,
+        role: formData.role,
+        active: formData.active,
+        accessToken: formData.accessToken,
+      };
+      dispatch(update(data));
       toast.success('Chỉnh sửa thành công', {
         position: 'top-right',
         autoClose: 3000,
@@ -135,7 +144,7 @@ const EditProfile = () => {
                 <h3 className="text-xl font-bold">Họ tên</h3>
                 <input
                   type="text"
-                  className="mt-3 border-2 border-gray-300 p-2 w-full rounded-lg text-lg font-medium"
+                  className="mt-3 w-full rounded-lg border-2 border-gray-300 p-2 text-lg font-medium"
                   value={formData?.displayName ?? ''}
                   onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
                 />

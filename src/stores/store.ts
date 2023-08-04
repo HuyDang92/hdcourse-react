@@ -40,7 +40,7 @@ const rootReducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'],
+  whitelist: ['auth', 'courseState', 'categoriesState', 'lectureState'],
 };
 // Tạo persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducers);

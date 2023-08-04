@@ -17,6 +17,7 @@ interface IChildProps {
 const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
   const navigate = useNavigate();
   const { signout } = useSignOut();
+
   const userCre = useSelector((state: RootState) => state.auth.currentUser);
   const slug = userCre && userCre.email.split('@')[0];
 
@@ -90,8 +91,8 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                to={`/user/${slug}`}
-                className={classNames(
+                  to={`/user/${slug}`}
+                  className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'text-md block px-4 py-3'
                   )}
