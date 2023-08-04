@@ -1,11 +1,9 @@
 import IonIcon from '@reacticons/ionicons';
-import { Link, NavLink, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Fragment, useEffect, useState } from 'react';
-import { Accordion, AccordionHeader, AccordionBody, Checkbox } from '@material-tailwind/react';
-import { useGetAllLectureQuery } from 'features/Course/lecture.service';
+import { Accordion, AccordionHeader, AccordionBody } from '@material-tailwind/react';
 import LoadingLocal from 'components/LoadingLocal';
 import { ILecture } from 'types/Home';
-import slugify from 'slugify';
 
 interface IChildProps {
   props: any;
@@ -13,6 +11,7 @@ interface IChildProps {
   idLectureCurrrent?: any;
   nameCourse?: any;
   videoEnded?: any;
+  setTotalLearned?: any;
 }
 const CUSTOM_ANIMATION = {
   mount: { scale: 1 },
@@ -22,14 +21,22 @@ const ContentCourses: React.FC<IChildProps> = ({
   props,
   enroll,
   idLectureCurrrent,
+  setTotalLearned,
   nameCourse,
   videoEnded,
 }) => {
   const [openAccordions, setOpenAccordions] = useState<any>([]);
 
   useEffect(() => {
+    let total = 0;
     if (props?.data) {
-      setOpenAccordions(props?.data.map((item: any, index: number) => index === 0));
+      setOpenAccordions(
+        props?.data.map((item: any, index: number) => {
+          total += item?.learnedCount || 0;
+          setTotalLearned(total);
+          return index === 0;
+        })
+      );
     }
   }, [props?.data]);
 
@@ -46,7 +53,6 @@ const ContentCourses: React.FC<IChildProps> = ({
       ) : (
         props?.data?.map((item: ILecture, index: number) => {
           const numberOfLectures = item?.lectures?.length;
-
           return (
             <Accordion
               animate={CUSTOM_ANIMATION}
@@ -66,7 +72,9 @@ const ContentCourses: React.FC<IChildProps> = ({
                       {item.name}
                     </p>
                     {enroll && (
-                      <span className="ps-3 text-sm font-medium">0/{item.lectureCount}</span>
+                      <span className="ps-3 text-sm font-medium">
+                        {item.learnedCount}/{item.lectureCount}
+                      </span>
                     )}
                   </div>
                   <div className={`flex items-center space-x-5`}>
@@ -80,40 +88,46 @@ const ContentCourses: React.FC<IChildProps> = ({
               </AccordionHeader>
               <AccordionBody className="p-0">
                 <ul className="text-[1rem] font-medium text-gray-400">
-                  {item.lectures.map((nav, index) => {
+                  {item.lectures.map((lecture, index) => {
                     return enroll ? (
-                      <Link key={index} to={`/course/${nameCourse}/lecture/${nav.id}`}>
+                      <Link key={index} to={`/course/${nameCourse}/lecture/${lecture.id}`}>
                         <li
                           key={index}
                           className={`${
-                            idLectureCurrrent === nav.id ? 'bg-[#F4F2DE]' : 'hover:bg-gray-100'
+                            idLectureCurrrent === lecture.id ? 'bg-[#F4F2DE]' : 'hover:bg-gray-100'
                           } my-1 flex cursor-pointer items-center justify-between rounded-lg p-4 text-darkLight transition-all `}
                         >
                           <div className="text-[15px]">
-                            <span>{nav.name}</span>
-                            <p className=" text-gray-500 flex items-center space-x-1">
+                            <span>{lecture.name}</span>
+                            <p className=" flex items-center space-x-1 text-gray-500">
                               <IonIcon name="time-outline" />
-                              <span>{nav.durationTimeVideo}</span>
+                              <span>{lecture.durationTimeVideo}</span>
                             </p>
                           </div>
-                          <IonIcon
-                            name={`${videoEnded ? 'ellipse-outline' : 'checkmark-circle'}`}
-                            className="ps-2 text-org"
-                          />
+                          {lecture.learned ? (
+                            <IonIcon name="checkmark-circle" className="ps-2 text-org" />
+                          ) : (
+                            <IonIcon
+                              name={`${
+                                videoEnded === lecture.id ? 'checkmark-circle' : 'ellipse-outline'
+                              }`}
+                              className="ps-2 text-org"
+                            />
+                          )}
                         </li>
                       </Link>
                     ) : (
                       <li
                         key={index}
                         className={`${
-                          idLectureCurrrent === nav.id ? 'bg-[#F4F2DE]' : 'hover:bg-[#F4F2DE]'
+                          idLectureCurrrent === lecture.id ? 'bg-[#F4F2DE]' : 'hover:bg-[#F4F2DE]'
                         } my-1 flex cursor-pointer items-center justify-between rounded-lg p-4 text-darkLight transition-all `}
                       >
                         <div className="flex items-center space-x-3 text-[15px]">
                           <IonIcon name="play-circle-outline" className="text-xl text-org" />
-                          <span>{nav.name}</span>
+                          <span>{lecture.name}</span>
                         </div>
-                        <p className="text-gray-500">{nav.durationTimeVideo}</p>
+                        <p className="text-gray-500">{lecture.durationTimeVideo}</p>
                       </li>
                     );
                   })}

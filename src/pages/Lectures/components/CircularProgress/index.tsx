@@ -24,7 +24,6 @@ function CircularProgressWithLabel(props: CircularProgressProps & { value: numbe
       />
       <CircularProgress
         variant="determinate"
-        disableShrink
         sx={{
           color: (theme) => (theme.palette.mode === 'light' ? '#ff6600' : '#308fe8'),
           animationDuration: '550ms',

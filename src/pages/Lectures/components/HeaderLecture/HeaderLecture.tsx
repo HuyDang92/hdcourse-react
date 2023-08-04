@@ -24,9 +24,13 @@ const HeaderLecture: React.FC<IChildProps> = ({ data }) => {
           </div>
           <div className="flex items-center space-x-2">
             {data && (
-              <CircularWithValueLabel data={{ totalLecture: data?.totalLecture, learned: 1 }} />
+              <CircularWithValueLabel
+                data={{ totalLecture: data?.totalLecture, learned: data?.totalLearned }}
+              />
             )}
-            <div className="font-semibold">2 / {data?.totalLecture} bài học</div>
+            <div className="font-semibold">
+              {data.totalLearned} / {data?.totalLecture} bài học
+            </div>
             <IconButton className="flex items-center space-x-2 rounded-full bg-white p-2 px-4 text-darkLight">
               <IonIcon name="arrow-redo" className="text-xl" />
             </IconButton>

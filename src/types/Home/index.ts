@@ -28,6 +28,7 @@ export interface ILecture {
   name: string;
   index: number;
   lectureCount: number;
+  learnedCount: number;
   createdAt: Timestamp;
   updatedAt: Timestamp;
   lectures: {
@@ -36,6 +37,7 @@ export interface ILecture {
     description: string;
     name: string;
     index: number;
+    learned: boolean;
     durationTimeVideo: any;
     createdAt: Timestamp;
     updatedAt: Timestamp;

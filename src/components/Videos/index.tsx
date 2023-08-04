@@ -16,7 +16,7 @@ interface IChildProps {
 
 const VideosComponent: React.FC<IChildProps> = ({ data, setVideoEnded }) => {
   const handleVideoEnded = () => {
-    setVideoEnded(true);
+    setVideoEnded(data?.idLecture);
   };
 
   return data.source ? (
@@ -30,13 +30,6 @@ const VideosComponent: React.FC<IChildProps> = ({ data, setVideoEnded }) => {
     >
       <MediaOutlet>
         <MediaPoster alt="" />
-        <track
-          src="https://media-files.vidstack.io/sprite-fight/subs/english.vtt"
-          label="English"
-          srcLang="en-US"
-          kind="subtitles"
-          default
-        />
         <track
           src="https://media-files.vidstack.io/sprite-fight/chapters.vtt"
           srcLang="en-US"

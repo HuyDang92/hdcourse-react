@@ -9,15 +9,18 @@ import VideosComponent from 'components/Videos';
 import ContentCourses from 'components/ContentCourses';
 import Button from 'components/Button';
 import IonIcon from '@reacticons/ionicons';
+import { Skeleton } from '@mui/material';
 
 const Lectures = () => {
   const { idLeature, nameCourse } = useParams();
   const idCourse = useSelector((state: RootState) => state.courseState.idCourse);
   const [lectureData, setLectureData] = useState<any>(null);
+  const [totalLearned, setTotalLearned] = useState<number>(0);
+
   const course = useGetCourseByIdQuery(idCourse);
   const lectures = useGetAllLectureQuery(idCourse);
   const { data, isFetching } = useGetLectureByIdQuery(idLeature as string);
-  const [videoEnded, setVideoEnded] = useState(false);
+  const [videoEnded, setVideoEnded] = useState<string | null>(null);
 
   useEffect(() => {
     document.title = course?.data?.title;
@@ -27,23 +30,35 @@ const Lectures = () => {
     <div className="">
       {!course.isFetching && (
         <HeaderLecture
-          data={{ title: course?.data?.title, totalLecture: course?.data?.totalLecture }}
+          data={{
+            title: course?.data?.title,
+            totalLecture: course?.data?.totalLecture,
+            totalLearned: totalLearned,
+          }}
         />
       )}
       <main className="mt-[70px] flex">
         <section className="max-h-[84vh] w-3/4 overflow-y-scroll">
           <VideosComponent
             setVideoEnded={setVideoEnded}
-            data={{ source: lectureData?.source, thumb: course?.data?.thumb }}
+            data={{ idLecture: idLeature, source: lectureData?.source, thumb: course?.data?.thumb }}
           />
           <div className="px-5 py-2 ">
-            <h1 className="text-2xl font-bold">{lectureData?.name}</h1>
+            <h1 className="text-2xl font-bold">
+              {isFetching ? <Skeleton height={'3rem'} width={'60%'} /> : lectureData?.name}
+            </h1>
             <span>
-              Cập nhật ngày{' '}
-              {new Date(
-                lectureData?.updatedAt?._seconds * 1000 +
-                  lectureData?.updatedAt?._nanoseconds / 1000000
-              ).toLocaleDateString()}
+              {isFetching ? (
+                <Skeleton height={'2rem'} width={'30%'} />
+              ) : (
+                <span>
+                  Cập nhật ngày{' '}
+                  {new Date(
+                    lectureData?.updatedAt?._seconds * 1000 +
+                      lectureData?.updatedAt?._nanoseconds / 1000000
+                  ).toLocaleDateString()}
+                </span>
+              )}
             </span>
           </div>
         </section>
@@ -54,6 +69,7 @@ const Lectures = () => {
             nameCourse={nameCourse}
             enroll
             videoEnded={videoEnded}
+            setTotalLearned={setTotalLearned}
             props={lectures}
           />
         </section>
