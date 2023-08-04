@@ -12,6 +12,7 @@ interface IChildProps {
   enroll?: boolean;
   idLectureCurrrent?: any;
   nameCourse?: any;
+  videoEnded?: any;
 }
 const CUSTOM_ANIMATION = {
   mount: { scale: 1 },
@@ -22,6 +23,7 @@ const ContentCourses: React.FC<IChildProps> = ({
   enroll,
   idLectureCurrrent,
   nameCourse,
+  videoEnded,
 }) => {
   const [openAccordions, setOpenAccordions] = useState<any>([]);
 
@@ -87,11 +89,17 @@ const ContentCourses: React.FC<IChildProps> = ({
                             idLectureCurrrent === nav.id ? 'bg-[#F4F2DE]' : 'hover:bg-gray-100'
                           } my-1 flex cursor-pointer items-center justify-between rounded-lg p-4 text-darkLight transition-all `}
                         >
-                          <div className="flex items-center space-x-3 text-[15px]">
-                            <IonIcon name="ellipse-outline" className="text-xl text-org" />
+                          <div className="text-[15px]">
                             <span>{nav.name}</span>
+                            <p className=" text-gray-500 flex items-center space-x-1">
+                              <IonIcon name="time-outline" />
+                              <span>{nav.durationTimeVideo}</span>
+                            </p>
                           </div>
-                          <p className="text-gray-500">{nav.durationTimeVideo}</p>
+                          <IonIcon
+                            name={`${videoEnded ? 'ellipse-outline' : 'checkmark-circle'}`}
+                            className="ps-2 text-org"
+                          />
                         </li>
                       </Link>
                     ) : (

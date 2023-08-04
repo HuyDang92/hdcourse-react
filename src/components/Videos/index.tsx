@@ -8,13 +8,16 @@ import {
   MediaPoster,
   MediaTime,
 } from '@vidstack/react';
-import { useState } from 'react';
 
 interface IChildProps {
   data: any;
+  setVideoEnded?: any;
 }
-const VideosComponent: React.FC<IChildProps> = ({ data }) => {
-  const [timeduration, setTime] = useState<any>(null);
+
+const VideosComponent: React.FC<IChildProps> = ({ data, setVideoEnded }) => {
+  const handleVideoEnded = () => {
+    setVideoEnded(true);
+  };
 
   return data.source ? (
     <MediaPlayer
@@ -22,8 +25,8 @@ const VideosComponent: React.FC<IChildProps> = ({ data }) => {
       src={data.source}
       poster={data.thumb}
       thumbnails="https://media-files.vidstack.io/sprite-fight/thumbnails.vtt"
-      aspectRatio={16 / 8}
-      crossorigin=""
+      aspectRatio={16 / 7}
+      onEnded={handleVideoEnded}
     >
       <MediaOutlet>
         <MediaPoster alt="" />

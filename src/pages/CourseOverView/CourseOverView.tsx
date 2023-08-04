@@ -72,7 +72,7 @@ const CourseOverView = () => {
   }, [nameCourse]);
   const handleEnrollCourse = async () => {
     if (user) {
-      await addUserCourse({ idUser: user.uid, idCourse: idCourse });
+      addUserCourse({ idUser: user.uid, idCourse: idCourse });
       navigate(
         `/course/${nameCourse}/lecture/${
           !lectures.isFetching && lectures?.data[0]?.lectures[0]?.id
