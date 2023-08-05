@@ -26,23 +26,45 @@ const ContentCourses: React.FC<IChildProps> = ({
   videoEnded,
 }) => {
   const [openAccordions, setOpenAccordions] = useState<any>([]);
+  const [completedLectures, setCompletedLectures] = useState<any[]>([]);
+  let total = 0;
 
   useEffect(() => {
-    let total = 0;
     if (props?.data) {
       setOpenAccordions(
-        props?.data.map((item: any, index: number) => {
-          total += item?.learnedCount || 0;
-          setTotalLearned(total);
+        props?.data?.map((item: any, index: number) => {
           return index === 0;
         })
       );
     }
   }, [props?.data]);
 
+  useEffect(() => {
+    if (props?.data && enroll) {
+      const sum = props?.data?.reduce(
+        (init: any, currentValue: any) => init + currentValue.learnedCount,
+        0
+      );
+      setTotalLearned(sum);
+    }
+  }, [props]);
+
+  useEffect(() => {
+    if (videoEnded && enroll) {
+      setCompletedLectures((prevCompletedLectures) => {
+        if (!prevCompletedLectures.includes(videoEnded)) {
+          // Nếu videoEnded chưa có trong mảng, thêm nó vào mảng
+          return [...prevCompletedLectures, videoEnded];
+        }
+        return prevCompletedLectures; // Nếu đã có, trả về mảng không thay đổi
+      });
+      setTotalLearned((prevTotal: any) => prevTotal + 1);
+    }
+  }, [videoEnded]);
+
   const toggleAccordion = (index: number) => {
     setOpenAccordions((prevState: any) =>
-      prevState.map((item: any, i: number) => (i === index ? !item : item))
+      prevState?.map((item: any, i: number) => (i === index ? !item : item))
     );
   };
 
@@ -88,32 +110,36 @@ const ContentCourses: React.FC<IChildProps> = ({
               </AccordionHeader>
               <AccordionBody className="p-0">
                 <ul className="text-[1rem] font-medium text-gray-400">
-                  {item.lectures.map((lecture, index) => {
+                  {item?.lectures?.map((lecture, index) => {
                     return enroll ? (
                       <Link key={index} to={`/course/${nameCourse}/lecture/${lecture.id}`}>
                         <li
                           key={index}
                           className={`${
                             idLectureCurrrent === lecture.id ? 'bg-[#F4F2DE]' : 'hover:bg-gray-100'
-                          } my-1 flex cursor-pointer items-center justify-between rounded-lg p-4 text-darkLight transition-all `}
+                          } my-1 flex cursor-pointer items-center justify-between rounded-lg p-4 pe-0 text-darkLight transition-all `}
                         >
-                          <div className="text-[15px]">
+                          <div className="w-[90%] text-[15px]">
                             <span>{lecture.name}</span>
                             <p className=" flex items-center space-x-1 text-gray-500">
                               <IonIcon name="time-outline" />
                               <span>{lecture.durationTimeVideo}</span>
                             </p>
                           </div>
-                          {lecture.learned ? (
-                            <IonIcon name="checkmark-circle" className="ps-2 text-org" />
-                          ) : (
-                            <IonIcon
-                              name={`${
-                                videoEnded === lecture.id ? 'checkmark-circle' : 'ellipse-outline'
-                              }`}
-                              className="ps-2 text-org"
-                            />
-                          )}
+                          <div className="w-[10%]">
+                            {lecture.learned ? (
+                              <IonIcon name="checkmark-circle" className="ps-2 text-org" />
+                            ) : (
+                              <IonIcon
+                                name={
+                                  completedLectures.includes(lecture.id)
+                                    ? 'checkmark-circle'
+                                    : 'ellipse-outline'
+                                }
+                                className="ps-2 text-org"
+                              />
+                            )}
+                          </div>
                         </li>
                       </Link>
                     ) : (

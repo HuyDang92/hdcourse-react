@@ -115,7 +115,7 @@ export const useSignInWithGoogle = () => {
         throw new Error('Đăng nhập thất bại!');
       }
       setError(null);
-
+      
       return userCredential.user;
     } catch (err: any) {
       const errorCode = err.code;

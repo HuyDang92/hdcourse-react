@@ -4,7 +4,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import HeaderLecture from './components/HeaderLecture/HeaderLecture';
 import { useParams } from 'react-router-dom';
-import { useGetAllLectureQuery, useGetLectureByIdQuery } from 'features/Course/lecture.service';
+import {
+  useGetAllLectureQuery,
+  useGetLectureByIdQuery,
+  useLearnedLectureMutation,
+} from 'features/Course/lecture.service';
 import VideosComponent from 'components/Videos';
 import ContentCourses from 'components/ContentCourses';
 import Button from 'components/Button';
@@ -21,6 +25,13 @@ const Lectures = () => {
   const lectures = useGetAllLectureQuery(idCourse);
   const { data, isFetching } = useGetLectureByIdQuery(idLeature as string);
   const [videoEnded, setVideoEnded] = useState<string | null>(null);
+  const [updateLearned, result] = useLearnedLectureMutation();
+  
+  useEffect(() => {
+    if (videoEnded) {
+      updateLearned({ idLecture: videoEnded });
+    }
+  }, [videoEnded]);
 
   useEffect(() => {
     document.title = course?.data?.title;

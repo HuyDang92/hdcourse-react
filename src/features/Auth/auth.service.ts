@@ -74,9 +74,13 @@ export const userApi = createApi({
           body,
         };
       },
+      invalidatesTags: (result, error, body) => [{ type: 'userApi', id: 'wishList' }],
     }),
     getWishList: builder.query<any, any>({
       query: (idUser) => `/api/current-user/getWishList/${idUser}`,
+      providesTags: (result) => {
+        return [{ type: 'userApi' as const, id: 'wishList' }];
+      },
     }),
     addUserCourse: builder.mutation<any, any>({
       query(body) {
@@ -86,9 +90,13 @@ export const userApi = createApi({
           body,
         };
       },
+      invalidatesTags: (result, error, body) => [{ type: 'userApi', id: 'userCourse' }],
     }),
     getUserCourse: builder.query<any, any>({
       query: (idUser) => `/api/current-user/getUserCourse/${idUser}`,
+      providesTags: (result) => {
+        return [{ type: 'userApi' as const, id: 'userCourse' }];
+      },
     }),
     getDataLimit: builder.query<any, any>({
       query: ({ pageSize, currentPage }) =>

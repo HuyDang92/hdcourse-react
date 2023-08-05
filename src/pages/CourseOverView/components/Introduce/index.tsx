@@ -29,8 +29,8 @@ const Introduce: React.FC<IChildProps> = ({ data, children }) => {
                   className="rounded-lg bg-blue-gray-100 p-2 text-lg"
                 />
               </div>
-              <h1 className="text-2xl font-bold">{data.title}</h1>
-              {data.source && <VideosComponent data={{ source: data.source, thumb: data.thumb }} />}
+              <h1 className="text-2xl font-bold py-2">{data.title}</h1>
+              {data.source && <VideosComponent  data={{ source: data.source, thumb: data.thumb }} />}
             </div>
           </DialogBody>
         </Dialog>

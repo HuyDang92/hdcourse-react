@@ -1,13 +1,6 @@
 import LoadingLocal from 'components/LoadingLocal';
 import './Video.module.css';
-import {
-  MediaCommunitySkin,
-  MediaOutlet,
-  MediaPlayButton,
-  MediaPlayer,
-  MediaPoster,
-  MediaTime,
-} from '@vidstack/react';
+import { MediaCommunitySkin, MediaOutlet, MediaPlayer, MediaPoster } from '@vidstack/react';
 
 interface IChildProps {
   data: any;
@@ -18,7 +11,6 @@ const VideosComponent: React.FC<IChildProps> = ({ data, setVideoEnded }) => {
   const handleVideoEnded = () => {
     setVideoEnded(data?.idLecture);
   };
-
   return data.source ? (
     <MediaPlayer
       title="Sprite Fight"

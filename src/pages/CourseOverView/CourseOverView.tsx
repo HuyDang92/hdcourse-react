@@ -20,7 +20,6 @@ import AllReview from './components/AllReview';
 import AddWhistList from 'components/AddWishList';
 import { useGetAllLectureQuery } from 'features/Course/lecture.service';
 import { useAddUserCourseMutation } from 'features/Auth/auth.service';
-import { ICourse } from 'types/Home';
 import CourseComponents from 'components/Course';
 const datariview = [
   {
@@ -70,6 +69,7 @@ const CourseOverView = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [nameCourse]);
+
   const handleEnrollCourse = async () => {
     if (user) {
       addUserCourse({ idUser: user.uid, idCourse: idCourse });

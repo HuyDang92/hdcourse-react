@@ -33,6 +33,7 @@ const Login = () => {
   const [mess, setMess] = useState<any>(null);
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const linkPre = useSelector((state: RootState) => state.courseState.linkPre);
   const { signInGoogle, errorGG } = useSignInWithGoogle();
   const { signin, isPending, error } = useSignIn();
 
@@ -66,7 +67,11 @@ const Login = () => {
   });
 
   const handleLogInGoogle = async () => {
-    await signInGoogle();
+    signInGoogle().then((user) => {
+      if (linkPre) {
+        navigate(linkPre);
+      }
+    });
   };
 
   const handleSendEmail = async () => {
