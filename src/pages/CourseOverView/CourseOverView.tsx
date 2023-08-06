@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import BreadcrumbComponent from './components/Breakcrumb';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { useGetAllCourseQuery, useGetCourseByIdQuery } from 'features/Course/course.service';
 import { Rating, Spinner } from '@material-tailwind/react';
@@ -21,6 +21,7 @@ import AddWhistList from 'components/AddWishList';
 import { useGetAllLectureQuery } from 'features/Course/lecture.service';
 import { useAddUserCourseMutation } from 'features/Auth/auth.service';
 import CourseComponents from 'components/Course';
+import { saveLink } from 'features/Course/Lecture.slice';
 const datariview = [
   {
     avatar: 'https://www.material-tailwind.com/img/face-2.jpg',
@@ -40,6 +41,7 @@ const datariview = [
 const CourseOverView = () => {
   const { nameCourse, idCourse } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [userData, setUserData] = useState<any | null>(null);
   const [limitCourse, setLimitCourse] = useState<boolean>(false);
   const [displayStyle, setDisplayStyle] = useState<boolean>(false);
@@ -72,13 +74,14 @@ const CourseOverView = () => {
 
   const handleEnrollCourse = async () => {
     if (user) {
-      addUserCourse({ idUser: user.uid, idCourse: idCourse });
+      await addUserCourse({ idUser: user.uid, idCourse: idCourse });
       navigate(
         `/course/${nameCourse}/lecture/${
           !lectures.isFetching && lectures?.data[0]?.lectures[0]?.id
         }`
       );
     } else {
+      dispatch(saveLink(`/course/${nameCourse}/${idCourse}`));
       navigate('/login');
     }
   };
@@ -90,7 +93,7 @@ const CourseOverView = () => {
           {!isFetching && <BreadcrumbComponent nameCourse={userData?.title} />}
           {!isFetching && (
             <div className="space-y-3 font-medium">
-              <h1 className="text-4xl font-bold">{userData?.title}</h1>
+              <h1 className="w-2/3 text-4xl font-bold">{userData?.title}</h1>
               <p className="w-2/3 text-xl">{userData?.description}</p>
               <div className="flex items-center space-x-2">
                 <span className="rounded-md bg-white px-4 py-2 text-sm text-org">

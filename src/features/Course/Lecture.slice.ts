@@ -5,12 +5,14 @@ export interface IState {
   active: number;
   title: string;
   subTitle: string;
+  linkPre: string;
 }
 const initialState: IState = {
   open: 1,
   active: 1,
   title: 'Overview',
   subTitle: 'Thống kê',
+  linkPre: '',
 };
 const lectureSlice = createSlice({
   name: 'lectureState',
@@ -22,8 +24,11 @@ const lectureSlice = createSlice({
     Active: (state, action: PayloadAction<number>) => {
       state.active = action.payload;
     },
+    saveLink: (state, action: PayloadAction<any>) => {
+      state.linkPre = action.payload;
+    },
   },
 });
-export const { Open, Active } = lectureSlice.actions;
+export const { Open, Active, saveLink } = lectureSlice.actions;
 const lectureReducer = lectureSlice.reducer;
 export default lectureReducer;

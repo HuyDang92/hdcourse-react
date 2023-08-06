@@ -39,7 +39,6 @@ const Header = () => {
   const [role, setRole] = useState<string>('none');
 
   useEffect(() => {
-      
     if (!currentUser) {
       setUserData(null);
     } else {
@@ -51,7 +50,8 @@ const Header = () => {
       setUserData(currentUser);
     }
   }, [currentUser]);
-
+  const userCre = useSelector((state: RootState) => state.auth.currentUser);
+  const slug = userCre && userCre.email.split('@')[0];
   return (
     <header
       className={`border-b-[1px] border-gray-200 bg-white shadow-md transition-all ${
@@ -72,18 +72,20 @@ const Header = () => {
         {userData !== null ? (
           <div className="flex items-center space-x-6 text-org">
             <div className="flex items-center space-x-3">
-              <Tooltip
-                className="border border-blue-gray-50 bg-white px-4 py-3 text-org shadow-xl shadow-black/10"
-                content="Dánh sách yêu thích"
-                placement="bottom"
-              >
-                <Button className="bg-white p-0 shadow-none hover:shadow-none">
-                  <IonIcon
-                    name="heart-outline"
-                    className="rounded-full p-2 text-2xl text-org transition-all hover:bg-gray-100"
-                  />
-                </Button>
-              </Tooltip>
+              <Link to={`/user/${slug}/wishList`}>
+                <Tooltip
+                  className="border border-blue-gray-50 bg-white px-4 py-3 text-org shadow-xl shadow-black/10"
+                  content="Dánh sách yêu thích"
+                  placement="bottom"
+                >
+                  <Button className="bg-white p-0 shadow-none hover:shadow-none">
+                    <IonIcon
+                      name="heart-outline"
+                      className="rounded-full p-2 text-2xl text-org transition-all hover:bg-gray-100"
+                    />
+                  </Button>
+                </Tooltip>
+              </Link>
               <Tooltip
                 className="border border-blue-gray-50 bg-white px-4 py-3 text-org shadow-xl shadow-black/10"
                 content="Giỏ hàng"

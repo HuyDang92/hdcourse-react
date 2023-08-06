@@ -1,5 +1,6 @@
 import LoadingLocal from 'components/LoadingLocal';
-import './Video.module.css';
+import 'vidstack/styles/defaults.css';
+import 'vidstack/styles/community-skin/video.css';
 import { MediaCommunitySkin, MediaOutlet, MediaPlayer, MediaPoster } from '@vidstack/react';
 
 interface IChildProps {
@@ -12,25 +13,21 @@ const VideosComponent: React.FC<IChildProps> = ({ data, setVideoEnded }) => {
     setVideoEnded(data?.idLecture);
   };
   return data.source ? (
-    <MediaPlayer
-      title="Sprite Fight"
-      src={data.source}
-      poster={data.thumb}
-      thumbnails="https://media-files.vidstack.io/sprite-fight/thumbnails.vtt"
-      aspectRatio={16 / 7}
-      onEnded={handleVideoEnded}
-    >
-      <MediaOutlet>
-        <MediaPoster alt="" />
-        <track
-          src="https://media-files.vidstack.io/sprite-fight/chapters.vtt"
-          srcLang="en-US"
-          kind="chapters"
-          default
-        />
-      </MediaOutlet>
-      <MediaCommunitySkin />
-    </MediaPlayer>
+    <div className="relative">
+      <MediaPlayer
+        title="Sprite Fight"
+        src={data.source}
+        poster={data.thumb}
+        thumbnails="https://media-files.vidstack.io/sprite-fight/thumbnails.vtt"
+        aspectRatio={16 / 7}
+        onEnded={handleVideoEnded}
+      >
+        <MediaOutlet>
+          <MediaPoster alt="" />
+        </MediaOutlet>
+        <MediaCommunitySkin />
+      </MediaPlayer>
+    </div>
   ) : (
     <div className="h-[75vh]  w-full bg-black">
       <LoadingLocal />

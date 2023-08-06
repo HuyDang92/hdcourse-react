@@ -44,6 +44,11 @@ const publicRoutes: RouteConfig[] = [
     layout: SignUp,
   },
   {
+    path: '/categories/:keywords',
+    component: Categories,
+    layout: DefaultLayout,
+  },
+  {
     path: '/categories/:nameCat',
     component: Categories,
     layout: DefaultLayout,
@@ -59,7 +64,7 @@ const publicRoutes: RouteConfig[] = [
     layout: DefaultLayout,
   },
   {
-    path: '/user/:nameuser',
+    path: '/user/:nameuser/:active',
     component: ProfileUser,
     layout: DefaultLayout,
   },

@@ -33,7 +33,7 @@ const Login = () => {
   const [mess, setMess] = useState<any>(null);
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const linkPre = useSelector((state: RootState) => state.courseState.linkPre);
+  const linkPre = useSelector((state: RootState) => state.lectureState.linkPre);
   const { signInGoogle, errorGG } = useSignInWithGoogle();
   const { signin, isPending, error } = useSignIn();
 
@@ -164,7 +164,7 @@ const Login = () => {
                           type="email"
                           className={`${
                             isSubmitted && formik.errors.email && 'border-red-500'
-                          }  focus:outline-slate-500 peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
+                          }  focus:outline-slate-500 peer h-10 w-full rounded-full border-2 border-gray-300 px-3 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                           value={formik.values.email}
                           onChange={formik.handleChange}
                         />
@@ -191,7 +191,7 @@ const Login = () => {
                           type="password"
                           className={`${
                             isSubmitted && formik.errors.password && 'border-red-500'
-                          }  focus:outline-slate-500 peer h-10 w-full rounded-full border-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
+                          }  focus:outline-slate-500 peer h-10 w-full rounded-full border-2 border-gray-300 px-3 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                           value={formik.values.password}
                           onChange={formik.handleChange}
                         />

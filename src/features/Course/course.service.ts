@@ -15,24 +15,6 @@ export const courseApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    createUser: builder.mutation<any, any>({
-      query(body) {
-        return {
-          url: '/api/current-user/create',
-          method: 'POST',
-          body,
-        };
-      },
-    }),
-    addUser: builder.mutation<any, any>({
-      query(body) {
-        return {
-          url: '/api/current-user/addUser',
-          method: 'POST',
-          body,
-        };
-      },
-    }),
     deleteUser: builder.mutation<any, any>({
       query(uid) {
         return {
@@ -46,6 +28,15 @@ export const courseApi = createApi({
         return {
           url: `/api/current-user/updateProfile`,
           method: 'PUT',
+          body,
+        };
+      },
+    }),
+    ratingCourse: builder.mutation<any, any>({
+      query(body) {
+        return {
+          url: `/api/course/ratingCourse`,
+          method: 'POST',
           body,
         };
       },
@@ -67,12 +58,14 @@ export const courseApi = createApi({
       query: ({ idCategory, pageSize, currentPage, free }) =>
         `/api/course/getAllDataFree/${idCategory}/${pageSize}/${currentPage}/${free}`,
     }),
+    getAllDataByName: builder.query<any, any>({
+      query: ({ keywords, pageSize, currentPage }) =>
+        `/api/course/getAllDataByName/${keywords}/${pageSize}/${currentPage}`,
+    }),
   }),
 });
 
 export const {
-  useCreateUserMutation,
-  useAddUserMutation,
   useDeleteUserMutation,
   useGetAllCourseQuery,
   useLazyGetAllCourseQuery,
@@ -81,4 +74,5 @@ export const {
   useUpdateProfileMutation,
   useGetAllDataByIdCatQuery,
   useLazyGetAllDataFreeQuery,
+  useLazyGetAllDataByNameQuery,
 } = courseApi;

@@ -106,7 +106,7 @@ const SignUp = () => {
                             type="text"
                             className={`peer h-10 w-full rounded-full border-2 ${
                               isSubmitted && formik.errors.name && 'border-red-500'
-                            }  focus:outline-slate-500 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
+                            }  focus:outline-slate-500 border-gray-300 px-3 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                             value={formik.values.name}
                             onChange={formik.handleChange}
                           />
@@ -132,7 +132,7 @@ const SignUp = () => {
                             type="email"
                             className={`peer h-10 w-full rounded-full border-2 ${
                               isSubmitted && formik.errors.email && 'border-red-500'
-                            }  focus:outline-slate-500 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
+                            }  focus:outline-slate-500 border-gray-300 px-3 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                             value={formik.values.email}
                             onChange={formik.handleChange}
                           />
@@ -159,7 +159,7 @@ const SignUp = () => {
                             type="password"
                             className={`peer h-10 w-full rounded-full border-2 ${
                               isSubmitted && formik.errors.password && 'border-red-500'
-                            }  focus:outline-slate-500 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
+                            }  focus:outline-slate-500 border-gray-300 px-3 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                             value={formik.values.password}
                             onChange={formik.handleChange}
                           />
@@ -186,7 +186,7 @@ const SignUp = () => {
                             type="password"
                             className={`peer h-10 w-full rounded-full border-2 ${
                               isSubmitted && formik.errors.repassword && 'border-red-500'
-                            }  focus:outline-slate-500 border-gray-300 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
+                            }  focus:outline-slate-500 border-gray-300 px-3 text-gray-900 placeholder-transparent focus:border-gray-500 focus:ring-0`}
                             value={formik.values.repassword}
                             onChange={formik.handleChange}
                           />

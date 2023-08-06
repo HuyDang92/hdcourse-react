@@ -98,6 +98,9 @@ export const userApi = createApi({
         return [{ type: 'userApi' as const, id: 'userCourse' }];
       },
     }),
+    getOneUserCourse: builder.query<any, any>({
+      query: ({ idUser, idCourse }) => `/api/current-user/getOneUserCourse/${idUser}/${idCourse}`,
+    }),
     getDataLimit: builder.query<any, any>({
       query: ({ pageSize, currentPage }) =>
         `/api/current-user/getDataLimit/${pageSize}/${currentPage}`,
@@ -119,5 +122,6 @@ export const {
   useGetWishListQuery,
   useAddUserCourseMutation,
   useGetUserCourseQuery,
+  useGetOneUserCourseQuery,
   useGetDataLimitQuery,
 } = userApi;

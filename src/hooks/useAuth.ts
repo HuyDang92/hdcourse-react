@@ -109,7 +109,6 @@ export const useSignInWithGoogle = () => {
 
     try {
       const userCredential = await signInWithPopup(auth, provider);
-      // console.log(userCredential);
 
       if (!userCredential) {
         throw new Error('Đăng nhập thất bại!');

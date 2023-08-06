@@ -18,6 +18,9 @@ import { Skeleton } from '@mui/material';
 const Lectures = () => {
   const { idLeature, nameCourse } = useParams();
   const idCourse = useSelector((state: RootState) => state.courseState.idCourse);
+  const user = useSelector((state: RootState) => state.auth.currentUser);
+  const userId = user?.uid || 'null';
+
   const [lectureData, setLectureData] = useState<any>(null);
   const [totalLearned, setTotalLearned] = useState<number>(0);
 
@@ -26,10 +29,10 @@ const Lectures = () => {
   const { data, isFetching } = useGetLectureByIdQuery(idLeature as string);
   const [videoEnded, setVideoEnded] = useState<string | null>(null);
   const [updateLearned, result] = useLearnedLectureMutation();
-  
+
   useEffect(() => {
     if (videoEnded) {
-      updateLearned({ idLecture: videoEnded });
+      updateLearned({ idUser: userId, idCourse: idCourse, idLecture: videoEnded });
     }
   }, [videoEnded]);
 

@@ -4,6 +4,9 @@ import { Fragment, useEffect, useState } from 'react';
 import { Accordion, AccordionHeader, AccordionBody } from '@material-tailwind/react';
 import LoadingLocal from 'components/LoadingLocal';
 import { ILecture } from 'types/Home';
+import { useGetOneUserCourseQuery } from 'features/Auth/auth.service';
+import { useSelector } from 'react-redux';
+import { RootState } from 'stores/store';
 
 interface IChildProps {
   props: any;
@@ -27,7 +30,10 @@ const ContentCourses: React.FC<IChildProps> = ({
 }) => {
   const [openAccordions, setOpenAccordions] = useState<any>([]);
   const [completedLectures, setCompletedLectures] = useState<any[]>([]);
-  let total = 0;
+  const user = useSelector((state: RootState) => state.auth.currentUser);
+  const idCourse = useSelector((state: RootState) => state.courseState.idCourse);
+  const userId = user?.uid || 'null';
+  const userCourse = useGetOneUserCourseQuery({ idUser: userId, idCourse: idCourse });
 
   useEffect(() => {
     if (props?.data) {
@@ -40,14 +46,11 @@ const ContentCourses: React.FC<IChildProps> = ({
   }, [props?.data]);
 
   useEffect(() => {
-    if (props?.data && enroll) {
-      const sum = props?.data?.reduce(
-        (init: any, currentValue: any) => init + currentValue.learnedCount,
-        0
-      );
+    if (userCourse && enroll) {
+      const sum = userCourse?.data?.lectureLearned.length;
       setTotalLearned(sum);
     }
-  }, [props]);
+  }, [userCourse.data]);
 
   useEffect(() => {
     if (videoEnded && enroll) {
@@ -75,6 +78,22 @@ const ContentCourses: React.FC<IChildProps> = ({
       ) : (
         props?.data?.map((item: ILecture, index: number) => {
           const numberOfLectures = item?.lectures?.length;
+          let totalLearnedSection = 0;
+          if (enroll) {
+            totalLearnedSection =
+              (userCourse?.data &&
+                item?.lectures?.reduce((count, lecture) => {
+                  return userCourse?.data?.lectureLearned?.includes(lecture?.id)
+                    ? count + 1
+                    : count;
+                }, 0)) ||
+              0;
+            item?.lectures?.forEach((lecture) => {
+              if (completedLectures?.includes(lecture?.id)) {
+                totalLearnedSection++;
+              }
+            });
+          }
           return (
             <Accordion
               animate={CUSTOM_ANIMATION}
@@ -95,7 +114,7 @@ const ContentCourses: React.FC<IChildProps> = ({
                     </p>
                     {enroll && (
                       <span className="ps-3 text-sm font-medium">
-                        {item.learnedCount}/{item.lectureCount}
+                        {totalLearnedSection}/{item.lectureCount}
                       </span>
                     )}
                   </div>
@@ -126,20 +145,22 @@ const ContentCourses: React.FC<IChildProps> = ({
                               <span>{lecture.durationTimeVideo}</span>
                             </p>
                           </div>
-                          <div className="w-[10%]">
-                            {lecture.learned ? (
-                              <IonIcon name="checkmark-circle" className="ps-2 text-org" />
-                            ) : (
-                              <IonIcon
-                                name={
-                                  completedLectures.includes(lecture.id)
-                                    ? 'checkmark-circle'
-                                    : 'ellipse-outline'
-                                }
-                                className="ps-2 text-org"
-                              />
-                            )}
-                          </div>
+                          {!userCourse.isFetching && (
+                            <div className="w-[10%]">
+                              {userCourse?.data?.lectureLearned.includes(lecture.id) ? (
+                                <IonIcon name="checkmark-circle" className="ps-2 text-org" />
+                              ) : (
+                                <IonIcon
+                                  name={
+                                    completedLectures.includes(lecture.id)
+                                      ? 'checkmark-circle'
+                                      : 'ellipse-outline'
+                                  }
+                                  className="ps-2 text-org"
+                                />
+                              )}
+                            </div>
+                          )}
                         </li>
                       </Link>
                     ) : (

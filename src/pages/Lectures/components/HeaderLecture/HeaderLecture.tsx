@@ -4,6 +4,7 @@ import logo from '../../../../assets/logo/logo.svg';
 import { Link } from 'react-router-dom';
 import CircularWithValueLabel from '../CircularProgress';
 import { IconButton } from '@material-tailwind/react';
+import RatingCourse from '../RatingCourse';
 interface IChildProps {
   data: any;
 }
@@ -19,9 +20,11 @@ const HeaderLecture: React.FC<IChildProps> = ({ data }) => {
           <p className="border-l-2 ps-6 text-xl font-bold">{data && data.title}</p>
         </div>
         <div className="flex items-center space-x-5">
-          <div className="flex cursor-pointer items-center space-x-2 hover:text-org">
-            <IonIcon name="star" className="text-xl text-white" /> <span>Đánh giá khóa học</span>
-          </div>
+          <RatingCourse>
+            <div className="flex cursor-pointer items-center space-x-2 hover:text-org">
+              <IonIcon name="star" className="text-xl text-white" /> <span>Đánh giá khóa học</span>
+            </div>
+          </RatingCourse>
           <div className="flex items-center space-x-2">
             {data && (
               <CircularWithValueLabel

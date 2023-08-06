@@ -45,17 +45,19 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
         <Menu.Items className="absolute right-0 z-10 mt-2 w-[22rem] origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-2 py-2">
             <Menu.Item>
-              <div className="flex items-center space-x-3 p-3">
-                <img
-                  className="h-14 w-14 rounded-full object-cover"
-                  src={data.photoURL}
-                  alt="avt"
-                />
-                <div className="">
-                  <h3 className="text-lg font-semibold text-darkLight">{data.displayName}</h3>
-                  <div className="text-gray-400">{data.email}</div>
+              <Link to={`/user/${slug}/allCourse`}>
+                <div className="flex items-center space-x-3 p-3">
+                  <img
+                    className="h-14 w-14 rounded-full object-cover"
+                    src={data.photoURL}
+                    alt="avt"
+                  />
+                  <div className="">
+                    <h3 className="text-lg font-semibold text-darkLight">{data.displayName}</h3>
+                    <div className="text-gray-400">{data.email}</div>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </Menu.Item>
             {role === 'admin' ? (
               <Menu.Item>
@@ -76,7 +78,7 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
               <Menu.Item>
                 {({ active }) => (
                   <Link
-                    to={`/user/${slug}`}
+                    to={`/user/${slug}/allCourse`}
                     className={classNames(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'text-md block px-4 py-3'
@@ -91,7 +93,7 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  to={`/user/${slug}`}
+                  to={`/user/${slug}/allCourse`}
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'text-md block px-4 py-3'
@@ -104,7 +106,7 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  to="/"
+                  to={`/user/${slug}/wishList`}
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'text-md block px-4 py-3'

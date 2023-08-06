@@ -1,13 +1,14 @@
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel, TabsProps } from '@material-tailwind/react';
 import Button from 'components/Button';
 import Course from 'components/Course';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import LoadingLocal from 'components/LoadingLocal';
 import { useGetUserCourseQuery, useGetWishListQuery } from 'features/Auth/auth.service';
 import { useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 
 export default function TabsProfile() {
+  const { active } = useParams();
   const user = useSelector((state: RootState) => state.auth.currentUser);
   const userId = user?.uid || 'null';
   const userWishList = useGetWishListQuery(userId);
@@ -36,7 +37,7 @@ export default function TabsProfile() {
     },
   ];
   return (
-    <Tabs className="rounded-2xl p-3 shadow-border-full" value="allCourse">
+    <Tabs className="rounded-2xl p-3 shadow-border-full" value={active}>
       <TabsHeader className="bg-gray-200">
         {dataFake?.map(({ label, value }: any) => (
           <Tab key={value} value={value}>

@@ -4,6 +4,7 @@ import BreadcrumbComponent from './components/Breakcrumb';
 import { Radio, Checkbox, Button } from '@material-tailwind/react';
 import {
   useGetAllDataByIdCatQuery,
+  useLazyGetAllDataByNameQuery,
   useLazyGetAllDataFreeQuery,
 } from 'features/Course/course.service';
 import CourseComponents from 'components/Course';
@@ -17,6 +18,7 @@ import { useGetAllCatLevelThreeQuery } from 'features/Category/category.service'
 import SkeletonComp from 'components/Skeleton';
 
 const Categories = () => {
+  const { keywords } = useParams();
   const nameCat = useSelector((state: RootState) => state.categoriesState.nameCatgory);
   const nameCatC2 = useSelector((state: RootState) => state.categoriesState.nameCatgoryC2);
   const nameCatC3 = useSelector((state: RootState) => state.categoriesState.nameCatgoryC3);
@@ -41,7 +43,10 @@ const Categories = () => {
     pageSize,
     currentPage,
   });
-  const [trigger, result] = useLazyGetAllDataFreeQuery();
+
+  // const [getCourseFree, resultCourseFree] = useLazyGetAllDataFreeQuery();
+  const [getCoursesKeyword, resultCourseKeyword] = useLazyGetAllDataByNameQuery();
+  console.log(dataCourse);
 
   useEffect(() => {
     document.title = `Danh mục khóa học ${handleTitle()}`;
@@ -55,30 +60,33 @@ const Categories = () => {
   }, [data]);
 
   useEffect(() => {
-    if (free === 1 || free === 0) {
-      trigger({
-        idCategory,
-        pageSize,
+    if (keywords) {
+      getCoursesKeyword({
+        keywords,
+        pageSize: 6,
         currentPage,
         free,
       });
     }
-  }, [free, trigger]);
+  }, [keywords, getCoursesKeyword]);
 
   useEffect(() => {
-    if (result.isSuccess && result.data) {
-      setDataCourse(result.data);
+    if (resultCourseKeyword.data) {
+      setDataCourse(resultCourseKeyword.data);
     }
-  }, [result]);
+  }, [resultCourseKeyword]);
 
   return (
     <div className="mx-auto max-w-7xl text-darkLight">
       <section className="my-4">
-        <BreadcrumbComponent nameCat={nameCat} nameCatC2={nameCatC2} nameCatC3={nameCatC3} />
+        {!keywords && (
+          <BreadcrumbComponent nameCat={nameCat} nameCatC2={nameCatC2} nameCatC3={nameCatC3} />
+        )}
       </section>
       <section>
         <h1 className="text-2xl font-extrabold ">
-          Tất cả các khóa học <span className="uppercase">{handleTitle()}</span>
+          Tất cả các khóa học{' '}
+          <span className="uppercase">{keywords ? keywords : handleTitle()}</span>
         </h1>
         <div className="my-10 flex items-center justify-between space-x-3 text-lg font-bold">
           <div className="flex space-x-3">
@@ -144,12 +152,12 @@ const Categories = () => {
             </div>
           </div>
         </div>
-        <div className="w-[80%]">
+        <div className="w-[75%]">
           <h1 className="text-center text-2xl font-bold text-gray-300">
             {!isFetching && dataCourse?.totalCourseCount === 0 && 'Không tìm thấy khóa học'}
           </h1>
           <div className={`${!isFetching && 'grid h-fit grid-cols-3 gap-3'}`}>
-            {isFetching || result.isFetching ? (
+            {isFetching || resultCourseKeyword.isFetching ? (
               <SkeletonComp />
             ) : (
               dataCourse?.data?.map((item: ICourse, index: number) => {

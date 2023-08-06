@@ -3,13 +3,14 @@ import { ICourse } from 'types/Home';
 import IonIcon from '@reacticons/ionicons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCourse, saveLink } from 'features/Course/Course.slice';
+import { getCourse } from 'features/Course/Course.slice';
 import AddWhistList from 'components/AddWishList';
 import { RootState } from 'stores/store';
 import { useGetUserCourseQuery } from 'features/Auth/auth.service';
 import slugify from 'slugify';
 import { useGetAllLectureQuery } from 'features/Course/lecture.service';
 import { useEffect, useState } from 'react';
+import { saveLink } from 'features/Course/Lecture.slice';
 
 interface IChildProps {
   data: ICourse;
@@ -47,18 +48,13 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
         dispatch(getCourse(idCourse));
       }
     } else {
-      dispatch(
-        saveLink(
-          `/course/${slug}/lecture/${!lectures.isFetching && lectures?.data[0]?.lectures[0]?.id}`
-        )
-      );
       navigate(`/course/${slug}/${idCourse}`);
       dispatch(getCourse(idCourse));
     }
   };
 
   return !row ? (
-    <div className="my-5 h-fit w-[19rem] rounded-2xl shadow-border-full">
+    <div className="my-5 h-fit w-[19.3rem] rounded-2xl shadow-border-full">
       <CardHeader
         color="blue-gray"
         className="group relative h-44 overflow-hidden transition-all hover:scale-[105%]"
