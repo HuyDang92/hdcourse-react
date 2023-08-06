@@ -86,18 +86,20 @@ const Header = () => {
                   </Button>
                 </Tooltip>
               </Link>
-              <Tooltip
-                className="border border-blue-gray-50 bg-white px-4 py-3 text-org shadow-xl shadow-black/10"
-                content="Giỏ hàng"
-                placement="bottom"
-              >
-                <Button className="bg-white p-0 shadow-none hover:shadow-none">
-                  <IonIcon
-                    name="cart-outline"
-                    className="rounded-full p-2 text-2xl text-org transition-all hover:bg-gray-100"
-                  />
-                </Button>
-              </Tooltip>
+              <Link to="/cart">
+                <Tooltip
+                  className="border border-blue-gray-50 bg-white px-4 py-3 text-org shadow-xl shadow-black/10"
+                  content="Giỏ hàng"
+                  placement="bottom"
+                >
+                  <Button className="bg-white p-0 shadow-none hover:shadow-none">
+                    <IonIcon
+                      name="cart-outline"
+                      className="rounded-full p-2 text-2xl text-org transition-all hover:bg-gray-100"
+                    />
+                  </Button>
+                </Tooltip>
+              </Link>
               <Notification />
             </div>
             <DropdownInfo data={userData} role={role} />

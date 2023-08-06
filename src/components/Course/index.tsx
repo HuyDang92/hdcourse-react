@@ -11,6 +11,7 @@ import slugify from 'slugify';
 import { useGetAllLectureQuery } from 'features/Course/lecture.service';
 import { useEffect, useState } from 'react';
 import { saveLink } from 'features/Course/Lecture.slice';
+import AddCart from 'components/AddCart';
 
 interface IChildProps {
   data: ICourse;
@@ -67,9 +68,7 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
         <img src={data.thumb} alt="img-blur-shadow" className="h-full w-full rounded-xl" />
         <div className="hover-target absolute left-[50%] top-[50%] z-30 flex -translate-x-[50%] -translate-y-[50%] space-x-3">
           <div className="scale-0 rounded-full bg-white shadow-border-full transition-all  group-hover:scale-100">
-            <IconButton variant="outlined" size="lg" color="orange" className="rounded-full">
-              <IonIcon name="cart" className={`pt-2 text-xl`} />
-            </IconButton>
+            <AddCart data={{ idCourse: data.id }} />
           </div>
           <div className="scale-0 rounded-full bg-white shadow-border-full transition-all  group-hover:scale-100">
             <AddWhistList data={{ idCourse: data.id }} />

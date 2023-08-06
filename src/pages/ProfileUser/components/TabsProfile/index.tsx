@@ -14,7 +14,7 @@ export default function TabsProfile() {
   const userWishList = useGetWishListQuery(userId);
   const userCourse = useGetUserCourseQuery(userId);
 
-  const dataFake = [
+  const data = [
     {
       label: 'Tất cả khóa học',
       value: 'allCourse',
@@ -39,7 +39,7 @@ export default function TabsProfile() {
   return (
     <Tabs className="rounded-2xl p-3 shadow-border-full" value={active}>
       <TabsHeader className="bg-gray-200">
-        {dataFake?.map(({ label, value }: any) => (
+        {data?.map(({ label, value }: any) => (
           <Tab key={value} value={value}>
             <span className="font-bold text-darkLight">{label}</span>
           </Tab>
@@ -47,7 +47,7 @@ export default function TabsProfile() {
       </TabsHeader>
       <TabsBody>
         {/* {isFetching && <LoadingLocal />} */}
-        {dataFake?.map(({ value, courses }: any) =>
+        {data?.map(({ value, courses }: any) =>
           courses.length ? (
             <TabPanel className="px-1 py-3 pt-8" key={value} value={value}>
               <div className="grid grid-cols-4 gap-3">

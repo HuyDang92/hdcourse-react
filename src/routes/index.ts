@@ -15,6 +15,7 @@ import SettingAccount from 'pages/SettingAccount/SettingAccount';
 import CourseOverView from 'pages/CourseOverView/CourseOverView';
 import ForgotPassword from 'pages/ForgotPassword/ForgotPassword';
 import Lectures from 'pages/Lectures/Lectures';
+import Cart from 'pages/Cart/Cart';
 
 interface RouteConfig {
   path: string;
@@ -36,12 +37,17 @@ const publicRoutes: RouteConfig[] = [
   {
     path: '/login',
     component: Login,
-    layout: Login,
+    layout: null,
   },
   {
     path: '/signup',
     component: SignUp,
-    layout: SignUp,
+    layout: null,
+  },
+  {
+    path: '/cart',
+    component: Cart,
+    layout: DefaultLayout,
   },
   {
     path: '/categories/:keywords',

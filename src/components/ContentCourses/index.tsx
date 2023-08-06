@@ -15,6 +15,7 @@ interface IChildProps {
   nameCourse?: any;
   videoEnded?: any;
   setTotalLearned?: any;
+  setRatingCheck?: any;
 }
 const CUSTOM_ANIMATION = {
   mount: { scale: 1 },
@@ -26,6 +27,7 @@ const ContentCourses: React.FC<IChildProps> = ({
   idLectureCurrrent,
   setTotalLearned,
   nameCourse,
+  setRatingCheck,
   videoEnded,
 }) => {
   const [openAccordions, setOpenAccordions] = useState<any>([]);
@@ -48,7 +50,9 @@ const ContentCourses: React.FC<IChildProps> = ({
   useEffect(() => {
     if (userCourse && enroll) {
       const sum = userCourse?.data?.lectureLearned.length;
+      const rated = userCourse?.data?.ratingCheck;
       setTotalLearned(sum);
+      setRatingCheck(rated);
     }
   }, [userCourse.data]);
 

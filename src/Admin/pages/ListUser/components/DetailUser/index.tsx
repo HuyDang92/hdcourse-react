@@ -40,7 +40,7 @@ const DetailUser: React.FC<IChildProps> = ({ data, setOpen }) => {
               Trạng thái:
               <span className="">{data.active ? 'Đã xác thực' : 'Chưa xác thực'}</span>
             </p>
-            <p className="flex justify-between">
+            {/* <p className="flex justify-between">
               Ngày tham gia:
               <span className="uppercase">
                 {new Date(data.createdAt?.toDate()).toLocaleString()}
@@ -51,7 +51,7 @@ const DetailUser: React.FC<IChildProps> = ({ data, setOpen }) => {
               <span className="uppercase">
                 {new Date(data.updatedAt?.toDate()).toLocaleString()}
               </span>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

@@ -62,11 +62,15 @@ export const courseApi = createApi({
       query: ({ keywords, pageSize, currentPage }) =>
         `/api/course/getAllDataByName/${keywords}/${pageSize}/${currentPage}`,
     }),
+    getRatingCouse: builder.query<any, any>({
+      query: (idCourse) => `/api/course/getRatingCouse/${idCourse}`,
+    }),
   }),
 });
 
 export const {
   useDeleteUserMutation,
+  useRatingCourseMutation,
   useGetAllCourseQuery,
   useLazyGetAllCourseQuery,
   useGetAllDataCatHotQuery,
@@ -75,4 +79,5 @@ export const {
   useGetAllDataByIdCatQuery,
   useLazyGetAllDataFreeQuery,
   useLazyGetAllDataByNameQuery,
+  useGetRatingCouseQuery
 } = courseApi;

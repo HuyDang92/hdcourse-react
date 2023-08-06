@@ -3,52 +3,17 @@ import { Fragment, useState } from 'react';
 import { Dialog, DialogBody, Input, Progress, Rating } from '@material-tailwind/react';
 import ReviewCourse from '../ReviewCourse';
 import Button from 'components/Button';
+import { useGetRatingCouseQuery } from 'features/Course/course.service';
 
 interface IChildProps {
   data: any;
   children: any;
 }
 
-const datariview = [
-  {
-    avatar: 'https://www.material-tailwind.com/img/face-2.jpg',
-    name: 'Huy Dz',
-    createdAt: '09/02/2023',
-    content:
-      'Khóa học chỉnh chu, anh eric chu đáo cẩn thận, cần xem chậm lại để nắm được những kiến thức anh chỉ.',
-  },
-  {
-    avatar: 'https://www.material-tailwind.com/img/face-2.jpg',
-    name: 'Huy Dz',
-    createdAt: '09/02/2023',
-    content:
-      'Khóa học chỉnh chu, anh eric chu đáo cẩn thận, cần xem chậm lại để nắm được những kiến thức anh chỉ.',
-  },
-  {
-    avatar: 'https://www.material-tailwind.com/img/face-2.jpg',
-    name: 'Huy Dz',
-    createdAt: '09/02/2023',
-    content:
-      'Khóa học chỉnh chu, anh eric chu đáo cẩn thận, cần xem chậm lại để nắm được những kiến thức anh chỉ.',
-  },
-  {
-    avatar: 'https://www.material-tailwind.com/img/face-2.jpg',
-    name: 'Huy Dz',
-    createdAt: '09/02/2023',
-    content:
-      'Khóa học chỉnh chu, anh eric chu đáo cẩn thận, cần xem chậm lại để nắm được những kiến thức anh chỉ.',
-  },
-  {
-    avatar: 'https://www.material-tailwind.com/img/face-2.jpg',
-    name: 'Huy Dz',
-    createdAt: '09/02/2023',
-    content:
-      'Khóa học chỉnh chu, anh eric chu đáo cẩn thận, cần xem chậm lại để nắm được những kiến thức anh chỉ.',
-  },
-];
 const AllReview: React.FC<IChildProps> = ({ data, children }) => {
   const [open, setOpen] = useState(false);
   const [limitCourse, setLimitCourse] = useState<boolean>(false);
+  const datareview = useGetRatingCouseQuery(data.idCourse);
 
   const handleOpenDialog = () => {
     setOpen(!open);
@@ -111,10 +76,11 @@ const AllReview: React.FC<IChildProps> = ({ data, children }) => {
                 />
               </div>
             </div>
-            <div className="max-h-[80vh] overflow-y-scroll w-3/4 ps-14">
-              {datariview?.map((item: any, index: any) => (
-                <ReviewCourse key={index} data={item} />
-              ))}
+            <div className="max-h-[80vh] w-3/4 overflow-y-scroll ps-14">
+              {!datareview.isFetching &&
+                datareview.data?.map((item: any, index: any) => (
+                  <ReviewCourse key={index} data={item} />
+                ))}
               <div onClick={() => setLimitCourse(!limitCourse)} className="pt-5 text-center">
                 <Button rounded_md border>
                   <p className="flex items-center space-x-4">

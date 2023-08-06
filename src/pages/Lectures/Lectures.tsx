@@ -23,6 +23,7 @@ const Lectures = () => {
 
   const [lectureData, setLectureData] = useState<any>(null);
   const [totalLearned, setTotalLearned] = useState<number>(0);
+  const [ratingCheck, setRatingCheck] = useState<boolean>(false);
 
   const course = useGetCourseByIdQuery(idCourse);
   const lectures = useGetAllLectureQuery(idCourse);
@@ -44,6 +45,7 @@ const Lectures = () => {
     <div className="">
       {!course.isFetching && (
         <HeaderLecture
+          ratingCheck={ratingCheck}
           data={{
             title: course?.data?.title,
             totalLecture: course?.data?.totalLecture,
@@ -84,6 +86,7 @@ const Lectures = () => {
             enroll
             videoEnded={videoEnded}
             setTotalLearned={setTotalLearned}
+            setRatingCheck={setRatingCheck}
             props={lectures}
           />
         </section>

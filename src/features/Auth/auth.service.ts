@@ -41,6 +41,7 @@ export const userApi = createApi({
           method: 'DELETE',
         };
       },
+      invalidatesTags: (result, error, body) => [{ type: 'userApi', id: 'listUser' }],
     }),
     updateProfile: builder.mutation<any, any>({
       query(body) {
@@ -108,6 +109,22 @@ export const userApi = createApi({
         return [{ type: 'userApi' as const, id: 'listUser' }];
       },
     }),
+    addCart: builder.mutation<any, any>({
+      query(body) {
+        return {
+          url: `/api/current-user/addCart`,
+          method: 'POST',
+          body,
+        };
+      },
+      invalidatesTags: (result, error, body) => [{ type: 'userApi', id: 'cart' }],
+    }),
+    getCart: builder.query<any, any>({
+      query: (idUser) => `/api/current-user/getCart/${idUser}`,
+      providesTags: (result) => {
+        return [{ type: 'userApi' as const, id: 'cart' }];
+      },
+    }),
   }),
 });
 export const {
@@ -124,4 +141,6 @@ export const {
   useGetUserCourseQuery,
   useGetOneUserCourseQuery,
   useGetDataLimitQuery,
+  useAddCartMutation,
+  useGetCartQuery
 } = userApi;

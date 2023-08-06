@@ -21,7 +21,6 @@ const AddUser = ({ setOpen, sendMess }: any) => {
   const [errServer, setErrServer] = useState<any>(undefined);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [addUserAdmin, isPending] = useCreateUserMutation();
-  // const { addUserById } = useAddUser();
 
   const formik = useFormik({
     initialValues: {

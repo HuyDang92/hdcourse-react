@@ -3,8 +3,9 @@ import IonIcon from '@reacticons/ionicons';
 import className from 'classnames/bind';
 import styles from './InputSearch.module.scss';
 import { useNavigate } from 'react-router-dom';
-const cx = className.bind(styles);
+import slugify from 'slugify';
 
+const cx = className.bind(styles);
 function InputSearch() {
   const navigate = useNavigate();
   const [isInputFocused, setInputFocused] = useState<boolean>(false);
@@ -12,11 +13,11 @@ function InputSearch() {
 
   const handleSearch = (e: any) => {
     e.preventDefault();
-    const convertedValue = search
-      .toLowerCase()
-      .replace(/[^\w\s]/g, '')
-      .replace(/\s+/g, '-')
-      .trim();
+    const convertedValue = slugify(search, {
+      replacement: '-',
+      lower: true,
+      strict: true,
+    });
     navigate(`/categories/${convertedValue}`);
     setSearch('');
   };

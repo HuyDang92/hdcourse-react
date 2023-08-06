@@ -3,7 +3,11 @@ import BreadcrumbComponent from './components/Breakcrumb';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
-import { useGetAllCourseQuery, useGetCourseByIdQuery } from 'features/Course/course.service';
+import {
+  useGetAllCourseQuery,
+  useGetCourseByIdQuery,
+  useGetRatingCouseQuery,
+} from 'features/Course/course.service';
 import { Rating, Spinner } from '@material-tailwind/react';
 import IonIcon from '@reacticons/ionicons';
 import ContentCourses from 'components/ContentCourses';
@@ -22,22 +26,7 @@ import { useGetAllLectureQuery } from 'features/Course/lecture.service';
 import { useAddUserCourseMutation } from 'features/Auth/auth.service';
 import CourseComponents from 'components/Course';
 import { saveLink } from 'features/Course/Lecture.slice';
-const datariview = [
-  {
-    avatar: 'https://www.material-tailwind.com/img/face-2.jpg',
-    name: 'Huy Dz',
-    createdAt: '09/02/2023',
-    content:
-      'Khóa học chỉnh chu, anh eric chu đáo cẩn thận, cần xem chậm lại để nắm được những kiến thức anh chỉ.',
-  },
-  {
-    avatar: 'https://www.material-tailwind.com/img/face-2.jpg',
-    name: 'Huy Dz',
-    createdAt: '09/02/2023',
-    content:
-      'Khóa học chỉnh chu, anh eric chu đáo cẩn thận, cần xem chậm lại để nắm được những kiến thức anh chỉ.',
-  },
-];
+
 const CourseOverView = () => {
   const { nameCourse, idCourse } = useParams();
   const navigate = useNavigate();
@@ -46,12 +35,12 @@ const CourseOverView = () => {
   const [limitCourse, setLimitCourse] = useState<boolean>(false);
   const [displayStyle, setDisplayStyle] = useState<boolean>(false);
   const user = useSelector((state: RootState) => state.auth.currentUser);
-  // const idCourse = useSelector((state: RootState) => state.courseState.idCourse);
   const { data, isFetching } = useGetCourseByIdQuery(idCourse as string);
   const lectures = useGetAllLectureQuery(idCourse);
   const [trigger, result] = useLazyGetInstructorByIdQuery();
   const courses = useGetAllCourseQuery(limitCourse ? 10 : 5);
   const [addUserCourse] = useAddUserCourseMutation();
+  const datareview = useGetRatingCouseQuery(idCourse);
 
   useEffect(() => {
     if (data?.idInstructor) {
@@ -199,23 +188,33 @@ const CourseOverView = () => {
           <div className="space-y-3 rounded-2xl p-8 shadow-border-full">
             <h1 className="flex space-x-3 pb-3 text-start text-2xl font-bold">
               <span>Đánh giá</span>
-              <span className="flex items-center space-x-2">
-                (<IonIcon name="star" className="pe-2 text-org" /> {userData?.rating} xếp hạng khóa
-                học)
-              </span>
+              {datareview?.data?.length > 0 && (
+                <span className="flex items-center space-x-2">
+                  (<IonIcon name="star" className="pe-2 text-org" /> {userData?.rating} xếp hạng
+                  khóa học)
+                </span>
+              )}
             </h1>
             <div className="space-y-4">
-              {datariview?.map((item: any, index: any) => (
-                <ReviewCourse key={index} data={item} />
-              ))}
+              {datareview?.data?.length > 0 ? (
+                datareview?.data?.map((item: any, index: any) => (
+                  <ReviewCourse key={index} data={item} />
+                ))
+              ) : (
+                <>
+                  <h3 className="text-center text-2xl font-bold text-gray-300">Chưa có đánh giá</h3>
+                </>
+              )}
             </div>
-            <div className="text-center">
-              <AllReview data={{ idCourse: idCourse }}>
-                <Button rounded_md border>
-                  Xem tất cả đánh giá
-                </Button>
-              </AllReview>
-            </div>
+            {datareview?.data?.length > 0 && (
+              <div className="text-center">
+                <AllReview data={{ idCourse: idCourse }}>
+                  <Button rounded_md border>
+                    Xem tất cả đánh giá
+                  </Button>
+                </AllReview>
+              </div>
+            )}
           </div>
         </div>
 
