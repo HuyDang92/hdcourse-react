@@ -5,13 +5,12 @@ import { RootState } from 'stores/store';
 import IonIcon from '@reacticons/ionicons';
 import EditProfile from './components/EditProfile';
 import SecurityUser from './components/SecurityUser';
-import { ToastContainer, toast } from 'react-toastify';
 
 export default function Example() {
   const userCre = useSelector((state: RootState) => state.auth.currentUser);
 
   useEffect(() => {
-    document.title = 'Trang cá nhân';
+    document.title = 'Chỉnh sửa thông tin';
   }, []);
 
   const data = [

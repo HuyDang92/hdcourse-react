@@ -2,7 +2,6 @@ import { Tabs, TabsHeader, TabsBody, Tab, TabPanel, TabsProps } from '@material-
 import Button from 'components/Button';
 import Course from 'components/Course';
 import { Link, useParams } from 'react-router-dom';
-import LoadingLocal from 'components/LoadingLocal';
 import { useGetUserCourseQuery, useGetWishListQuery } from 'features/Auth/auth.service';
 import { useSelector } from 'react-redux';
 import { RootState } from 'stores/store';

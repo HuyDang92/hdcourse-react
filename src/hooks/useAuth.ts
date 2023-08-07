@@ -8,11 +8,10 @@ import {
   User,
   sendPasswordResetEmail,
 } from 'firebase/auth';
-import { setDoc, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebase.jsx';
 import { auth, provider } from 'firebase.jsx';
-import { useEffect, useState } from 'react';
-import { IUserInfo } from 'types/User';
+import { useState } from 'react';
 
 export const useVerificationEmail = () => {
   const [error, setError] = useState<string | null>(null);
@@ -114,7 +113,7 @@ export const useSignInWithGoogle = () => {
         throw new Error('Đăng nhập thất bại!');
       }
       setError(null);
-      
+
       return userCredential.user;
     } catch (err: any) {
       const errorCode = err.code;

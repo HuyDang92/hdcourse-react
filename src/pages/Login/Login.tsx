@@ -12,11 +12,10 @@ import {
   useVerificationEmail,
   useUpdateActiveUser,
 } from 'hooks/useAuth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Timestamp } from 'firebase/firestore';
 import sendEmail from 'assets/sendemail.gif';
 
 interface Login {

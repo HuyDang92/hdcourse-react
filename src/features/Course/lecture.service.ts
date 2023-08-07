@@ -16,14 +16,25 @@ export const lectureApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    addUser: builder.mutation<any, any>({
+    addCommentLecture: builder.mutation<any, any>({
       query(body) {
         return {
-          url: '/api/lecture/addUser',
+          url: '/api/lecture/addCommentLecture',
           method: 'POST',
           body,
         };
       },
+      invalidatesTags: (result, error, body) => [{ type: 'lectureApi', id: 'comments' }],
+    }),
+    addReplyCommentLecture: builder.mutation<any, any>({
+      query(body) {
+        return {
+          url: '/api/lecture/addReplyCommentLecture',
+          method: 'POST',
+          body,
+        };
+      },
+      invalidatesTags: (result, error, body) => [{ type: 'lectureApi', id: 'comments' }],
     }),
     learnedLecture: builder.mutation<any, any>({
       query(body) {
@@ -52,13 +63,21 @@ export const lectureApi = createApi({
     getLectureById: builder.query<any, string>({
       query: (id) => `/api/lecture/getLectureById/${id}`,
     }),
+    getCommentLecture: builder.query<any, any>({
+      query: ({ idLecture, limit }) => `/api/lecture/getCommentLecture/${idLecture}/${limit}`,
+      providesTags: (result) => {
+        return [{ type: 'lectureApi' as const, id: 'comments' }];
+      },
+    }),
   }),
 });
 
 export const {
-  useAddUserMutation,
+  useAddCommentLectureMutation,
+  useAddReplyCommentLectureMutation,
   useDeleteUserMutation,
   useLearnedLectureMutation,
   useGetAllLectureQuery,
   useGetLectureByIdQuery,
+  useGetCommentLectureQuery,
 } = lectureApi;

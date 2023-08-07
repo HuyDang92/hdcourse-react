@@ -1,11 +1,10 @@
 import { useParams } from 'react-router-dom';
 import IonIcon from '@reacticons/ionicons';
 import BreadcrumbComponent from './components/Breakcrumb';
-import { Radio, Checkbox, Button } from '@material-tailwind/react';
+import { Radio, Checkbox } from '@material-tailwind/react';
 import {
   useGetAllDataByIdCatQuery,
   useLazyGetAllDataByNameQuery,
-  useLazyGetAllDataFreeQuery,
 } from 'features/Course/course.service';
 import CourseComponents from 'components/Course';
 import Pagination from 'components/Panination';
@@ -13,7 +12,6 @@ import { ICourse } from 'types/Home';
 import { useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { useEffect, useState } from 'react';
-import LoadingLocal from 'components/LoadingLocal';
 import { useGetAllCatLevelThreeQuery } from 'features/Category/category.service';
 import SkeletonComp from 'components/Skeleton';
 
@@ -49,7 +47,7 @@ const Categories = () => {
   console.log(dataCourse);
 
   useEffect(() => {
-    document.title = `Danh mục khóa học ${handleTitle()}`;
+    document.title = `Danh mục khóa học`;
   }, [idCategory]);
 
   useEffect(() => {

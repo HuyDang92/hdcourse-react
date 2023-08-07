@@ -1,12 +1,4 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-  Avatar,
-  Tooltip,
-} from '@material-tailwind/react';
+import { Card, CardHeader, CardBody, Typography, Avatar, Tooltip } from '@material-tailwind/react';
 
 export default function Blog() {
   return (
@@ -19,7 +11,7 @@ export default function Blog() {
         />
       </CardHeader>
       <CardBody className="space-y-2 p-4 text-darkLight">
-        <span className="text-sm uppercase text-org font-medium">TikTok</span>
+        <span className="text-sm font-medium uppercase text-org">TikTok</span>
         <Typography variant="h5" color="blue-gray">
           UI/UX Review Check
         </Typography>
@@ -39,7 +31,7 @@ export default function Blog() {
           </Tooltip>
           <div className="">
             <p className="font-semibold">Full Name</p>
-            <p className='text-sm font-medium'>Jul 07 2023</p>
+            <p className="text-sm font-medium">Jul 07 2023</p>
           </div>
         </div>
       </CardBody>

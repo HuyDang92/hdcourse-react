@@ -1,9 +1,8 @@
-import { Tabs, TabsHeader, TabsBody, Tab, TabPanel, TabsProps } from '@material-tailwind/react';
+import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from '@material-tailwind/react';
 import Button from 'components/Button';
 import Course from 'components/Course';
 import { Link } from 'react-router-dom';
 import { useGetAllDataCatHotQuery } from 'features/Course/course.service';
-import { useEffect } from 'react';
 import LoadingLocal from 'components/LoadingLocal';
 export default function TabsComponent() {
   const { data, isFetching } = useGetAllDataCatHotQuery();

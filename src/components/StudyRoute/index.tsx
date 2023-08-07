@@ -1,12 +1,11 @@
-import { Card, CardHeader, CardBody, Typography } from '@material-tailwind/react';
-import { ArrowLongRightIcon } from '@heroicons/react/24/outline';
+import { CardHeader, CardBody, Typography } from '@material-tailwind/react';
 import IonIcon from '@reacticons/ionicons';
 import Button from 'components/Button';
 import { Link } from 'react-router-dom';
 
 export default function StudyRoute() {
   return (
-    <div className="flex w-full h-72 rounded-3xl text-darkLight shadow-border-full">
+    <div className="flex h-72 w-full rounded-3xl text-darkLight shadow-border-full">
       <CardHeader shadow={false} floated={false} className="m-0 w-2/5 shrink-0 rounded-r-none">
         <img
           src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
@@ -24,7 +23,7 @@ export default function StudyRoute() {
           viên muốn trở thành một DA chuyên nghiệp và cả những học viên muốn ứng dụng Phân tích dữ
           liệu để tối ưu công việc của mình.
         </Typography>
-        <div className="flex justify-between items-end">
+        <div className="flex items-end justify-between">
           <ul>
             <li className="text-md flex items-center space-x-3 font-medium ">
               <IonIcon name="book-outline" />

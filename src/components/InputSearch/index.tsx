@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import IonIcon from '@reacticons/ionicons';
 import className from 'classnames/bind';
 import styles from './InputSearch.module.scss';

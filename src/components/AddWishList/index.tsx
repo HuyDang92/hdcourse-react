@@ -2,7 +2,7 @@ import { IconButton, Spinner } from '@material-tailwind/react';
 import IonIcon from '@reacticons/ionicons';
 import { useAddWishListMutation, useGetWishListQuery } from 'features/Auth/auth.service';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from 'stores/store';
 

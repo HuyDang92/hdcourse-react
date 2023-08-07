@@ -1,4 +1,3 @@
-import React from 'react';
 import { GridSpinner } from 'react-spinners-kit';
 
 const Loading = ({ children }: any) => {

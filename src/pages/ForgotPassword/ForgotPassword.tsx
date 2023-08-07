@@ -7,7 +7,7 @@ import sendEmail from 'assets/sendemail.gif';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useSignUp, useSignInWithGoogle, useResetPassword } from 'hooks/useAuth';
+import { useResetPassword } from 'hooks/useAuth';
 import { useSelector } from 'react-redux';
 import IonIcon from '@reacticons/ionicons';
 import { RootState } from 'stores/store';
@@ -125,9 +125,7 @@ const ForgotPassword = () => {
             <div className="relative bg-white px-4 py-6 shadow-lg sm:rounded-3xl sm:px-32 sm:py-10">
               <div className="mx-auto max-w-sm text-center">
                 <img className="w-72" src={sendEmail} alt="" />
-                <div className="text-lg font-semibold">
-                  Đã gửi email đặt lại mật khẩu
-                </div>
+                <div className="text-lg font-semibold">Đã gửi email đặt lại mật khẩu</div>
                 <div className="text-lg font-semibold">Vui lòng kiểm tra trong hộp thư</div>
                 <span className="cursor-pointer text-sm text-org underline">
                   Không nhận được thư?

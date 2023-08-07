@@ -1,7 +1,7 @@
 import { CardHeader, CardBody, Rating, IconButton } from '@material-tailwind/react';
 import { ICourse } from 'types/Home';
 import IonIcon from '@reacticons/ionicons';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCourse } from 'features/Course/Course.slice';
 import AddWhistList from 'components/AddWishList';
@@ -10,14 +10,14 @@ import { useGetUserCourseQuery } from 'features/Auth/auth.service';
 import slugify from 'slugify';
 import { useGetAllLectureQuery } from 'features/Course/lecture.service';
 import { useEffect, useState } from 'react';
-import { saveLink } from 'features/Course/Lecture.slice';
 import AddCart from 'components/AddCart';
 
 interface IChildProps {
   data: ICourse;
   row?: boolean;
+  cart?: boolean;
 }
-const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
+const CourseComponents: React.FC<IChildProps> = ({ data, row, cart }) => {
   const slug = slugify(data.title, {
     replacement: '-',
     lower: true,
@@ -158,6 +158,7 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row }) => {
       )}
 
       <AddWhistList data={{ idCourse: data.id }} />
+      {cart && <AddCart data={{ idCourse: data.id }} />}
     </div>
   );
 };

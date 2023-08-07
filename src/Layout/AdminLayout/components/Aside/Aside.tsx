@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import IonIcon from '@reacticons/ionicons';
 import logo from 'assets/logo/logo.svg';
 import DropdownMenu from './components/DropdownMenu';
 const Aside = () => {
