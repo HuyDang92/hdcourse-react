@@ -48,7 +48,7 @@ const ContentCourses: React.FC<IChildProps> = ({
   }, [props?.data]);
 
   useEffect(() => {
-    if (userCourse && enroll) {
+    if (userCourse.isSuccess && enroll) {
       const sum = userCourse?.data?.lectureLearned.length;
       const rated = userCourse?.data?.ratingCheck;
       setTotalLearned(sum);
@@ -123,7 +123,7 @@ const ContentCourses: React.FC<IChildProps> = ({
                     )}
                   </div>
                   <div className={`flex items-center space-x-5`}>
-                    {!enroll && <p className="text-[15px]">{numberOfLectures} bài giảng</p>}
+                    {!enroll && <p className="text-[15px] w-[6rem]">{numberOfLectures} bài giảng</p>}
                     <IonIcon
                       name="chevron-down-outline"
                       className={`${openAccordions[index] === true && 'rotate-180'} transition-all`}

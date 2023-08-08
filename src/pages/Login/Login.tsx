@@ -67,9 +67,9 @@ const Login = () => {
 
   const handleLogInGoogle = async () => {
     signInGoogle().then((user) => {
-      if (linkPre) {
-        navigate(linkPre);
-      }
+      // if (linkPre) {
+      //   navigate(linkPre);
+      // }
     });
   };
 

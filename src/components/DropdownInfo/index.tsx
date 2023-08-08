@@ -119,7 +119,7 @@ const DropdownInfo: React.FC<IChildProps> = ({ data, role }) => {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  to="/"
+                  to="/cart"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'text-md block px-4 py-3'

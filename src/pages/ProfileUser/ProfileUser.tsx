@@ -29,7 +29,10 @@ const ProfileUser = () => {
                   src={userCre?.photoURL}
                   alt=""
                 />
-                <p className="text-3xl font-bold">{userCre?.displayName}</p>
+                <p>
+                  <p className="text-3xl font-bold">{userCre?.displayName}</p>
+                  <p>Học viên</p>
+                </p>
               </div>
               <Link to={'/user/edit-profile'}>
                 <IconButton color="white">

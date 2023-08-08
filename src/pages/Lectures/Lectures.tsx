@@ -123,7 +123,7 @@ const Lectures = () => {
                 </>
               )}
             </div>
-            {dataComment.isSuccess && dataComment?.data?.length > 0 && (
+            {dataComment.isSuccess && dataComment?.data?.length > 5 && (
               <div onClick={() => setLimit((prev) => prev + 10)} className="py-3 text-center">
                 <Button rounded_md border>
                   Xem thêm

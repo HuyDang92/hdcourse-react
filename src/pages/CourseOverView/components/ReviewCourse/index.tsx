@@ -4,8 +4,12 @@ import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
-import { useAddReplyCommentLectureMutation } from 'features/Course/lecture.service';
+import {
+  useAddReplyCommentLectureMutation,
+  useDeleteCommentMutation,
+} from 'features/Course/lecture.service';
 import { useParams } from 'react-router-dom';
+import IonIcon from '@reacticons/ionicons';
 
 interface IChildProps {
   data: any;
@@ -15,6 +19,7 @@ interface IChildProps {
 const ReviewCourse: React.FC<IChildProps> = ({ data, comment, user }) => {
   const { idLeature } = useParams();
 
+  const [openAction, setOpenAction] = useState<boolean>(false);
   const [like, setLike] = useState<boolean>(false);
   const [unlike, setUnlike] = useState<boolean>(false);
   const [reply, setReply] = useState<boolean>(false);
@@ -22,6 +27,7 @@ const ReviewCourse: React.FC<IChildProps> = ({ data, comment, user }) => {
   const [commentReply, setCommentReply] = useState<string>('');
 
   const [addCommentRepky, loading] = useAddReplyCommentLectureMutation();
+  const [deleteComment] = useDeleteCommentMutation();
 
   const handleLike = () => {
     setLike(!like);
@@ -30,6 +36,10 @@ const ReviewCourse: React.FC<IChildProps> = ({ data, comment, user }) => {
   const handleUnlike = () => {
     setLike(false);
     setUnlike(!unlike);
+  };
+  const handleDeleteComment = async () => {
+    await deleteComment(data.id);
+    setOpenAction(false);
   };
 
   const [timeAgo, setTimeAgo] = useState('');
@@ -94,7 +104,7 @@ const ReviewCourse: React.FC<IChildProps> = ({ data, comment, user }) => {
         </div>
 
         <div className="">{comment ? data.comment : data.content}</div>
-        <div className="flex space-x-3">
+        <div className="relative flex items-center space-x-3">
           <span onClick={handleLike}>{!like ? <ThumbUpOffAltIcon /> : <ThumbUpAltIcon />}</span>
           <span onClick={handleUnlike}>
             {!unlike ? <ThumbDownOffAltIcon /> : <ThumbDownAltIcon />}
@@ -106,6 +116,25 @@ const ReviewCourse: React.FC<IChildProps> = ({ data, comment, user }) => {
             >
               Trả lời
             </button>
+          )}
+          {comment && data?.idUser === user.uid && (
+            <div className="relative">
+              <IonIcon
+                onClick={() => setOpenAction(!openAction)}
+                name="ellipsis-horizontal-outline"
+                className="rounded-full p-1 hover:bg-gray-200"
+              />
+              <ul
+                className={` w-32 ${
+                  openAction ? 'absolute' : 'hidden'
+                } cursor-pointer rounded-xl bg-white p-1 text-center shadow-border-full transition-all`}
+              >
+                <li className="rounded-lg p-1 hover:bg-gray-200">Chỉnh sửa</li>
+                <li onClick={handleDeleteComment} className="rounded-lg p-1 hover:bg-gray-200">
+                  Xóa
+                </li>
+              </ul>
+            </div>
           )}
         </div>
         {openReply && (

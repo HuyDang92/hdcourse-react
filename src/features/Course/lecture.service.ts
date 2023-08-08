@@ -46,13 +46,14 @@ export const lectureApi = createApi({
       },
       // invalidatesTags: (result, error, body) => [{ type: 'lectureApi', id: 'listLecture' }],
     }),
-    deleteUser: builder.mutation<any, any>({
-      query(uid) {
+    deleteComment: builder.mutation<any, any>({
+      query(idComment) {
         return {
-          url: `/api/lecture/delete/${uid}`,
+          url: `/api/lecture/deleteComment/${idComment}`,
           method: 'DELETE',
         };
       },
+      invalidatesTags: (result, error, body) => [{ type: 'lectureApi', id: 'comments' }], 
     }),
     getAllLecture: builder.query<any, any>({
       query: (idCourse) => `/api/lecture/getAllLecture/${idCourse}`,
@@ -75,7 +76,7 @@ export const lectureApi = createApi({
 export const {
   useAddCommentLectureMutation,
   useAddReplyCommentLectureMutation,
-  useDeleteUserMutation,
+  useDeleteCommentMutation,
   useLearnedLectureMutation,
   useGetAllLectureQuery,
   useGetLectureByIdQuery,
