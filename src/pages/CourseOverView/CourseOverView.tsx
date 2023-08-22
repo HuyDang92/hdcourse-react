@@ -97,9 +97,7 @@ const CourseOverView = () => {
                   <IonIcon name="person" className="w-full rounded-full border-2 p-2 text-2xl" />
                   <p>
                     <span>Chuyên gia</span> <br />
-                    <Link to={`/instructor/${userData?.author}`}>
-                      <span className="text-darkLight underline">{userData?.author}</span>
-                    </Link>
+                    <span className="text-darkLight ">{userData?.author}</span>
                   </p>
                 </div>
                 <div className="flex items-center space-x-3 border-l-2 border-r-2 px-4">

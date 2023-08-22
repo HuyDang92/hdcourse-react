@@ -39,14 +39,20 @@ function Hero() {
       />
       <Slider ref={sliderRef} {...settings}>
         <div className="relative">
-          <img src={banner_1} className="h-[30rem] w-full object-cover" alt="" />
-          <div className="absolute left-[8%] top-[20%] w-[30rem] space-y-4 text-white">
-            <h1 className="text-4xl font-extrabold">Hoc thả ga với gói hội viên HDCourse</h1>
-            <p className="text-lg font-bold">
+          <img
+            src={banner_1}
+            className="h-[15rem] w-full object-cover md:h-[30rem] xl:h-[30rem]"
+            alt=""
+          />
+          <div className="absolute left-[8%] top-[20%] w-[30rem] text-white md:space-y-4">
+            <h1 className="w-[60%] text-xl font-extrabold md:w-full md:text-4xl ">
+              Hoc thả ga với gói hội viên HDCourse
+            </h1>
+            <p className="w-[60%] text-sm font-bold md:w-full md:text-lg">
               Học không giới hạn <span className="font-extrabold text-org">450+</span> khóa học chất
               lượng
             </p>
-            <p className="text-4xl font-extrabold">
+            <p className="text-lg font-extrabold md:text-4xl">
               Chỉ từ <span className="font-extrabold text-org">199.000đ</span>/tháng
             </p>
             <Button rounded_md primary>
@@ -55,13 +61,19 @@ function Hero() {
           </div>
         </div>
         <div className="relative">
-          <img src={banner_2} className="h-[30rem] w-full object-cover" alt="" />
-          <div className="absolute left-[8%] top-[20%] w-[30rem] space-y-4 text-darkLight">
-            <h1 className="text-4xl font-extrabold">HDCourse học tập tiết kiệm tối đa</h1>
-            <p className="text-lg font-bold">
+          <img
+            src={banner_2}
+            className="h-[15rem] w-full object-cover md:h-[30rem] xl:h-[30rem]"
+            alt=""
+          />
+          <div className="absolute left-[8%] top-[20%] w-[30rem] text-darkLight md:space-y-4">
+            <h1 className="w-[60%] text-xl font-extrabold md:w-full md:text-4xl">
+              HDCourse học tập tiết kiệm tối đa
+            </h1>
+            <p className="w-[60%] text-sm font-bold md:w-full md:text-lg">
               Đồng giá <span className="font-extrabold text-org">200+</span> khóa học chất lượng
             </p>
-            <p className="text-4xl font-extrabold">
+            <p className="text-lg font-extrabold md:text-4xl">
               Chỉ từ <span className="font-extrabold text-org">149.000đ</span>
             </p>
             <Button rounded_md primary>

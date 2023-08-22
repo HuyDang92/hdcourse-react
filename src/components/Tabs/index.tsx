@@ -23,7 +23,7 @@ export default function TabsComponent() {
           data?.map(({ value, courses }: any) => {
             return (
               <TabPanel className="px-1 py-3 pt-8" key={value} value={value}>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                   {courses?.map((item: any, index: any) => (
                     <Course key={index} data={item} />
                   ))}

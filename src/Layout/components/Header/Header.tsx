@@ -10,6 +10,7 @@ import Notification from '../../../components/Notification';
 import { useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { Tooltip, Button } from '@material-tailwind/react';
+import MenuMobile from './components/MenuMobile';
 
 const Header = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
@@ -58,7 +59,7 @@ const Header = () => {
         isNavbarVisible ? 'sticky top-0 z-30' : 'block'
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between py-3 ">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-3 py-3 xl:px-0">
         <div className="flex items-center space-x-5">
           <h1 className="flex space-x-2 text-3xl font-bold text-org">
             <img src={logo} className="w-7" alt="logo" />
@@ -66,11 +67,19 @@ const Header = () => {
               HD<span className="text-darkLight">Course</span>
             </Link>
           </h1>
-          <Dropdown />
-          <InputSearch />
+          <div className="hidden md:hidden xl:block">
+            <Dropdown />
+          </div>
+          <div className="hidden md:block xl:block">
+            <InputSearch />
+          </div>
+        </div>
+        <div className="block space-x-2 xl:hidden">
+          {userData !== null && <DropdownInfo data={userData} role={role} />}
+          <MenuMobile login={userData !== null} />
         </div>
         {userData !== null ? (
-          <div className="flex items-center space-x-6 text-org">
+          <div className="hidden items-center space-x-6 text-org xl:flex">
             <div className="flex items-center space-x-3">
               <Link to={`/user/${slug}/wishList`}>
                 <Tooltip
@@ -105,7 +114,7 @@ const Header = () => {
             <DropdownInfo data={userData} role={role} />
           </div>
         ) : (
-          <div className="flex items-center space-x-4 text-org">
+          <div className=" hidden items-center space-x-4 text-org xl:flex">
             <IonIcon name="cart-outline" className="icon__hover text-3xl" />
             <Link to="/login">
               <ButtonComponents rounded_full border>

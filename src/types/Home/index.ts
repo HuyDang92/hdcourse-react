@@ -47,6 +47,7 @@ export interface ILecture {
 export interface IInstructor {
   id: string;
   idUser: string;
+  email: string;
   name: string;
   avatar: string;
   field: string;

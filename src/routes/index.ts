@@ -16,6 +16,8 @@ import CourseOverView from 'pages/CourseOverView/CourseOverView';
 import ForgotPassword from 'pages/ForgotPassword/ForgotPassword';
 import Lectures from 'pages/Lectures/Lectures';
 import Cart from 'pages/Cart/Cart';
+import Intructors from 'pages/Intructors/Intructors';
+import Message from 'pages/Message/Message';
 
 interface RouteConfig {
   path: string;
@@ -43,6 +45,16 @@ const publicRoutes: RouteConfig[] = [
     path: '/signup',
     component: SignUp,
     layout: null,
+  },
+  {
+    path: '/intructors/:name',
+    component: Intructors,
+    layout: DefaultLayout,
+  },
+  {
+    path: '/message',
+    component: Message,
+    layout: DefaultLayout,
   },
   {
     path: '/cart',

@@ -55,17 +55,17 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row, cart }) => {
   };
 
   return !row ? (
-    <div className="my-5 h-fit w-[19.3rem] rounded-2xl shadow-border-full">
+    <div className="my-5 h-fit xl:w-[19.3rem] rounded-2xl shadow-border-full">
       <CardHeader
         color="blue-gray"
-        className="group relative h-44 overflow-hidden transition-all hover:scale-[105%]"
+        className="group relative h-52 xl:h-44 overflow-hidden transition-all hover:scale-[105%]"
       >
         <span
           onClick={() => handleRoute(data.id)}
           className="absolute bottom-0 left-0 right-0 top-0 z-10 bg-black opacity-0 transition-all group-hover:opacity-50"
         ></span>
 
-        <img src={data.thumb} alt="img-blur-shadow" className="h-full w-full rounded-xl" />
+        <img src={data.thumb} alt="img-blur-shadow" className="h-full w-full rounded-xl object-cover" />
         <div className="hover-target absolute left-[50%] top-[50%] z-30 flex -translate-x-[50%] -translate-y-[50%] space-x-3">
           <div className="scale-0 rounded-full bg-white shadow-border-full transition-all  group-hover:scale-100">
             <AddCart data={{ idCourse: data.id }} />

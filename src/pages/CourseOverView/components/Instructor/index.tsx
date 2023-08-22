@@ -2,27 +2,31 @@ import IonIcon from '@reacticons/ionicons';
 import { IInstructor } from 'types/Home';
 import { useState } from 'react';
 import { IUserInfo } from 'types/User';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setIdInstructor } from 'features/Instructor/Instructor.slice';
 
 interface IChildProps {
   data: IInstructor;
 }
 const Instructor: React.FC<IChildProps> = ({ data }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [extra, setExtra] = useState<boolean>(true);
-  // const [getInstructor, isPending] = useGetUserByIdMutation();
+  const slug = data && data.email.split('@')[0];
+  const handleRoute = () => {
+    dispatch(setIdInstructor(data?.id));
+    navigate(`/intructors/${slug}`);
+  };
 
-  // useEffect(() => {
-  //   if (data.idUser) {
-  //     getInstructor({ uid: data.idUser }).then((item: any) => {
-  //       setUser(item.data);
-  //     });
-  //   }
-  // }, [data.idUser]);
   return (
     data && (
       <>
         <h1 className="text-2xl font-bold">Giảng viên</h1>
         <ul className="space-y-4 font-medium">
-          <li className="text-xl font-bold text-org underline">{data?.name}</li>
+          <li onClick={handleRoute} className="cursor-pointer text-xl font-bold text-org underline">
+            {data?.name}
+          </li>
           <li className="text-lg text-gray-500">{data?.field}</li>
           <li className="flex items-center space-x-5">
             <img src={data?.avatar} alt="" className="h-36 w-36 rounded-full object-cover" />

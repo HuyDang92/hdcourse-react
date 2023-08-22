@@ -5,8 +5,8 @@ import logo from 'assets/logo/logo.svg';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-[#252831] py-10 text-white ">
-      <div className="mx-auto flex max-w-7xl justify-between">
+    <footer className="w-full bg-[#252831] px-10 py-10 text-white xl:px-0 ">
+      <div className="mx-auto max-w-7xl justify-between space-y-5 md:flex md:space-y-5">
         <div>
           <h3 className="mb-7 flex space-x-4 text-xl uppercase tracking-[0.2rem] text-org">
             <img src={logo} className="w-7" alt="logo" /> <p>Thông tin</p>

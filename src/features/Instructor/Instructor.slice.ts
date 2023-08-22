@@ -8,14 +8,14 @@ const initialState: IInstructorProps = {
 };
 
 const instructorSlice = createSlice({
-  name: 'instructor',
+  name: 'instructorState',
   initialState,
   reducers: {
-    getInstructor: (state, action: PayloadAction<any>) => {
+    setIdInstructor: (state, action: PayloadAction<any>) => {
       state.idInstructor = action.payload;
     },
   },
 });
-export const { getInstructor } = instructorSlice.actions;
+export const { setIdInstructor } = instructorSlice.actions;
 const instructorReducer = instructorSlice.reducer;
 export default instructorReducer;
