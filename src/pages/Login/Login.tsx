@@ -135,11 +135,11 @@ const Login = () => {
         </h1>
       </Link>
       <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-5 sm:py-8">
-        <div className="relative py-3 sm:mx-auto sm:my-20 sm:max-w-xl">
+        <div className="relative mx-auto max-w-[22rem] py-3 md:my-20 md:max-w-xl">
           <div className="fixed bottom-0 left-0 right-0 top-0 bg-black opacity-30"></div>
-          <div className="absolute inset-0 -skew-y-6 transform bg-gradient-to-r from-org to-orange-200 shadow-lg sm:rotate-6 sm:skew-y-0 sm:rounded-3xl"></div>
+          <div className="absolute inset-0 rotate-6 skew-y-0 transform rounded-3xl bg-gradient-to-r from-org to-orange-200 shadow-lg"></div>
           <form onSubmit={formik.handleSubmit} className="">
-            <div className="relative bg-white  shadow-lg sm:rounded-3xl sm:px-10 sm:py-12">
+            <div className="relative bg-white  shadow-lg rounded-3xl px-10 py-8 sm:py-12">
               <div className="mx-auto max-w-sm ">
                 <div className="text-center">
                   <h1 className="text-center text-2xl font-bold">Đăng nhập</h1>
@@ -153,7 +153,7 @@ const Login = () => {
                     <small className="text-[13px] text-red-600">Tài khoản chưa được đăng ký</small>
                   )}
                 </div>
-                <div className="w-96 divide-y divide-gray-200 sm:px-8">
+                <div className="md:w-96 divide-y divide-gray-200 md:px-8">
                   <div className="space-y-4 py-8 text-base leading-6 text-gray-700 sm:text-lg sm:leading-7">
                     <div className="space-y-4">
                       <div className="relative">

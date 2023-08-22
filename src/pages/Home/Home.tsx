@@ -47,22 +47,22 @@ const Home = () => {
             <h1 className="text-xl font-extrabold text-darkLight md:text-3xl">
               Vì sao học viên nên chọn HDCourse ?
             </h1>
-            <ul className="grid gap-3 text-center font-medium md:grid-cols-2 xl:grid-cols-4">
+            <ul className="grid grid-cols-2 gap-3 text-center font-medium xl:grid-cols-4">
               <li className="flex flex-col items-center rounded-3xl p-5 shadow-border-full">
-                <img className="h-28 w-28" src={section_1} alt="" />
-                <span>Lộ trình bài bản Ứng với từng vị trí, cấp bậc</span>
+                <img className="h-14 w-14 md:h-28 md:w-28" src={section_1} alt="" />
+                <span className='md:text-lg text-sm'>Lộ trình bài bản Ứng với từng vị trí, cấp bậc</span>
               </li>
               <li className="flex flex-col items-center rounded-3xl p-5 shadow-border-full">
-                <img className="h-28 w-28" src={section_2} alt="" />
-                <span>Kiến thức thực tiễn Giải quyết ngay vấn đề trong công việc</span>
+                <img className="h-14 w-14 md:h-28 md:w-28" src={section_2} alt="" />
+                <span className='md:text-lg text-sm'>Kiến thức thực tiễn Giải quyết ngay vấn đề trong công việc</span>
               </li>
               <li className="flex flex-col items-center rounded-3xl p-5 shadow-border-full">
-                <img className="h-28 w-28" src={section_3} alt="" />
-                <span>Giảng viên trực tiếp giải đáp trong 8h làm việc</span>
+                <img className="h-14 w-14 md:h-28 md:w-28" src={section_3} alt="" />
+                <span className='md:text-lg text-sm'>Giảng viên trực tiếp giải đáp trong 8h làm việc</span>
               </li>
               <li className="flex flex-col items-center rounded-3xl p-5 shadow-border-full">
-                <img className="h-28 w-28" src={section_4} alt="" />
-                <span>Nội dung cập nhật hàng tháng Đảm bảo phiên bản mới nhất</span>
+                <img className="h-14 w-14 md:h-28 md:w-28" src={section_4} alt="" />
+                <span className='md:text-lg text-sm'>Nội dung cập nhật hàng tháng Đảm bảo phiên bản mới nhất</span>
               </li>
             </ul>
           </div>
@@ -96,7 +96,7 @@ const Home = () => {
             <h1 className="text-xl font-extrabold text-darkLight md:text-3xl">
               Các thể loại hàng đầu
             </h1>
-            <ul className="grid gap-3 text-center font-medium md:grid-cols-2 xl:grid-cols-4">
+            <ul className="grid grid-cols-2 gap-3 text-center font-medium xl:grid-cols-4">
               {ListTopic?.map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -104,7 +104,7 @@ const Home = () => {
                     key={index}
                     className="flex flex-col items-center rounded-3xl p-4 shadow-border-full"
                   >
-                    <div className="w-44 transition-all hover:scale-[115%]">
+                    <div className="w-20 transition-all hover:scale-[115%] md:w-44">
                       <Icon />
                     </div>
                     <span className="text-lg font-bold text-darkLight">{item.title}</span>
@@ -161,11 +161,11 @@ const Home = () => {
           </div>
         </section>
         <section className="section_7 ">
-          <div className=" mx-auto md:flex max-w-4xl">
+          <div className=" mx-auto max-w-4xl md:flex">
             <div className="md:w-[35%]">
               <img src="https://s.udemycdn.com/home/non-student-cta/instructor-1x-v3.jpg" alt="" />
             </div>
-            <div className="md:w-[65%] space-y-5 md:ps-10 pt-10 text-darkLight">
+            <div className="space-y-5 pt-10 text-darkLight md:w-[65%] md:ps-10">
               <h1 className="text-3xl font-extrabold ">Trở thành giảng viên</h1>
               <p className="text-font-medium text-lg">
                 Giảng viên trên khắp thế giới giảng dạy hàng triệu học viên trên Udemy. Chúng tôi
@@ -186,7 +186,7 @@ const Home = () => {
             <h1 className="text-xl font-extrabold text-darkLight md:text-3xl">
               Cẩm nang kỹ năng và kiến thức
             </h1>
-            <div className="md:flex justify-between space-x-3">
+            <div className="justify-between space-x-3 md:flex">
               <Blog />
               <Blog />
               <Blog />
@@ -196,7 +196,7 @@ const Home = () => {
         <section className="section_9">
           <div className=" mx-auto max-w-7xl space-y-5">
             <h1 className="text-xl font-extrabold text-darkLight md:text-3xl">Tìm kiếm nhiều</h1>
-            <div className="flex space-x-3 flex-wrap space-y-2">
+            <div className="flex flex-wrap space-x-3 space-y-2">
               <Link to="/">
                 <Button rounded_full border>
                   Kinh doanh

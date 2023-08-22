@@ -94,7 +94,7 @@ const DropdownMobile: React.FC<IChildProps> = ({ openParent }) => {
                         });
                         const combinedSlug = `${slug}/${subSlugC2}`;
                         return (
-                          <div key={subIndex} className="px-4">
+                          <div key={subIndex} className="">
                             <li className="relative rounded-sm px-4 py-3 hover:bg-gray-200">
                               <Link
                                 onClick={() =>
