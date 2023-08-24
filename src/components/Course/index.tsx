@@ -113,15 +113,15 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row, cart }) => {
   ) : (
     <div className="flex items-center justify-between border-b-[1px] pb-4">
       <div onClick={() => handleRoute(data.id)}>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3"> 
           <div className="">
-            <img src={data.thumb} alt="" className="h-20 w-28 rounded-xl" />
+            <img src={data.thumb} alt="" className="h-20 w-28 rounded-xl object-cover" />
           </div>
           <div className="space-y-2 font-medium">
-            <p className="flex w-72 items-center space-x-4">
-              <span className="text-xl font-bold line-clamp-2">{data.title}</span>
+            <p className="flex md:w-72 items-center space-x-4">
+              <span className="text-sm md:text-xl font-bold line-clamp-2">{data.title}</span>
             </p>
-            <ul className="flex items-center space-x-7 text-sm">
+            <ul className="md:flex items-center md:space-x-7 text-sm">
               <li className="font-semibold">Tổng {data.totalTimeVideo} giờ</li>
               <li className=" list-disc">
                 Cập nhật{' '}
@@ -134,10 +134,10 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row, cart }) => {
           </div>
         </div>
       </div>
-      <div className="flex items-center space-x-1 font-bold text-org">
+      <div className="hidden items-center space-x-1 font-bold text-org md:flex">
         <span>{data.rating}</span> <IonIcon name="star" />
       </div>
-      <div className="flex items-center space-x-1 font-bold ">
+      <div className="hidden items-center space-x-1 font-bold md:flex ">
         <IonIcon name="people" className="text-xl" /> <span>{data.totalStudent}</span>
       </div>
       {!data.free ? (
@@ -160,9 +160,10 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row, cart }) => {
           )}
         </div>
       )}
-
-      <AddWhistList data={{ idCourse: data.id }} />
-      {cart && <AddCart data={{ idCourse: data.id }} />}
+      <div className="hidden md:block">
+        <AddWhistList data={{ idCourse: data.id }} />
+        {cart && <AddCart data={{ idCourse: data.id }} />}
+      </div>
     </div>
   );
 };

@@ -113,7 +113,11 @@ const ContentCourses: React.FC<IChildProps> = ({
               >
                 <div className="flex w-full items-center justify-between text-darkLight">
                   <div className="">
-                    <p className={`justify-start ps-3 ${enroll ? 'text-[17px]' : 'text-lg'}`}>
+                    <p
+                      className={`justify-start ps-3 ${
+                        enroll ? 'text-[15px] md:text-[17px]' : 'text-[15px] md:text-lg'
+                      }`}
+                    >
                       {item.name}
                     </p>
                     {enroll && (
@@ -123,7 +127,11 @@ const ContentCourses: React.FC<IChildProps> = ({
                     )}
                   </div>
                   <div className={`flex items-center space-x-5`}>
-                    {!enroll && <p className="text-[15px] w-[6rem]">{numberOfLectures} bài giảng</p>}
+                    {!enroll && (
+                      <p className="hidden w-[6rem] text-[15px] md:block">
+                        {numberOfLectures} bài giảng
+                      </p>
+                    )}
                     <IonIcon
                       name="chevron-down-outline"
                       className={`${openAccordions[index] === true && 'rotate-180'} transition-all`}

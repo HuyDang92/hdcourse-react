@@ -76,8 +76,8 @@ const CourseOverView = () => {
   };
 
   return (
-    <div className="relative pb-10">
-      <section className="bg-gradient-to-r from-[#db6968] to-[#F6D794] py-5">
+    <div className="relative px-3 pb-10 md:px-5 xl:px-0">
+      <section className="hidden bg-gradient-to-r from-[#db6968] to-[#F6D794] py-5 xl:block">
         <div className="mx-auto max-w-7xl text-white">
           {!isFetching && <BreadcrumbComponent nameCourse={userData?.title} />}
           {!isFetching && (
@@ -124,9 +124,9 @@ const CourseOverView = () => {
           )}
         </div>
       </section>
-      <div className="mx-auto  flex max-w-7xl space-x-10  text-darkLight ">
-        <div className="my-10 w-2/3 space-y-10">
-          <div className="space-y-3 rounded-2xl p-8 shadow-border-full">
+      <div className="mx-auto flex max-w-7xl flex-col-reverse py-10 text-darkLight xl:flex-row xl:space-x-10  xl:py-0 ">
+        <div className="my-10 space-y-10 xl:w-2/3">
+          <div className="space-y-3 rounded-2xl p-4 shadow-border-full md:p-8">
             <h1 className="text-2xl font-bold">Bạn sẽ học được gì?</h1>
             <ul className="font-medium">
               {isFetching ? (
@@ -141,7 +141,7 @@ const CourseOverView = () => {
               )}
             </ul>
           </div>
-          <div className="space-y-3 rounded-2xl p-8 shadow-border-full">
+          <div className="space-y-3 rounded-2xl p-4 shadow-border-full md:p-8">
             <h1 className="text-2xl font-bold">Nội dung khóa học</h1>
             <ContentCourses props={lectures} />
           </div>
@@ -160,13 +160,13 @@ const CourseOverView = () => {
               )}
             </ul>
           </div>
-          <div className="space-y-3 rounded-2xl p-8 shadow-border-full">
+          <div className="space-y-3 rounded-2xl p-4 shadow-border-full md:p-8">
             {!result.data ? <LoadingLocal /> : <Instructor data={result.data} />}
           </div>
-          <div className="space-y-3 rounded-2xl p-8 shadow-border-full">
+          <div className="space-y-3 rounded-2xl p-4 shadow-border-full md:p-8">
             {isFetching ? <LoadingLocal /> : <Description data={userData} />}
           </div>
-          <div className="space-y-3 rounded-2xl  p-8 shadow-border-full">
+          <div className="space-y-3 rounded-2xl  p-4 shadow-border-full md:p-8">
             <h1 className="pb-3 text-start text-2xl font-bold">Học viên cũng mua</h1>
             <div className="space-y-4">
               {courses.isSuccess &&
@@ -218,14 +218,14 @@ const CourseOverView = () => {
 
         <div
           className={`${
-            !displayStyle ? 'z-0 -translate-y-[25%]' : 'z-[100] translate-y-8'
-          } sticky top-0 h-fit w-1/3 rounded-2xl bg-white shadow-border-full transition-all duration-300 ease-in`}
+            !displayStyle ? 'z-0 xl:-translate-y-[25%]' : 'translate-y-8 xl:z-[100]'
+          } top-0 h-fit rounded-2xl bg-white shadow-border-full transition-all duration-300 ease-in xl:sticky xl:w-1/3`}
         >
           {isFetching ? (
             <LoadingLocal />
           ) : (
             <>
-              <CardHeader color="blue-gray" className="relative h-56">
+              <CardHeader color="blue-gray" className="relative h-[12rem] md:h-[20rem] xl:h-56">
                 {lectures.isFetching ? (
                   <LoadingLocal />
                 ) : (
@@ -241,15 +241,15 @@ const CourseOverView = () => {
                       name="play-circle"
                       className="absolute left-[50%] top-[50%] z-20 -translate-x-[50%]  -translate-y-[50%] text-[5rem] text-white"
                     />
-                    <div className="absolute bottom-5 left-20 z-20 w-full text-lg font-bold">
+                    <div className="absolute bottom-5 z-20 w-full text-lg font-bold md:left-60 xl:left-20">
                       Xem giới thiệu khóa học
                     </div>
-                    <img src={userData?.thumb} alt="card-image" className="" />
+                    <img src={userData?.thumb} alt="card-image" className="w-full object-cover" />
                   </Introduce>
                 )}
               </CardHeader>
               <CardBody>
-                <div className="space-y-2 px-5 font-medium">
+                <div className="space-y-2 font-medium md:px-32 xl:px-5">
                   {userData?.free ? (
                     <span className=" text-center text-2xl font-bold text-darkLight">Miễn phí</span>
                   ) : (

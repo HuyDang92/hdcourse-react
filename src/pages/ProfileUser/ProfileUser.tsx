@@ -13,11 +13,11 @@ const ProfileUser = () => {
     document.title = 'Trang cá nhân';
   }, []);
   return (
-    <div className="mx-auto max-w-7xl">
-      <div className="relative my-5">
+    <div className="mx-auto max-w-7xl ">
+      <div className="relative my-5 px-5 xl:px-0">
         <div className="cover ">
           <img
-            className="h-[30vh] w-full rounded-3xl object-cover"
+            className="md:h-[20vh] xl:h-[30vh] w-full rounded-3xl object-cover"
             src="https://images.pexels.com/photos/220118/pexels-photo-220118.jpeg?auto=compress&cs=tinysrgb&h=627&fit=crop&w=1200"
             alt=""
           />
