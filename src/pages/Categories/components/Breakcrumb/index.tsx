@@ -37,14 +37,14 @@ export default function BreadcrumbComponent({ nameCat, nameCatC2, nameCatC3 }: a
 
   return (
     <Breadcrumbs className="space-x-2 ">
-      <Link to="/" className="pe-2 text-lg">
+      <Link to="/" className="pe-2 md:text-lg">
         <IonIcon name="home" />
       </Link>
       {nameCat && (
         <Link
           onClick={() => handleRouteUrl(nameCat.id, nameCat.name, nameCat.id)}
           to={`/categories/${slugC1}`}
-          className="pe-2 text-lg font-medium"
+          className="pe-2 font-medium md:text-lg"
         >
           {nameCat.name}
         </Link>
@@ -55,7 +55,7 @@ export default function BreadcrumbComponent({ nameCat, nameCatC2, nameCatC3 }: a
             handleRouteUrl(nameCatC2.id, nameCat.name, nameCat.id, nameCatC2.name, nameCatC2.id)
           }
           to={`/categories/${slugC1}/${slugC2}`}
-          className="pe-2 text-lg font-medium"
+          className="pe-2 font-medium md:text-lg"
         >
           {nameCatC2.name}
         </Link>
@@ -74,7 +74,7 @@ export default function BreadcrumbComponent({ nameCat, nameCatC2, nameCatC3 }: a
             )
           }
           to={`/categories/${slugC1}/${slugC2}/${slugC3}`}
-          className="text-lg font-medium"
+          className="font-medium md:text-lg"
         >
           {nameCatC3.name}
         </Link>

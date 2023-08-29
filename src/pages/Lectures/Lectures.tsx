@@ -17,6 +17,7 @@ import Button from 'components/Button';
 import IonIcon from '@reacticons/ionicons';
 import { Skeleton } from '@mui/material';
 import ReviewCourse from 'pages/CourseOverView/components/ReviewCourse';
+import { Drawer } from '@material-tailwind/react';
 
 const Lectures = () => {
   const { idLeature, nameCourse } = useParams();
@@ -38,6 +39,7 @@ const Lectures = () => {
   const [updateLearned] = useLearnedLectureMutation();
   const dataComment = useGetCommentLectureQuery({ idLecture: lectureId, limit });
   const [addComment, loading] = useAddCommentLectureMutation();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (videoEnded) {
@@ -75,8 +77,8 @@ const Lectures = () => {
           }}
         />
       )}
-      <main className="mt-[70px] flex">
-        <section className="max-h-[84vh] w-3/4 overflow-y-scroll">
+      <main className="mt-[70px] xl:flex">
+        <section className="xl:max-h-[84vh] xl:w-3/4 xl:overflow-y-scroll">
           <VideosComponent
             setVideoEnded={setVideoEnded}
             data={{ idLecture: idLeature, source: lectureData?.source, thumb: course?.data?.thumb }}
@@ -132,7 +134,7 @@ const Lectures = () => {
             )}
           </div>
         </section>
-        <section className="mb-10 max-h-[84vh] w-1/4 overflow-y-scroll">
+        <section className="mb-10 hidden max-h-[84vh] w-1/4 overflow-y-scroll xl:block">
           <h1 className=" px-5 py-2 text-xl font-bold  text-darkLight">Nội dung khóa học</h1>
           <ContentCourses
             idLectureCurrrent={idLeature}
@@ -145,7 +147,34 @@ const Lectures = () => {
           />
         </section>
       </main>
-      <footer className="fixed bottom-0 flex w-full justify-center bg-white p-1 shadow-border-full">
+      <footer className="fixed bottom-0 flex w-full items-center justify-between bg-white p-1 px-5 shadow-border-full xl:justify-center xl:px-0">
+        {/* <Filter>
+          <IonIcon name="list-outline" className="text-3xl" />
+        </Filter> */}
+        <div className="xl:hidden ">
+          <div onClick={() => setOpen(!open)}>
+            <IonIcon name="list-outline" className="text-3xl" />
+          </div>
+          <div
+            className={` bottom-0 left-0 right-0 top-0 z-50 bg-black bg-opacity-50 ${
+              !open ? 'hidden' : 'fixed'
+            }`}
+          ></div>
+          <Drawer open={open} onClose={() => setOpen(!open)} className="z-50 pt-[90px]">
+            <section className="mb-10 max-h-[87vh] overflow-y-scroll">
+              <h1 className=" px-5 py-2 text-xl font-bold  text-darkLight">Nội dung khóa học</h1>
+              <ContentCourses
+                idLectureCurrrent={idLeature}
+                nameCourse={nameCourse}
+                enroll
+                videoEnded={videoEnded}
+                setTotalLearned={setTotalLearned}
+                setRatingCheck={setRatingCheck}
+                props={lectures}
+              />
+            </section>
+          </Drawer>
+        </div>
         <div className="flex items-center space-x-2">
           <IonIcon name="chevron-back-outline" className="text-3xl" />
           <button className="pe-4">Bài trước</button>

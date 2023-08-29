@@ -27,19 +27,19 @@ const HeaderLecture: React.FC<IChildProps> = ({ data, ratingCheck }) => {
     }
   }, [userRated]);
   return (
-    <header className="fixed top-0 z-50 w-full">
+    <header className="fixed top-0 z-40 w-full">
       <div className="flex items-center justify-between bg-darkLight px-5 py-3 text-white shadow-border-full">
         <div className="flex items-center space-x-3">
           <Link to="/" className="flex items-center space-x-2 pe-3">
             <IonIcon name="chevron-back-outline" className="text-3xl text-white" />
             <img src={logo} alt="" className="w-6" />
           </Link>
-          <p className="border-l-2 ps-6 text-xl font-bold">{data && data.title}</p>
+          <p className="border-l-2 line-clamp-1 ps-6 text-xl font-bold">{data && data.title}</p>
         </div>
         <div className="flex items-center space-x-5">
           {!ratingCheck && !userRated && (
             <RatingCourse setUserRated={setUserRated}>
-              <div className="flex cursor-pointer items-center space-x-2 hover:text-org">
+              <div className="hidden cursor-pointer items-center space-x-2 hover:text-org xl:flex">
                 <IonIcon name="star" className="text-xl text-white" />{' '}
                 <span>Đánh giá khóa học</span>
               </div>
@@ -52,9 +52,12 @@ const HeaderLecture: React.FC<IChildProps> = ({ data, ratingCheck }) => {
               />
             )}
             <div className="font-semibold">
-              {data.totalLearned} / {data?.totalLecture} bài học
+              <span className="inline-block w-12 xl:w-14">
+                {data.totalLearned} / {data?.totalLecture}
+              </span>{' '}
+              <span className="hidden xl:inline">bài học</span>
             </div>
-            <IconButton className="flex items-center space-x-2 rounded-full bg-white p-2 px-4 text-darkLight">
+            <IconButton className="hidden items-center space-x-2 rounded-full bg-white p-2 px-4 text-darkLight xl:flex">
               <IonIcon name="arrow-redo" className="text-xl" />
             </IconButton>
             <IconButton className="flex items-center space-x-2 rounded-full bg-white p-2 px-4 text-darkLight">

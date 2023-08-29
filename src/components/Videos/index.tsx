@@ -29,7 +29,7 @@ const VideosComponent: React.FC<IChildProps> = ({ data, setVideoEnded }) => {
       </MediaPlayer>
     </div>
   ) : (
-    <div className="h-[75vh]  w-full bg-black">
+    <div className="h-[40vh] xl:h-[75vh]  w-full bg-black">
       <LoadingLocal />
     </div>
   );

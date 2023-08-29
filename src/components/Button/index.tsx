@@ -20,10 +20,8 @@ const Button: React.FC<ButtonProps> = (data) => {
   const classes = [
     'border-[1px]',
     'inline-block',
-    'md:px-4',
-    'px-2',
-    'md:py-2',
-    'py-1',
+    'px-4',
+    'py-2',
     'md:text-lg',
     'text-sm',
     data.width_full && `w-full`,

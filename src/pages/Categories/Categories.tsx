@@ -14,6 +14,7 @@ import { RootState } from 'stores/store';
 import { useEffect, useState } from 'react';
 import { useGetAllCatLevelThreeQuery } from 'features/Category/category.service';
 import SkeletonComp from 'components/Skeleton';
+import { Filter } from './components/Filter';
 
 const Categories = () => {
   const { keywords } = useParams();
@@ -75,24 +76,28 @@ const Categories = () => {
   }, [resultCourseKeyword]);
 
   return (
-    <div className="mx-auto max-w-7xl text-darkLight">
+    <div className="mx-auto max-w-7xl px-5 text-darkLight xl:px-0">
       <section className="my-4">
         {!keywords && (
           <BreadcrumbComponent nameCat={nameCat} nameCatC2={nameCatC2} nameCatC3={nameCatC3} />
         )}
       </section>
       <section>
-        <h1 className="text-2xl font-extrabold ">
+        <h1 className="text-xl font-extrabold md:text-2xl ">
           Tất cả các khóa học{' '}
           <span className="uppercase">{keywords ? keywords : handleTitle()}</span>
         </h1>
-        <div className="my-10 flex items-center justify-between space-x-3 text-lg font-bold">
+        <div className="my-10 flex items-center justify-between space-x-3 text-[12px] font-bold md:text-lg">
           <div className="flex space-x-3">
-            <div className="flex cursor-pointer items-center space-x-3 border-2 border-gray-500 px-4 py-3">
-              <IonIcon name="filter" />
-              <p>Bộ lọc</p>
+            <div className="md:hidden">
+              <Filter>
+                <div className="flex cursor-pointer items-center space-x-3 border-2 border-gray-500 px-2 py-1 md:px-4 md:py-3">
+                  <IonIcon name="filter" />
+                  <p>Bộ lọc</p>
+                </div>
+              </Filter>
             </div>
-            <select className="flex w-60 items-center space-x-3 border-2 border-gray-500 px-4 py-3">
+            <select className="flex items-center space-x-3 border-2 border-gray-500 px-4 md:py-3 md:w-60">
               <option value="">Sắp xếp theo</option>
               <option value="">Phổ biến nhất</option>
               <option value="">Đánh giá cao nhất</option>
@@ -102,8 +107,8 @@ const Categories = () => {
           <p className="">{dataCourse?.totalCourseCount} kết quả</p>
         </div>
       </section>
-      <section className="flex">
-        <div className="w-[25%] space-y-10 ">
+      <section className="md:flex">
+        <div className="hidden w-[25%] space-y-10 md:block ">
           <div className="filter-1">
             <h3 className="mb-3 text-lg font-bold">Giá</h3>
             <div className="flex flex-col ">
@@ -150,11 +155,11 @@ const Categories = () => {
             </div>
           </div>
         </div>
-        <div className="w-[75%]">
+        <div className="md:w-[75%]">
           <h1 className="text-center text-2xl font-bold text-gray-300">
             {!isFetching && dataCourse?.totalCourseCount === 0 && 'Không tìm thấy khóa học'}
           </h1>
-          <div className={`${!isFetching && 'grid h-fit grid-cols-3 gap-3'}`}>
+          <div className={`${!isFetching && 'grid h-fit gap-3 md:grid-cols-2 xl:grid-cols-3'}`}>
             {isFetching || resultCourseKeyword.isFetching ? (
               <SkeletonComp />
             ) : (
