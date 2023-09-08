@@ -160,7 +160,7 @@ const CourseComponents: React.FC<IChildProps> = ({ data, row, cart }) => {
           )}
         </div>
       )}
-      <div className="hidden md:block">
+      <div className="hidden md:block space-x-2">
         <AddWhistList data={{ idCourse: data.id }} />
         {cart && <AddCart data={{ idCourse: data.id }} />}
       </div>

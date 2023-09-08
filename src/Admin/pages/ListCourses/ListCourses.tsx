@@ -3,27 +3,28 @@ import TableList from 'Admin/components/TableList';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { CardHeader, CardBody, CardFooter, Input, Typography } from '@material-tailwind/react';
 import DialogComponent from '../../components/Dialog';
-import AddUser from './components/AddUser';
 import { IUserInfo } from 'types/User';
 import PaginationAdmin from '../../components/Pagination';
 import Loading from 'Admin/components/Loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useGetAllDataQuery, useGetDataLimitQuery } from 'features/Auth/auth.service';
+import AddUser from './components/AddCourse';
+import { useGetAllCourseQuery, useGetDataLimitQuery } from 'features/Course/course.service';
+import TableListCourse from 'Admin/components/TableListCourse';
 
-const ListCategory = () => {
+const ListCouses = () => {
   const [mess, setMess] = useState<boolean>(false);
-  const [selectedValue, setSelectedValue] = useState<number>(3);
+  const [selectedValue, setSelectedValue] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [userData, setUserData] = useState<Omit<IUserInfo, 'accessToken'>[]>([]);
   const [filteredData, setFilteredData] = useState<any>([]);
-  const { data, isFetching } = useGetAllDataQuery();
+  const { data, isFetching } = useGetAllCourseQuery(20);
+  console.log(filteredData);
 
   const userPagination = useGetDataLimitQuery({
     pageSize: selectedValue,
     currentPage: currentPage,
   });
-  console.log(userPagination.data);
 
   useEffect(() => {
     if (data) {
@@ -31,7 +32,7 @@ const ListCategory = () => {
     }
   }, [isFetching]);
   useEffect(() => {
-    document.title = 'Danh sách danh mục';
+    document.title = 'Danh sách khóa học';
     if (!userPagination?.isFetching) {
       setFilteredData(userPagination?.data?.data);
     }
@@ -71,7 +72,7 @@ const ListCategory = () => {
           <div className="flex items-start justify-between gap-8">
             <div className="">
               <Typography variant="h4" color="blue-gray">
-                Danh sách người dùng
+                Danh sách khóa học
               </Typography>
               <div className="flex items-center space-x-3">
                 <select
@@ -96,7 +97,7 @@ const ListCategory = () => {
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
               <div className="w-full md:w-72">
                 <Input
-                  label="Tìm kiếm người dùng theo email"
+                  label="Tìm kiếm khóa học theo tên"
                   onChange={(value) => handleSearchData(value.target.value)}
                   icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                 />
@@ -109,7 +110,7 @@ const ListCategory = () => {
           </div>
         </CardHeader>
         <CardBody className="p-0">
-          {!userPagination?.isFetching ? <TableList data={filteredData} /> : <Loading />}
+          {!userPagination?.isFetching ? <TableListCourse data={filteredData} /> : <Loading />}
         </CardBody>
         <CardFooter className="flex justify-center">
           <PaginationAdmin
@@ -123,4 +124,4 @@ const ListCategory = () => {
   );
 };
 
-export default ListCategory;
+export default ListCouses;

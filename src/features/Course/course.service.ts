@@ -65,6 +65,9 @@ export const courseApi = createApi({
     getRatingCouse: builder.query<any, any>({
       query: (idCourse) => `/api/course/getRatingCouse/${idCourse}`,
     }),
+    getDataLimit: builder.query<any, any>({
+      query: ({ pageSize, currentPage }) => `/api/course/getDataLimit/${pageSize}/${currentPage}`,
+    }),
   }),
 });
 
@@ -79,5 +82,6 @@ export const {
   useGetAllDataByIdCatQuery,
   useLazyGetAllDataFreeQuery,
   useLazyGetAllDataByNameQuery,
-  useGetRatingCouseQuery
+  useGetRatingCouseQuery,
+  useGetDataLimitQuery,
 } = courseApi;

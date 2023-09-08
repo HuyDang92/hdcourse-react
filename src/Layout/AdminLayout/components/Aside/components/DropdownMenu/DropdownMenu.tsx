@@ -7,10 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
 import { Open, Active, Title, subTitle } from 'features/Admin/Aside.slice';
 
-const navDashboard = [
-  { name: 'Overview', to: '/admin' },
-  { name: 'Chi tiết', to: '/' },
-];
+const navDashboard = [{ name: 'Overview', to: '/admin' }];
 const navManager = [
   { name: 'Danh mục', to: '/admin/manager-category' },
   { name: 'Khóa học', to: '/admin/manager-course' },

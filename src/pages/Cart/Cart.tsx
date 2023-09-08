@@ -13,7 +13,6 @@ const Cart = () => {
   const userId = user?.uid || 'null';
   const cart = useGetCartQuery(userId);
   const [totalCart, setTotalCart] = useState<number>(0);
-  console.log(cart.data);
 
   useEffect(() => {
     document.title = 'Giỏ hàng';
@@ -23,9 +22,11 @@ const Cart = () => {
         0
       );
       setTotalCart(sum);
-      console.log(sum);
+      // if (totalCart === 0) {
+      //   setTotalCart(0);
+      // }
     }
-  }, [cart.isSuccess]);
+  }, [cart.isFetching]);
 
   return (
     <div className="mx-auto  max-w-7xl space-y-4 py-10">

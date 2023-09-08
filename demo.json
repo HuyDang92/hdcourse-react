@@ -1,0 +1,28 @@
+{
+    "id": "9Sco9wzptnOgIZPbgSCI",
+    "totalLecture": 0,
+    "totalStudent": 0,
+    "learned": [],
+    "level": "Nâng cao",
+    "thumb": "https://res.cloudinary.com/dbppi7qw4/image/upload/v1690183561/courses/t4nqpy9opi9ih6mj7cxe.jpg",
+    "totalTimeVideo": 0,
+    "author": "Mr.Huy",
+    "id_category": "ZPKM8IuC2Pi5iElmaq5M",
+    "rating": 0,
+    "description": "1234567",
+    "title": "Angular nâng cao",
+    "ratingCount": 0,
+    "requiments": [],
+    "idInstructor": "Ky3lkHEyYRosulNIoigQ",
+    "price": 123456754,
+    "free": false,
+    "createdAt": {
+        "_seconds": 1691226061,
+        "_nanoseconds": 385000000
+    },
+    "updatedAt": {
+        "_seconds": 1691226061,
+        "_nanoseconds": 385000000
+    },
+    "slug": "angular-nang-cao"
+}

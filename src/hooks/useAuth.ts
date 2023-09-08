@@ -9,7 +9,7 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
-import { db } from 'firebase.jsx';
+import { db, providerFacebook } from 'firebase.jsx';
 import { auth, provider } from 'firebase.jsx';
 import { useState } from 'react';
 
@@ -100,6 +100,30 @@ export const useSignIn = () => {
   return { signin, isPending, error };
 };
 
+export const useSignInWithFacebook = () => {
+  const [errorF, setError] = useState<string | null>(null);
+
+  const signInFacebook = async () => {
+    setError(null);
+
+    try {
+      const userCredential = await signInWithPopup(auth, providerFacebook);
+
+      if (!userCredential) {
+        throw new Error('Đăng nhập thất bại!');
+      }
+      setError(null);
+
+      return userCredential.user;
+    } catch (err: any) {
+      const errorCode = err.code;
+      const errorMessage = err.message;
+      console.log(errorCode, errorMessage);
+      setError(errorCode);
+    }
+  };
+  return { signInFacebook, errorF };
+};
 export const useSignInWithGoogle = () => {
   const [errorGG, setError] = useState<string | null>(null);
 

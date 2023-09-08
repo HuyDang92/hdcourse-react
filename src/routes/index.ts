@@ -18,6 +18,7 @@ import Lectures from 'pages/Lectures/Lectures';
 import Cart from 'pages/Cart/Cart';
 import Intructors from 'pages/Intructors/Intructors';
 import Message from 'pages/Message/Message';
+import ListCouses from 'Admin/pages/ListCourses/ListCourses';
 
 interface RouteConfig {
   path: string;
@@ -116,7 +117,7 @@ const privateRoutes: RouteConfig[] = [
   },
   {
     path: '/admin/manager-course',
-    component: ListUser,
+    component: ListCouses,
     layout: AdminLayout,
   },
   {

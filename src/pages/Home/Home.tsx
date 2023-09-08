@@ -41,7 +41,7 @@ const Home = () => {
       <section className="section_1">
         <SliderComponent />
       </section>
-      <div className="space-y-32 px-5  xl:space-y-0 xl:px-0">
+      <div className="xl:space-y-32 px-5  space-y-0 xl:px-0">
         <section className="section_2">
           <div className="mx-auto max-w-7xl space-y-10">
             <h1 className="text-xl font-extrabold text-darkLight md:text-3xl">

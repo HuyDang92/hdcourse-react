@@ -11,6 +11,7 @@ import {
   useSignIn,
   useVerificationEmail,
   useUpdateActiveUser,
+  useSignInWithFacebook,
 } from 'hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { RootState } from 'stores/store';
@@ -34,6 +35,7 @@ const Login = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const linkPre = useSelector((state: RootState) => state.lectureState.linkPre);
   const { signInGoogle, errorGG } = useSignInWithGoogle();
+  const { signInFacebook, errorF } = useSignInWithFacebook();
   const { signin, isPending, error } = useSignIn();
 
   useEffect(() => {
@@ -67,10 +69,13 @@ const Login = () => {
 
   const handleLogInGoogle = async () => {
     signInGoogle().then((user) => {
-      if (linkPre) {
-        navigate(linkPre);
-      }
+      // if (linkPre) {
+      //   navigate(linkPre);
+      // }
     });
+  };
+  const handleLogInFacebook = async () => {
+    signInFacebook().then((user) => {});
   };
 
   const handleSendEmail = async () => {
@@ -139,7 +144,7 @@ const Login = () => {
           <div className="fixed bottom-0 left-0 right-0 top-0 bg-black opacity-30"></div>
           <div className="absolute inset-0 rotate-6 skew-y-0 transform rounded-3xl bg-gradient-to-r from-org to-orange-200 shadow-lg"></div>
           <form onSubmit={formik.handleSubmit} className="">
-            <div className="relative bg-white  shadow-lg rounded-3xl px-10 py-8 sm:py-12">
+            <div className="relative rounded-3xl  bg-white px-10 py-8 shadow-lg sm:py-12">
               <div className="mx-auto max-w-sm ">
                 <div className="text-center">
                   <h1 className="text-center text-2xl font-bold">Đăng nhập</h1>
@@ -153,7 +158,7 @@ const Login = () => {
                     <small className="text-[13px] text-red-600">Tài khoản chưa được đăng ký</small>
                   )}
                 </div>
-                <div className="md:w-96 divide-y divide-gray-200 md:px-8">
+                <div className="divide-y divide-gray-200 md:w-96 md:px-8">
                   <div className="space-y-4 py-8 text-base leading-6 text-gray-700 sm:text-lg sm:leading-7">
                     <div className="space-y-4">
                       <div className="relative">
@@ -237,7 +242,10 @@ const Login = () => {
                     </div>
                     <h1 className="text-center text-gray-500">hoặc</h1>
                     <ul className="listIconFooter mt-5 flex justify-center space-x-2">
-                      <li className="rounded-lg border-2 border-darkLight p-2 pb-0">
+                      <li
+                        onClick={handleLogInFacebook}
+                        className="rounded-lg border-2 border-darkLight p-2 pb-0"
+                      >
                         <IonIcon name="logo-facebook" className="text-2xl" />
                       </li>
                       <li
